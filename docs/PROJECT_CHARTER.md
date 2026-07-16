@@ -58,4 +58,3 @@ Dieser Produkt-Hook ist vorläufig. Er wird erst nach abgeschlossenem Konkurrenz
 ## Definition of Done
 
 Das Projekt ist erst fertig, wenn alle Anforderungen in `docs/REQUIREMENTS_CHECKLIST.md` durch konkrete Evidenz erfüllt sind, die App öffentlich erreichbar ist, ein frischer Klon reproduzierbar ausgeführt werden kann und Präsentation sowie Handout visuell geprüft wurden.
-

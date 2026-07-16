@@ -1,6 +1,7 @@
 # MietCheck - verbindliche Produktspezifikation
 
-Version: 0.1  
+Version: 0.1
+
 Stand: 16. Juli 2026
 
 ## Produktversprechen
@@ -159,4 +160,3 @@ Diese Abgrenzung schützt wissenschaftliche Klarheit, Datenlizenz, Wartbarkeit u
 - Präsentation für 10-15 Minuten
 - Handout mit maximal fünf DIN-A4-Seiten
 - Demo-Drehbuch und Vorbereitung auf Rückfragen
-

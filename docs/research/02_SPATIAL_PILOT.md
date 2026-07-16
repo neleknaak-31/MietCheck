@@ -65,4 +65,3 @@ Die geringere Güte bei amtlich unsicheren Zielwerten bestätigt, dass das Kennz
 - finale Modellkarte und Reproduzierbarkeitsprüfung
 
 Maschinenlesbarer Pilotbericht: `reports/pilot_spatial_metrics.json`.
-
