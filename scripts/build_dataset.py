@@ -24,6 +24,7 @@ RAW_DIR = PROJECT_ROOT / "data" / "raw"
 PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
 OUTPUT_FILE = PROCESSED_DIR / "model_table.parquet"
 REPORT_FILE = PROCESSED_DIR / "build_report.json"
+PUBLIC_REPORT_FILE = PROJECT_ROOT / "reports" / "dataset_build_report.json"
 RAW_MANIFEST = RAW_DIR / "source_manifest.json"
 
 GRID_ID = "GITTER_ID_100m"
@@ -258,6 +259,11 @@ def main() -> None:
     model_table.to_parquet(OUTPUT_FILE, index=False, compression="zstd")
     report = build_report(model_table)
     REPORT_FILE.write_text(
+        json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    PUBLIC_REPORT_FILE.parent.mkdir(parents=True, exist_ok=True)
+    PUBLIC_REPORT_FILE.write_text(
         json.dumps(report, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )

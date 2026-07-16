@@ -11,7 +11,7 @@ Statuswerte: `OFFEN`, `IN ARBEIT`, `ERFUELLT`, `BLOCKIERT`.
 | Daten | großer öffentlicher Datensatz | Zensus 2022 mit 2.058.569 Beobachtungen | ERFUELLT |
 | Daten | aktuelle Marktreferenz | GREIX bis Q1/2026 | ERFUELLT |
 | Daten | reproduzierbarer Download | `scripts/download_data.py`, lokales SHA-256-Manifest | ERFUELLT |
-| Daten | Lizenz und Quellenangabe | Datenblatt und App-Quellenansicht | IN ARBEIT |
+| Daten | Lizenz und Quellenangabe | Zensus-, GREIX- und OSM-Attribution in Manifesten und Forschungsdokumentation; Datenblatt und App-Ansicht folgen | IN ARBEIT |
 | Methodik | vollständige QUA3CK-Struktur | sieben ausführbare Notebooks | IN ARBEIT |
 | Methodik | EDA und Datenqualitätsprüfung | validierter Big-Data-Build vorhanden; U-Notebook noch offen | IN ARBEIT |
 | Methodik | mehrere Modelle und Baselines | fünf Modellfamilien auf identischer 3-Fold-Spatial-CV verglichen | ERFUELLT |

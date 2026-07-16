@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "regions": 37,
+  "greix_period": "2026-Q1",
+  "zensus_reference_date": "2022-05-15",
+  "context_method": "Median context of up to 500 occupied Zensus cells within 10 km of the Nominatim region centre; at least the 100 nearest cells as fallback",
+  "coordinate_reference_system": "ETRS89-extended / LAEA Europe (EPSG:3035)",
+  "geocoding_source": "OpenStreetMap contributors, Nominatim",
+  "geocoding_license": "Open Database License (ODbL)",
+  "geocoding_url": "https://nominatim.openstreetmap.org/",
+  "model_file": "zensus_hgb.joblib"
+}

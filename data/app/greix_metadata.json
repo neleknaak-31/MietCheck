@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "built_at_utc": "2026-07-16T20:13:12+00:00",
+  "source_url": "https://www.kielinstitut.de/fileadmin/Dateiverwaltung/IfW_Unit/Macroeconomics/GREIX/Mietpreisindex/City_metrics_public.xlsx",
+  "landing_page": "https://www.kielinstitut.de/de/institut/forschungszentren/makrooekonomie/makrofinanzen/mietpreisindex/",
+  "source_attribution": "Kiel Institut für Weltwirtschaft auf Basis der VALUE Marktdatenbank",
+  "price_basis": "Nominal quarterly asking rents",
+  "rows": 2166,
+  "regions": 38,
+  "local_regions": 37,
+  "first_period": "2012-Q1",
+  "latest_period": "2026-Q1",
+  "latest_regions": 38
+}
