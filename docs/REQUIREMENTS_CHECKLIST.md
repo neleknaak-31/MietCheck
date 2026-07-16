@@ -15,15 +15,15 @@ Statuswerte: `OFFEN`, `IN ARBEIT`, `ERFUELLT`, `BLOCKIERT`.
 | Methodik | vollständige QUA3CK-Struktur | sieben ausführbare Notebooks | IN ARBEIT |
 | Methodik | EDA und Datenqualitätsprüfung | validierter Big-Data-Build vorhanden; U-Notebook noch offen | IN ARBEIT |
 | Methodik | mehrere Modelle und Baselines | fünf Modellfamilien auf identischer 3-Fold-Spatial-CV verglichen | ERFUELLT |
-| Methodik | Feature-Anpassung und Hyperparameteroptimierung | räumliches 8-Kandidaten-Tuning abgeschlossen; Ablation und A3-Notebook folgen | IN ARBEIT |
-| Methodik | räumlich robuste, leckagefreie Evaluation | leakage-bereinigter Holdout und 3-Fold-Spatial-CV vorhanden; finale Evaluation noch offen | IN ARBEIT |
-| Methodik | quantitative und qualitative Modellwahl | Benchmark begründet HGB als Champion und Random Forest als Challenger; C-Notebook und Modellkarte folgen | IN ARBEIT |
-| Methodik | Unsicherheitsabschätzung | kalibrierte Intervalle und Coverage-Test | OFFEN |
+| Methodik | Feature-Anpassung und Hyperparameteroptimierung | räumliches 8-Kandidaten-Tuning und 4-stufige Ablation abgeschlossen; A3-Notebook folgt | IN ARBEIT |
+| Methodik | räumlich robuste, leckagefreie Evaluation | finale Auswertung auf 276.458 Zeilen aus 99 gesperrten Testblöcken | ERFUELLT |
+| Methodik | quantitative und qualitative Modellwahl | HGB-Champion, RF-Challenger, Modellkarte und finale Baseline-Messung | ERFUELLT |
+| Methodik | Unsicherheitsabschätzung | separate Split-Conformal-Kalibrierung; 86,8 % Test-Coverage transparent dokumentiert | ERFUELLT |
 | Produkt | belegbares Alleinstellungsmerkmal | Konkurrenzmatrix und USP-Test | IN ARBEIT |
 | Produkt | professionelle Streamlit-App | visuelle, funktionale und mobile Prüfung | OFFEN |
 | Produkt | verständliche Erklärbarkeit | lokale Erklärungen und Datenstand je Ergebnis | OFFEN |
 | Qualität | automatisierte Tests | 11 lokale Tests bestehen; CI-Workflow vorhanden, GitHub-Lauf noch offen | IN ARBEIT |
-| Qualität | Datenschutz, Bias, Grenzen und Sicherheit | Modellkarte und Risikoanalyse | OFFEN |
+| Qualität | Datenschutz, Bias, Grenzen und Sicherheit | Modellkarte vorhanden; App- und Gesamtrisikoanalyse folgen | IN ARBEIT |
 | Veröffentlichung | öffentliches GitHub-Repository | Repository-URL | OFFEN |
 | Veröffentlichung | öffentliches Streamlit-Deployment | App-URL und Smoke-Test | OFFEN |
 | Prüfung | Präsentation, Handout und Demo-Ablauf | final gerenderte Artefakte | OFFEN |

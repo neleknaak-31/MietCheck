@@ -1,0 +1,245 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-07-16T20:00:04+00:00",
+  "purpose": "Spatial feature ablation within development blocks",
+  "data": {
+    "rows": 300000,
+    "blocks": 461,
+    "random_state": 2026
+  },
+  "validation": "3-fold GroupKFold; calibration and test partitions unused",
+  "model_parameters": {
+    "learning_rate": 0.06,
+    "max_iter": 300,
+    "max_leaf_nodes": 127,
+    "min_samples_leaf": 100,
+    "l2_regularization": 5.0
+  },
+  "feature_sets": {
+    "categories_only": {
+      "features": [
+        "building_after_1990",
+        "dwelling_over_65sqm"
+      ],
+      "folds": [
+        {
+          "fold": 1,
+          "training_rows": 200000,
+          "validation_rows": 100000,
+          "training_seconds": 2.921637199993711,
+          "metrics": {
+            "mae": 1.6110435724258423,
+            "r2": 0.07465916872024536
+          }
+        },
+        {
+          "fold": 2,
+          "training_rows": 200000,
+          "validation_rows": 100000,
+          "training_seconds": 2.4912993000034476,
+          "metrics": {
+            "mae": 1.4669826030731201,
+            "r2": 0.09138351678848267
+          }
+        },
+        {
+          "fold": 3,
+          "training_rows": 200000,
+          "validation_rows": 100000,
+          "training_seconds": 3.083495099999709,
+          "metrics": {
+            "mae": 1.8576509952545166,
+            "r2": -0.03333711624145508
+          }
+        }
+      ],
+      "summary": {
+        "mean_mae": 1.645225723584493,
+        "std_mae": 0.16131080301863232,
+        "mean_r2": 0.04423518975575765,
+        "mean_training_seconds": 2.8321438666656227
+      }
+    },
+    "location": {
+      "features": [
+        "x_laea_m",
+        "y_laea_m",
+        "building_after_1990",
+        "dwelling_over_65sqm"
+      ],
+      "folds": [
+        {
+          "fold": 1,
+          "training_rows": 200000,
+          "validation_rows": 100000,
+          "training_seconds": 14.612571799996658,
+          "metrics": {
+            "mae": 1.310920000076294,
+            "r2": 0.319769024848938
+          }
+        },
+        {
+          "fold": 2,
+          "training_rows": 200000,
+          "validation_rows": 100000,
+          "training_seconds": 18.399323799996637,
+          "metrics": {
+            "mae": 1.268710732460022,
+            "r2": 0.24359917640686035
+          }
+        },
+        {
+          "fold": 3,
+          "training_rows": 200000,
+          "validation_rows": 100000,
+          "training_seconds": 14.344474400000763,
+          "metrics": {
+            "mae": 1.4722836017608643,
+            "r2": 0.3083342909812927
+          }
+        }
+      ],
+      "summary": {
+        "mean_mae": 1.3506381114323933,
+        "std_mae": 0.08772542222228054,
+        "mean_r2": 0.2905674974123637,
+        "mean_training_seconds": 15.785456666664686
+      }
+    },
+    "location_plus_numeric_context": {
+      "features": [
+        "x_laea_m",
+        "y_laea_m",
+        "building_after_1990",
+        "dwelling_over_65sqm",
+        "population",
+        "avg_household_size",
+        "ownership_rate_pct",
+        "vacancy_rate_pct",
+        "avg_dwelling_area_sqm",
+        "dwelling_count"
+      ],
+      "folds": [
+        {
+          "fold": 1,
+          "training_rows": 200000,
+          "validation_rows": 100000,
+          "training_seconds": 15.967305899997882,
+          "metrics": {
+            "mae": 1.2780237197875977,
+            "r2": 0.3435242772102356
+          }
+        },
+        {
+          "fold": 2,
+          "training_rows": 200000,
+          "validation_rows": 100000,
+          "training_seconds": 16.39284090000001,
+          "metrics": {
+            "mae": 1.234593391418457,
+            "r2": 0.2812674641609192
+          }
+        },
+        {
+          "fold": 3,
+          "training_rows": 200000,
+          "validation_rows": 100000,
+          "training_seconds": 15.709261100004369,
+          "metrics": {
+            "mae": 1.4334529638290405,
+            "r2": 0.3373544216156006
+          }
+        }
+      ],
+      "summary": {
+        "mean_mae": 1.315356691678365,
+        "std_mae": 0.08536820437562471,
+        "mean_r2": 0.32071538766225177,
+        "mean_training_seconds": 16.02313596666742
+      }
+    },
+    "all_context_and_quality_flags": {
+      "features": [
+        "x_laea_m",
+        "y_laea_m",
+        "building_after_1990",
+        "dwelling_over_65sqm",
+        "population",
+        "avg_household_size",
+        "ownership_rate_pct",
+        "vacancy_rate_pct",
+        "avg_dwelling_area_sqm",
+        "dwelling_count",
+        "household_size_uncertain",
+        "ownership_uncertain",
+        "vacancy_uncertain",
+        "dwelling_area_uncertain",
+        "rent_count_uncertain"
+      ],
+      "folds": [
+        {
+          "fold": 1,
+          "training_rows": 200000,
+          "validation_rows": 100000,
+          "training_seconds": 16.854250299998967,
+          "metrics": {
+            "mae": 1.2567780017852783,
+            "r2": 0.3592028021812439
+          }
+        },
+        {
+          "fold": 2,
+          "training_rows": 200000,
+          "validation_rows": 100000,
+          "training_seconds": 16.982033899999806,
+          "metrics": {
+            "mae": 1.2150691747665405,
+            "r2": 0.2965012788772583
+          }
+        },
+        {
+          "fold": 3,
+          "training_rows": 200000,
+          "validation_rows": 100000,
+          "training_seconds": 16.72053959999903,
+          "metrics": {
+            "mae": 1.4102356433868408,
+            "r2": 0.3517242670059204
+          }
+        }
+      ],
+      "summary": {
+        "mean_mae": 1.29402760664622,
+        "std_mae": 0.08391717112785231,
+        "mean_r2": 0.33580944935480755,
+        "mean_training_seconds": 16.852274599999266
+      }
+    }
+  },
+  "incremental_comparison": [
+    {
+      "feature_set": "categories_only",
+      "mean_mae": 1.645225723584493,
+      "improvement_vs_categories": 0.0,
+      "improvement_vs_previous": null
+    },
+    {
+      "feature_set": "location",
+      "mean_mae": 1.3506381114323933,
+      "improvement_vs_categories": 0.17905604558034413,
+      "improvement_vs_previous": 0.17905604558034413
+    },
+    {
+      "feature_set": "location_plus_numeric_context",
+      "mean_mae": 1.315356691678365,
+      "improvement_vs_categories": 0.20050077456085133,
+      "improvement_vs_previous": 0.026122037765254
+    },
+    {
+      "feature_set": "all_context_and_quality_flags",
+      "mean_mae": 1.29402760664622,
+      "improvement_vs_categories": 0.21346500477339314,
+      "improvement_vs_previous": 0.01621543811430313
+    }
+  ]
+}

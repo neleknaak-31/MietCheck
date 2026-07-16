@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "model_name": "MietCheck Zensus stock-rent HGB",
+  "created_at_utc": "2026-07-16T20:05:50+00:00",
+  "target": "rent_eur_sqm",
+  "target_unit": "EUR per square metre net cold rent",
+  "feature_order": [
+    "x_laea_m",
+    "y_laea_m",
+    "building_after_1990",
+    "dwelling_over_65sqm",
+    "population",
+    "avg_household_size",
+    "ownership_rate_pct",
+    "vacancy_rate_pct",
+    "avg_dwelling_area_sqm",
+    "dwelling_count",
+    "household_size_uncertain",
+    "ownership_uncertain",
+    "vacancy_uncertain",
+    "dwelling_area_uncertain",
+    "rent_count_uncertain"
+  ],
+  "feature_medians": {
+    "x_laea_m": 4243550.0,
+    "y_laea_m": 3108250.0,
+    "building_after_1990": 0.0,
+    "dwelling_over_65sqm": 1.0,
+    "population": 45.0,
+    "avg_household_size": 1.9500000476837158,
+    "ownership_rate_pct": 35.290000915527344,
+    "vacancy_rate_pct": 0.0,
+    "avg_dwelling_area_sqm": 89.02999877929688,
+    "dwelling_count": 12.0,
+    "household_size_uncertain": 0.0,
+    "ownership_uncertain": 0.0,
+    "vacancy_uncertain": 0.0,
+    "dwelling_area_uncertain": 0.0,
+    "rent_count_uncertain": 0.0
+  },
+  "category_interval_half_widths_eur_sqm": {
+    "0_0": 2.876694679260254,
+    "0_1": 2.3182373046875,
+    "1_0": 3.47709321975708,
+    "1_1": 3.001309394836426
+  },
+  "global_interval_half_width_eur_sqm": 2.7305965423583984,
+  "nominal_interval_coverage": 0.9,
+  "test_metrics": {
+    "mae": 1.4132773876190186,
+    "median_ae": 0.9558582305908203,
+    "rmse": 2.130218029022217,
+    "r2": 0.5838987231254578
+  },
+  "test_interval_coverage": 0.8682476180830361,
+  "training_rows": 1518322,
+  "calibration_rows": 263789,
+  "test_rows": 276458,
+  "data_reference_date": "2022-05-15",
+  "data_release": "Zensus 2022 open 100 m grid data, released 2025",
+  "license": "Datenlizenz Deutschland - Namensnennung - Version 2.0",
+  "sklearn_version": "1.8.0"
+}
