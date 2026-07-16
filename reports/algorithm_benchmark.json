@@ -1,0 +1,368 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-07-16T13:43:06+00:00",
+  "purpose": "Spatially grouped candidate algorithm comparison",
+  "sample": {
+    "rows": 600000,
+    "spatial_blocks": 660,
+    "random_state": 2026
+  },
+  "validation": {
+    "method": "GroupKFold",
+    "groups": "spatial_block_25km",
+    "folds": 3
+  },
+  "features": [
+    "x_laea_m",
+    "y_laea_m",
+    "building_after_1990",
+    "dwelling_over_65sqm",
+    "population",
+    "avg_household_size",
+    "ownership_rate_pct",
+    "vacancy_rate_pct",
+    "avg_dwelling_area_sqm",
+    "dwelling_count",
+    "household_size_uncertain",
+    "ownership_uncertain",
+    "vacancy_uncertain",
+    "dwelling_area_uncertain",
+    "rent_count_uncertain"
+  ],
+  "models": {
+    "category_median": {
+      "folds": [
+        {
+          "fold": 1,
+          "training_rows": 400000,
+          "test_rows": 200000,
+          "metrics": {
+            "mae": 1.6654715538024902,
+            "median_ae": 1.320000171661377,
+            "rmse": 2.252192974090576,
+            "r2": 0.06469941139221191
+          }
+        },
+        {
+          "fold": 2,
+          "training_rows": 400000,
+          "test_rows": 200000,
+          "metrics": {
+            "mae": 1.892134666442871,
+            "median_ae": 1.3400001525878906,
+            "rmse": 2.7599382400512695,
+            "r2": 0.016887307167053223
+          }
+        },
+        {
+          "fold": 3,
+          "training_rows": 400000,
+          "test_rows": 200000,
+          "metrics": {
+            "mae": 1.5997270345687866,
+            "median_ae": 1.239999771118164,
+            "rmse": 2.212857246398926,
+            "r2": 0.07112836837768555
+          }
+        }
+      ],
+      "summary": {
+        "mae": {
+          "mean": 1.7191110849380493,
+          "std": 0.12525561935467402
+        },
+        "median_ae": {
+          "mean": 1.3000000317891438,
+          "std": 0.04320511751867961
+        },
+        "rmse": {
+          "mean": 2.408329486846924,
+          "std": 0.24914301296737687
+        },
+        "r2": {
+          "mean": 0.05090502897898356,
+          "std": 0.024196927076740943
+        }
+      }
+    },
+    "ridge": {
+      "folds": [
+        {
+          "fold": 1,
+          "training_rows": 400000,
+          "test_rows": 200000,
+          "training_seconds": 1.0158369000018865,
+          "metrics": {
+            "mae": 1.57308030128479,
+            "median_ae": 1.2954466342926025,
+            "rmse": 2.087568998336792,
+            "r2": 0.19643378257751465
+          },
+          "warnings": []
+        },
+        {
+          "fold": 2,
+          "training_rows": 400000,
+          "test_rows": 200000,
+          "training_seconds": 1.0263975000016217,
+          "metrics": {
+            "mae": 1.7798740863800049,
+            "median_ae": 1.3234930038452148,
+            "rmse": 2.535231828689575,
+            "r2": 0.17045503854751587
+          },
+          "warnings": []
+        },
+        {
+          "fold": 3,
+          "training_rows": 400000,
+          "test_rows": 200000,
+          "training_seconds": 0.9785314999971888,
+          "metrics": {
+            "mae": 1.5435994863510132,
+            "median_ae": 1.236619472503662,
+            "rmse": 2.1015515327453613,
+            "r2": 0.16222190856933594
+          },
+          "warnings": []
+        }
+      ],
+      "summary": {
+        "mae": {
+          "mean": 1.632184624671936,
+          "std": 0.10512345896454083
+        },
+        "median_ae": {
+          "mean": 1.2851863702138264,
+          "std": 0.03620043624196263
+        },
+        "rmse": {
+          "mean": 2.241450786590576,
+          "std": 0.20781298217339886
+        },
+        "r2": {
+          "mean": 0.17637024323145548,
+          "std": 0.014579787735710224
+        }
+      }
+    },
+    "random_forest": {
+      "folds": [
+        {
+          "fold": 1,
+          "training_rows": 400000,
+          "test_rows": 200000,
+          "training_seconds": 30.63632030000008,
+          "metrics": {
+            "mae": 1.2923262119293213,
+            "median_ae": 0.9588055610656738,
+            "rmse": 1.8304935693740845,
+            "r2": 0.38215941190719604
+          },
+          "warnings": []
+        },
+        {
+          "fold": 2,
+          "training_rows": 400000,
+          "test_rows": 200000,
+          "training_seconds": 30.96156350000092,
+          "metrics": {
+            "mae": 1.3946893215179443,
+            "median_ae": 0.9830503463745117,
+            "rmse": 2.0454773902893066,
+            "r2": 0.4599997401237488
+          },
+          "warnings": []
+        },
+        {
+          "fold": 3,
+          "training_rows": 400000,
+          "test_rows": 200000,
+          "training_seconds": 29.353837899998325,
+          "metrics": {
+            "mae": 1.273438811302185,
+            "median_ae": 0.9335381984710693,
+            "rmse": 1.835679531097412,
+            "r2": 0.3607914447784424
+          },
+          "warnings": []
+        }
+      ],
+      "summary": {
+        "mae": {
+          "mean": 1.320151448249817,
+          "std": 0.05326727819286469
+        },
+        "median_ae": {
+          "mean": 0.9584647019704183,
+          "std": 0.020214686677350904
+        },
+        "rmse": {
+          "mean": 1.9038834969202678,
+          "std": 0.10014438419702167
+        },
+        "r2": {
+          "mean": 0.4009835322697957,
+          "std": 0.042632789391106124
+        }
+      }
+    },
+    "hist_gradient_boosting": {
+      "folds": [
+        {
+          "fold": 1,
+          "training_rows": 400000,
+          "test_rows": 200000,
+          "training_seconds": 13.695904299998801,
+          "metrics": {
+            "mae": 1.2676637172698975,
+            "median_ae": 0.9256186485290527,
+            "rmse": 1.8178619146347046,
+            "r2": 0.39065706729888916
+          },
+          "warnings": [
+            "Could not find the number of physical cores for the following reason:\nfound 0 physical cores < 1\nReturning the number of logical cores instead. You can silence this warning by setting LOKY_MAX_CPU_COUNT to the number of cores you want to use."
+          ]
+        },
+        {
+          "fold": 2,
+          "training_rows": 400000,
+          "test_rows": 200000,
+          "training_seconds": 11.99779110000236,
+          "metrics": {
+            "mae": 1.3823366165161133,
+            "median_ae": 0.9584342241287231,
+            "rmse": 2.0467042922973633,
+            "r2": 0.45935171842575073
+          },
+          "warnings": []
+        },
+        {
+          "fold": 3,
+          "training_rows": 400000,
+          "test_rows": 200000,
+          "training_seconds": 12.848174099999596,
+          "metrics": {
+            "mae": 1.2635093927383423,
+            "median_ae": 0.913848876953125,
+            "rmse": 1.8430825471878052,
+            "r2": 0.3556253910064697
+          },
+          "warnings": []
+        }
+      ],
+      "summary": {
+        "mae": {
+          "mean": 1.3045032421747844,
+          "std": 0.05506263236289169
+        },
+        "median_ae": {
+          "mean": 0.9326339165369669,
+          "std": 0.018865732331563544
+        },
+        "rmse": {
+          "mean": 1.9025495847066243,
+          "std": 0.10245146775269812
+        },
+        "r2": {
+          "mean": 0.4018780589103699,
+          "std": 0.04308302635247174
+        }
+      }
+    },
+    "mlp": {
+      "folds": [
+        {
+          "fold": 1,
+          "training_rows": 400000,
+          "test_rows": 200000,
+          "training_seconds": 69.87768849999702,
+          "metrics": {
+            "mae": 1.3394439220428467,
+            "median_ae": 1.0164294242858887,
+            "rmse": 1.8698410987854004,
+            "r2": 0.3553122282028198
+          },
+          "warnings": [
+            "Stochastic Optimizer: Maximum iterations (80) reached and the optimization hasn't converged yet."
+          ]
+        },
+        {
+          "fold": 2,
+          "training_rows": 400000,
+          "test_rows": 200000,
+          "training_seconds": 70.10859440000058,
+          "metrics": {
+            "mae": 1.5042365789413452,
+            "median_ae": 1.078296184539795,
+            "rmse": 2.1784050464630127,
+            "r2": 0.3875342011451721
+          },
+          "warnings": [
+            "Stochastic Optimizer: Maximum iterations (80) reached and the optimization hasn't converged yet."
+          ]
+        },
+        {
+          "fold": 3,
+          "training_rows": 400000,
+          "test_rows": 200000,
+          "training_seconds": 82.6619077999967,
+          "metrics": {
+            "mae": 1.3461188077926636,
+            "median_ae": 1.0045838356018066,
+            "rmse": 1.9203124046325684,
+            "r2": 0.3004920482635498
+          },
+          "warnings": [
+            "Stochastic Optimizer: Maximum iterations (80) reached and the optimization hasn't converged yet."
+          ]
+        }
+      ],
+      "summary": {
+        "mae": {
+          "mean": 1.3965997695922852,
+          "std": 0.07615948428605901
+        },
+        "median_ae": {
+          "mean": 1.0331031481424968,
+          "std": 0.03232014229469245
+        },
+        "rmse": {
+          "mean": 1.989519516626994,
+          "std": 0.13514226014230282
+        },
+        "r2": {
+          "mean": 0.3477794925371806,
+          "std": 0.03593179348453793
+        }
+      }
+    }
+  },
+  "ranking_by_mean_mae": [
+    {
+      "model": "hist_gradient_boosting",
+      "mean_mae": 1.3045032421747844,
+      "std_mae": 0.05506263236289169
+    },
+    {
+      "model": "random_forest",
+      "mean_mae": 1.320151448249817,
+      "std_mae": 0.05326727819286469
+    },
+    {
+      "model": "mlp",
+      "mean_mae": 1.3965997695922852,
+      "std_mae": 0.07615948428605901
+    },
+    {
+      "model": "ridge",
+      "mean_mae": 1.632184624671936,
+      "std_mae": 0.10512345896454083
+    },
+    {
+      "model": "category_median",
+      "mean_mae": 1.7191110849380493,
+      "std_mae": 0.12525561935467402
+    }
+  ]
+}
