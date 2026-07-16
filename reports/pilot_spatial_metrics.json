@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-07-16T13:29:22+00:00",
+  "purpose": "Feasibility pilot; not final model selection",
+  "split": {
+    "method": "GroupShuffleSplit on 25 km spatial blocks",
+    "random_state": 42,
+    "training_rows": 1591192,
+    "test_rows": 467377,
+    "training_blocks": 530,
+    "test_blocks": 133,
+    "shared_blocks": 0
+  },
+  "results": {
+    "category_median": {
+      "metrics": {
+        "mae": 1.6352128982543945,
+        "median_ae": 1.2499995231628418,
+        "rmse": 2.288259983062744,
+        "r2": 0.0568850040435791
+      }
+    },
+    "hist_gradient_location": {
+      "features": [
+        "x_laea_m",
+        "y_laea_m",
+        "building_after_1990",
+        "dwelling_over_65sqm"
+      ],
+      "training_seconds": 31.29947959999845,
+      "iterations": 250,
+      "metrics": {
+        "mae": 1.3007540702819824,
+        "median_ae": 0.9252986907958984,
+        "rmse": 1.9064629077911377,
+        "r2": 0.3453478217124939
+      },
+      "certain_target_metrics": {
+        "mae": 1.2677654027938843,
+        "median_ae": 0.8816962242126465,
+        "rmse": 1.902890920639038,
+        "r2": 0.3266655206680298
+      },
+      "uncertain_target_metrics": {
+        "mae": 1.5619328022003174,
+        "median_ae": 1.346853256225586,
+        "rmse": 1.934509515762329,
+        "r2": 0.05964386463165283
+      }
+    },
+    "hist_gradient_context": {
+      "features": [
+        "x_laea_m",
+        "y_laea_m",
+        "building_after_1990",
+        "dwelling_over_65sqm",
+        "population",
+        "avg_household_size",
+        "ownership_rate_pct",
+        "vacancy_rate_pct",
+        "avg_dwelling_area_sqm",
+        "dwelling_count",
+        "household_size_uncertain",
+        "ownership_uncertain",
+        "vacancy_uncertain",
+        "dwelling_area_uncertain",
+        "rent_count_uncertain"
+      ],
+      "training_seconds": 43.40547230000084,
+      "iterations": 250,
+      "metrics": {
+        "mae": 1.2578788995742798,
+        "median_ae": 0.8862009048461914,
+        "rmse": 1.8617668151855469,
+        "r2": 0.3756840229034424
+      },
+      "certain_target_metrics": {
+        "mae": 1.2378064393997192,
+        "median_ae": 0.856715202331543,
+        "rmse": 1.869370460510254,
+        "r2": 0.35017889738082886
+      },
+      "uncertain_target_metrics": {
+        "mae": 1.4167972803115845,
+        "median_ae": 1.1721177101135254,
+        "rmse": 1.8004337549209595,
+        "r2": 0.18547403812408447
+      }
+    }
+  },
+  "context_model_mae_improvement_vs_category_median": 0.23075527295737602,
+  "passes_15_percent_feasibility_gate": true
+}

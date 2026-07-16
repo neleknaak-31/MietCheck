@@ -1,0 +1,71 @@
+{
+  "best_model": "Gradient Boosting",
+  "test_mae": 89.7,
+  "test_r2": 0.898,
+  "test_mape": 13.7,
+  "cv_results": {
+    "Lineare Regression": {
+      "cv_mae": 120.48919336882287,
+      "cv_std": 0.7070415863078205
+    },
+    "Random Forest": {
+      "cv_mae": 102.74044256307653,
+      "cv_std": 0.8405870833445249
+    },
+    "Gradient Boosting": {
+      "cv_mae": 90.1946880964416,
+      "cv_std": 0.6131313621294557
+    }
+  },
+  "n_train": 202908,
+  "importances": [
+    {
+      "feature": "Wohnfläche",
+      "value": 185.8
+    },
+    {
+      "feature": "Stadt/Landkreis",
+      "value": 77.9
+    },
+    {
+      "feature": "Bundesland",
+      "value": 57.9
+    },
+    {
+      "feature": "Baujahr",
+      "value": 28.4
+    },
+    {
+      "feature": "Ausstattungsqualität",
+      "value": 9.6
+    },
+    {
+      "feature": "Einbauküche",
+      "value": 6.5
+    },
+    {
+      "feature": "Zustand",
+      "value": 6.3
+    },
+    {
+      "feature": "Aufzug",
+      "value": 4.2
+    },
+    {
+      "feature": "Wohnungstyp",
+      "value": 2.7
+    },
+    {
+      "feature": "Zimmer",
+      "value": 1.4
+    },
+    {
+      "feature": "Balkon",
+      "value": 1.4
+    },
+    {
+      "feature": "Keller",
+      "value": 1.0
+    }
+  ]
+}
