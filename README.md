@@ -137,10 +137,10 @@ Streamlit-Render-Smoke-Test. GitHub Actions führt dieselben Qualitätsgates aus
 | Phase | Notebook |
 |---|---|
 | Gesamtüberblick | `00_gesamtueberblick_qua3ck.ipynb` |
-| Q – Qualitätsprüfung | `01_qualitaetspruefung.ipynb` |
-| U – Understanding the Data | `02_understanding_the_data.ipynb` |
+| Q – Question | `01_question.ipynb` |
+| U – Understanding the Data und Datenqualität | `02_understanding_the_data.ipynb` |
 | A – Algorithmenauswahl | `03_algorithmenauswahl.ipynb` |
-| A³ – Anwendung, Anpassung, Auswertung | `04_modellentwicklung.ipynb` |
+| A²/A³ – Features anpassen und Hyperparameter justieren | `04_modellentwicklung.ipynb` |
 | C – Kreuzvalidierung und finaler Test | `05_kreuzvalidierung.ipynb` |
 | K – Wissensextraktion | `06_wissensextraktion.ipynb` |
 

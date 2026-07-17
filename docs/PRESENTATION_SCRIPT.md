@@ -20,7 +20,7 @@ Zielzeit: **12 Minuten Vortrag plus Fragen**. Die Folien 13 und 14 sind Backup-F
 
 ## Folie 5 – QUA³CK-Nachweiskette (3:00–3:50)
 
-„QUA³CK ist hier kein Inhaltsverzeichnis, sondern eine Kette von überprüfbaren Entscheidungen. Qualität prüft Hashes, Granularität und Missingness. Understanding dokumentiert EDA und räumliche Struktur. Auswahl vergleicht fünf Modellfamilien. Anpassung umfasst acht Tuningvarianten und vier Ablationen. Anwendung erzeugt Modell und Kalibrierung. Comparing misst den unangetasteten Test und Subgruppen. Knowledge übersetzt das Ergebnis in die App. Alle sieben Notebooks sind ausgeführt: 33 von 33 Codezellen, ohne Fehleroutput.“
+„QUA³CK ist hier kein Inhaltsverzeichnis, sondern eine Kette von überprüfbaren Entscheidungen. Question definiert Problem, Zielgruppen, KPIs und Deployment-Ziel. Understanding prüft Quellen und Datenqualität und dokumentiert EDA sowie räumliche Struktur. Algorithm Selection vergleicht fünf Modellfamilien. Adapting Features umfasst vier inkrementelle Ablationen; Adjusting Hyperparameters acht räumliche Tuningvarianten unter Datensperre. Conclude and Compare bewertet den unangetasteten Test quantitativ und qualitativ. Knowledge Transfer übersetzt das Ergebnis in die App. Alle sieben Notebooks sind ausgeführt: 37 von 37 Codezellen, ohne Fehleroutput.“
 
 ## Folie 6 – Räumlicher Holdout (3:50–4:45)
 

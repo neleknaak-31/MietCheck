@@ -121,11 +121,11 @@ display(snapshot.style.hide(axis="index"))"""
 
 | Phase | Leitfrage | Notebook / Evidenz |
 |---|---|---|
-| Q · Quality | Sind Quellen, Werte und Joins belastbar? | `01_qualitaetspruefung.ipynb` |
-| U · Understanding | Wie verteilen sich Ziel und Merkmale räumlich? | `02_understanding_the_data.ipynb` |
+| Q · Question | Welches Problem, für wen und mit welchen KPIs? | `01_question.ipynb` |
+| U · Understanding | Sind Quellen belastbar und wie verteilen sich Ziel und Merkmale? | `02_understanding_the_data.ipynb` |
 | A¹ · Auswahl | Welche Modellfamilie generalisiert räumlich? | `03_algorithmenauswahl.ipynb` |
-| A² · Anpassung | Welche Parameter und Features helfen? | `04_modellentwicklung.ipynb` |
-| A³ · Anwendung | Wie wird das Modell kalibriert und gespeichert? | `04_modellentwicklung.ipynb` |
+| A² · Adapting | Welche Feature-Gruppen liefern Zusatznutzen? | `04_modellentwicklung.ipynb` |
+| A³ · Adjusting | Welche Hyperparameter generalisieren stabil? | `04_modellentwicklung.ipynb` |
 | C · Comparing | Wie gut ist es auf gesperrten Regionen? | `05_kreuzvalidierung.ipynb` |
 | K · Knowledge | Welcher Mehrwert entsteht für Mietende? | `06_wissensextraktion.ipynb` |"""
             ),
@@ -156,14 +156,145 @@ plt.tight_layout(); plt.show()"""
         ],
     )
 
-    quality = notebook(
-        "01 · Q – Qualitätsprüfung",
-        "Quellen, Schema, Zielgrain, Missingness und amtliche Unsicherheit.",
+    question = notebook(
+        "01 · Q – Question",
+        "Problem, Zielgruppe, Forschungsfragen, KPIs und geplante Bereitstellung.",
         [
             markdown(
-                """## Qualitätslogik
+                """## Position im QUA³CK-Prozess
 
-Die Modellzeile ist eindeutig durch `GITTER_ID_100m × Gebäudealterklasse × Wohnungsgrößenklasse`. Kontextquellen werden zunächst je Gitterzelle validiert und anschließend als `many_to_one` an das Zielgrain gejoint. Zielwerte werden nie imputiert."""
+Jedes belastbare Data-Science-Projekt beginnt nicht mit einem Algorithmus, sondern mit einer klaren Entscheidung darüber, **welches Problem gelöst werden soll**. Die Q-Phase übersetzt den gesellschaftlichen Kontext steigender Wohnkosten in eine prüfbare Data-Science-Aufgabe. Sie definiert Zielgruppen, Forschungsfragen, Erfolgsmetriken, Grenzen und das Deployment-Ziel, bevor Daten oder Modelle ausgewählt werden.
+
+> **Zentrale Forschungsfrage:** Wie groß ist die Lücke zwischen kleinräumiger Bestandsmiete und aktueller Angebotsmiete in Deutschland, welche räumlichen und wohnungsbezogenen Faktoren erklären die Bestandsmiete und wie zuverlässig lässt sie sich für eine konkrete Wohnsituation schätzen?"""
+            ),
+            markdown(
+                """## Problem und Relevanz
+
+Bestehende Mietverhältnisse, heutige Wohnungsangebote und die persönliche Vertragsmiete messen drei unterschiedliche Realitäten. Viele Rechner verdichten sie trotzdem zu einer einzigen vermeintlich „fairen“ Miete. Dadurch bleiben Zeitbezug, Marktstreuung und Modellfehler unsichtbar.
+
+MietCheck trennt deshalb:
+
+1. **Bestandsrealität:** amtliche Zensus-Nettokaltmiete zum 15.05.2022,
+2. **Umzugsrealität:** aktuelle GREIX-Angebotsmiete bis Q1/2026,
+3. **persönliche Realität:** eigene Vertragsmiete und Mietbelastung.
+
+Der daraus abgeleitete **Umzugsaufschlag** beantwortet eine konkrete Alltagsfrage: Was würde ein heutiger Umzug gegenüber dem lokalen Wohnungsbestand und meiner jetzigen Situation finanziell verändern?"""
+            ),
+            markdown(
+                """## Zielgruppen und Entscheidungssituationen
+
+| Zielgruppe | Konkrete Entscheidung | Benötigte Information |
+|---|---|---|
+| Mieterinnen und Mieter | eigene Miete einordnen | persönliche Miete vs. lokaler Bestand |
+| Wohnungssuchende | Umzug finanziell bewerten | aktueller Angebotsmedian und Markt-IQR |
+| Studierende / Berufseinsteiger | Budgetfolgen abschätzen | monatliche Belastung relativ zum Einkommen |
+| dateninteressierte Öffentlichkeit | regionale Unterschiede verstehen | Zeitreihen, Methodik, Quellen und Grenzen |
+
+Die App ist bewusst **keine Rechtsprüfung**, kein amtlicher Mietspiegel und keine punktgenaue Wohnungsbewertung."""
+            ),
+            code(
+                """stakeholders = pd.DataFrame([
+    ("Mietende", "aktuelle Vertragsmiete einordnen", "Bestandsanker + eigenes Mietbild"),
+    ("Wohnungssuchende", "Umzugsfolgen abschätzen", "Angebotsmedian + Umzugsaufschlag"),
+    ("Studierende / Berufseinsteiger", "Budgetrisiko prüfen", "Mietbelastung am Haushaltsnetto"),
+    ("Öffentlichkeit", "regionale Unterschiede verstehen", "Zeitreihe + Methodik + Grenzen"),
+], columns=["Zielgruppe", "Entscheidung", "App-Ausgabe"])
+display(stakeholders.style.hide(axis="index"))"""
+            ),
+            markdown(
+                """## Thematische Forschungsfragen
+
+1. Wie stark variiert die Bestandsmiete innerhalb und zwischen deutschen Regionen?
+2. Verbessern strukturelle Wohnumfeldmerkmale eine rein kategoriale Baseline?
+3. Welches Regressionsverfahren generalisiert auf bislang ungesehene räumliche Gebiete?
+4. Wie groß ist die Differenz zwischen Zensus-Bestandsmiete 2022 und GREIX-Angebotsmiete 2026?
+5. Wie verändert diese Differenz die persönliche Mietbelastung bei einem Umzug?
+6. Wie muss Unsicherheit dargestellt werden, damit aus einem Modellwert keine Scheingenauigkeit wird?"""
+            ),
+            markdown(
+                """## Vorab definierte KPIs und Go/No-Go-Regeln
+
+| Dimension | Ziel vor Modellierung | Konsequenz bei Nichterfüllung |
+|---|---|---|
+| Big Data | mindestens 2 Mio. reproduzierbare Modellzeilen | Datenkonzept neu bewerten |
+| Modellvergleich | mindestens vier Modellfamilien plus fachliche Baseline | A¹ erweitern |
+| Generalisierung | räumlich disjunkte Entwicklung, Kalibrierung und Test | kein Deployment |
+| Modellnutzen | mindestens 15 % niedrigerer Test-MAE als Baseline | Produkt-Hook neu bewerten |
+| Unsicherheit | separates Kalibrierungsset und gemessene Coverage | keine Punktzahl ohne Warnung |
+| Produkt | zentrale Nutzerreise unter zwei Sekunden und mobil lesbar | Optimierung vor Freigabe |
+| Reproduzierbarkeit | Download, Tests, GitHub Actions und ausgeführte Notebooks | keine Abgabe |
+
+Die Schwellenwerte werden **vor** dem finalen Test festgelegt. Dadurch kann ein Ergebnis nicht nachträglich passend erklärt werden."""
+            ),
+            code(
+                """criteria = pd.DataFrame([
+    ("Datenumfang", "≥ 2.000.000 Zeilen", "reports/dataset_build_report.json"),
+    ("Modellvergleich", "≥ 4 Familien + Baseline", "reports/algorithm_benchmark.json"),
+    ("Testdesign", "0 gemeinsame 25-km-Blöcke", "reports/hgb_tuning.json"),
+    ("Modellnutzen", "≥ 15 % MAE-Verbesserung", "reports/final_model_evaluation.json"),
+    ("Unsicherheit", "separate Kalibrierung + Coverage", "reports/final_model_evaluation.json"),
+    ("Deployment", "Streamlit + GitHub + CI", "app.py / .github/workflows/ci.yml"),
+], columns=["Dimension", "Erfolgskriterium", "späterer Nachweis"])
+display(criteria.style.hide(axis="index"))"""
+            ),
+            markdown(
+                """## Marktumfeld und Alleinstellungsmerkmal
+
+Amtliche Mietspiegel, Immobilienportale und Budgetrechner beantworten jeweils Teilfragen. MietCheck verbindet in **einer quelloffenen Nutzerreise** einen kleinräumigen ML-Bestandsanker, einen aktuellen unabhängigen Angebotsmarkt und die persönliche Mietbelastung. Entscheidend ist nicht ein weiterer Preisrechner, sondern die methodische Trennung:
+
+- **Zensus:** Was wurde im Bestand 2022 durchschnittlich gezahlt?
+- **GREIX:** Was wird bei heutigen Angeboten in einem Markt verlangt?
+- **persönliche Eingabe:** Was bedeutet der Abstand für diesen Haushalt?
+
+Diese Kombination ist der USP; jede Einzelkomponente bleibt hinsichtlich Datenstand, Abdeckung und Unsicherheit sichtbar."""
+            ),
+            markdown(
+                """## Deployment-Ziel und Lieferobjekte
+
+Das Ergebnis der K-Phase ist eine responsive Streamlit-App mit reservierter URL `mietcheck.streamlit.app`, ein öffentlich nachvollziehbares GitHub-Repository, vollständig ausgeführte QUA³CK-Notebooks, Modell- und Datenkarte, automatisierte Tests sowie Präsentations- und Dokumentationsartefakte.
+
+**Bewusste Grenzen:** keine Portal-Scrapes, keine personenbezogene Speicherung, keine Rechts- oder Finanzberatung, keine lokale Angebotsbehauptung außerhalb der 37 belegten GREIX-Märkte."""
+            ),
+            code(
+                """deliverables = pd.DataFrame([
+    ("ML-Nachweis", "ausgeführte QUA³CK-Notebooks + versionierte Reports"),
+    ("Produkt", "responsive Streamlit-App"),
+    ("Reproduzierbarkeit", "GitHub, Downloadskripte, Tests und CI"),
+    ("Transparenz", "Datenkarte, Modellkarte, Risiko-/Ethikdokument"),
+    ("Prüfung", "Präsentation, schriftliche Ausarbeitung und Demo-Runbook"),
+], columns=["Lieferobjekt", "Abnahmekriterium"])
+display(deliverables.style.hide(axis="index"))"""
+            ),
+        ],
+    )
+
+    understanding = notebook(
+        "02 · U – Understanding the Data",
+        "Explorative Analyse von 2,06 Mio. Zielzeilen und räumlichem Kontext.",
+        [
+            markdown(
+                """## Aufgabe der U-Phase
+
+Die U-Phase klärt, **was die Daten tatsächlich messen**, wie vollständig und belastbar sie sind und welche Muster die spätere Modellwahl beeinflussen. MietCheck kombiniert bewusst zwei Datenprodukte, die nicht dieselbe Grundgesamtheit beschreiben:
+
+| Datenquelle | Messkonzept | räumlich/zeitlicher Grain | Rolle im Produkt |
+|---|---|---|---|
+| Zensus 2022, 100-m-Gitter | durchschnittliche Nettokaltmiete bestehender Mietverhältnisse | Gitterzelle × Gebäudealter × Wohnungsgröße, Stichtag 15.05.2022 | ML-Ziel und lokaler Bestandsanker |
+| GREIX Mietpreisindex | nominale Angebotsmieten aus Inseraten | Quartal × Markt, 2012-Q1 bis 2026-Q1 | aktuelle Umzugsrealität und Markt-IQR |
+
+Die Differenz zwischen beiden Quellen wird **deskriptiv** als Umzugsaufschlag bezeichnet. Sie ist keine Preisfortschreibung des Zensus und kein kausaler Markteffekt."""
+            ),
+            markdown(
+                """## Herkunft, Lizenz und Auswahlentscheidung
+
+Die Zensus-Gitterdaten stammen von den Statistischen Ämtern des Bundes und der Länder und stehen unter der Datenlizenz Deutschland – Namensnennung – Version 2.0. GREIX wird vom Kiel Institut für Weltwirtschaft auf Basis der VALUE-Marktdatenbank veröffentlicht. Beide Quellen sind öffentlich nachvollziehbar, vermeiden kommerzielles Portal-Scraping und besitzen klar dokumentierte Datenstände.
+
+**Warum diese Kombination?** Zensus liefert die für Big Data erforderliche räumliche Tiefe; GREIX liefert die aktuelle Marktdynamik. Keine Quelle kann die jeweils andere ersetzen."""
+            ),
+            markdown(
+                """## Qualitätslogik vor der EDA
+
+Die Modellzeile ist eindeutig durch `GITTER_ID_100m × Gebäudealterklasse × Wohnungsgrößenklasse`. Kontextquellen werden zunächst je Gitterzelle validiert und anschließend als `many_to_one` an das Zielgrain gejoint. Zielwerte werden nie imputiert. So verhindert der Build unbemerkte Zeilenvervielfachung und künstlich erfundene Mieten."""
             ),
             code(
                 """report = load_json("reports/dataset_build_report.json")
@@ -176,7 +307,7 @@ quality_summary = pd.DataFrame({
              target["min"], target["median"], target["mean"], target["max"],
              target["uncertain_share"]],
 })
-display(quality_summary)"""
+display(quality_summary.style.hide(axis="index"))"""
             ),
             code(
                 """coverage = pd.Series(report["feature_non_null_share"], name="non_null_share")
@@ -206,23 +337,16 @@ assert 0.5 <= target["min"] <= target["max"] <= 60
 print("✓ Alle zentralen Datenqualitäts-Gates bestanden")"""
             ),
             markdown(
-                """## Kritische Entscheidungen
+                """### Kritische Datenentscheidungen
 
 - Das amtliche Zeichen `–` bedeutet in den ausgewählten Zensusdateien **exakt beziehungsweise auf 0 geändert**, nicht „fehlend“. Der Parser schützt diese Semantik mit Tests.
-- `KLAMMERN` wird als Unsicherheitsflag erhalten.
-- Das Unsicherheitsflag der **Zielmiete** wird nur ausgewertet, niemals als Feature verwendet.
-- Die Roharchive bleiben unverändert; SHA-256-Hashes dokumentieren den exakten Stand.
-- Keine Portal-Scrapes und keine personenbezogenen Daten."""
+- `KLAMMERN` wird als amtliches Unsicherheitsflag erhalten.
+- Das Unsicherheitsflag der **Zielmiete** wird ausgewertet, aber nicht als Eingabefeature verwendet.
+- Roharchive bleiben unverändert; URL, Abrufzeitpunkt, Dateigröße und SHA-256 dokumentieren ihren Stand.
+- Sensible Merkmale wie Religion oder Staatsangehörigkeit werden nicht modelliert."""
             ),
-        ],
-    )
-
-    understanding = notebook(
-        "02 · U – Understanding the Data",
-        "Explorative Analyse von 2,06 Mio. Zielzeilen und räumlichem Kontext.",
-        [
             markdown(
-                """## Daten laden
+                """## Daten laden und inspizieren
 
 Für Diagramme wird eine deterministische Stichprobe gezogen; Kennzahlen und Modelle nutzen weiterhin die vollständige Tabelle beziehungsweise die dokumentierten großen Splits."""
             ),
@@ -240,6 +364,26 @@ sample = df.sample(n=200_000, random_state=2026)
 print(f"Vollbestand: {len(df):,} Zeilen · EDA-Stichprobe: {len(sample):,}")
 display(sample["rent_eur_sqm"].describe(percentiles=[.01, .25, .5, .75, .99]).to_frame())"""
             ),
+            markdown(
+                """## Zielvariable und Merkmalsgruppen
+
+**Zielvariable:** durchschnittliche Nettokaltmiete in Euro pro Quadratmeter. Eine Zeile beschreibt kein individuelles Inserat, sondern ein amtliches Aggregat für eine 100-m-Gitterzelle und eine grobe Wohnungsgruppe.
+
+| Merkmalsgruppe | Beispiele | Modelllogik |
+|---|---|---|
+| Lage | ETRS89-LAEA x/y | regionale und urbane Mietstruktur |
+| Wohnung | Baujahr vor/nach 1990, bis/über 65 m² | grobe Alters- und Größenunterschiede |
+| Bevölkerung | Einwohner, Haushaltsgröße | lokaler Siedlungskontext |
+| Wohnungsmarktstruktur | Eigentum, Leerstand, Wohnfläche, Wohnungszahl | Bestands- und Angebotsdruck im Umfeld |
+| Qualität | fünf amtliche Unsicherheitskennzeichen | Verlässlichkeit der Kontextwerte |
+
+Koordinaten und Kontext dürfen prädiktiv nützlich sein, werden aber später **nicht kausal** interpretiert."""
+            ),
+            markdown(
+                """## Aufgabe 1: Verteilung und Kategorien
+
+Der lange rechte Rand der Mietverteilung macht den Mittelwert empfindlich gegenüber Extremwerten. Deshalb werden später MAE und Median Absolute Error als robuste Hauptmetriken verwendet. Die Kategorienvisualisierung prüft, ob Gebäudealter und Wohnungsgröße bereits ohne komplexes Modell erkennbare Unterschiede tragen."""
+            ),
             code(
                 """fig, axes = plt.subplots(1, 2, figsize=(11, 4.2))
 sample["rent_eur_sqm"].clip(upper=20).plot.hist(
@@ -254,6 +398,11 @@ axes[1].set(title="Median nach amtlichen Kategorien", xlabel="Alter · Größe",
 axes[1].set_xticklabels(labels, rotation=25, ha="right")
 plt.tight_layout(); plt.show()"""
             ),
+            markdown(
+                """## Aufgabe 2: Räumliche Struktur
+
+Benachbarte Gitterzellen ähneln sich häufig. Würden sie zufällig auf Training und Test verteilt, könnte das Modell räumliche Nachbarn „wiedererkennen“ und seine Güte würde zu optimistisch erscheinen. Die Karte begründet deshalb den späteren Split in 25-km-Blöcke."""
+            ),
             code(
                 """plot_sample = sample.sample(n=50_000, random_state=2026)
 fig, ax = plt.subplots(figsize=(8.5, 7))
@@ -264,6 +413,11 @@ fig.colorbar(points, ax=ax, label="Bestandsmiete €/m² (bis 15)")
 ax.set(title="Räumliche Struktur der Zensus-Bestandsmieten",
        xlabel="ETRS89-LAEA x", ylabel="ETRS89-LAEA y")
 ax.set_aspect("equal"); plt.tight_layout(); plt.show()"""
+            ),
+            markdown(
+                """## Aufgabe 3: Zusammenhänge und Grenzen der Interpretation
+
+Rangkorrelationen zeigen monotone Beziehungen auch bei schiefen Verteilungen. Sie sind ein Diagnosewerkzeug für Redundanz und Feature Engineering, aber kein Nachweis für Ursache und Wirkung. Besonders räumliche Lage, Eigentum und Leerstand können gemeinsame regionale Strukturen abbilden."""
             ),
             code(
                 """numeric = ["rent_eur_sqm", "population", "avg_household_size",
@@ -297,9 +451,34 @@ print("Zielunsicherheit:", f"{df['target_uncertain'].mean():.1%}")"""
         "Fünf Modellfamilien unter identischer räumlicher GroupKFold-Validierung.",
         [
             markdown(
-                """## Faires Design
+                """## Position in der A³-Schleife
+
+Nach der U-Phase ist klar: Die Zielgröße ist kontinuierlich, räumlich strukturiert und rechtsschief. A¹ wählt deshalb nicht einfach den modernsten Algorithmus, sondern vergleicht repräsentative Regressionsfamilien unter exakt denselben räumlichen Bedingungen.
+
+| Kandidat | einfache Vorstellung | Stärke | erwartbare Grenze |
+|---|---|---|---|
+| Kategorien-Median | typischer Wert je Alter/Größe | fachlich verständliche Baseline | ignoriert Lage und Kontext |
+| Ridge | regulierte Regressionsgerade | schnell und transparent | bildet Nichtlinearität nur begrenzt ab |
+| Random Forest | Mittel vieler Entscheidungsbäume | flexible Interaktionen | groß und langsamer |
+| HistGradientBoosting | Bäume korrigieren schrittweise Fehler | stark auf großen Tabellen | weniger direkt erklärbar |
+| MLP | neuronales Netz für Tabellendaten | flexible Funktionsform | tuning- und rechenintensiv |
+
+Alle Modelle lösen dasselbe **Regressionsproblem**: Aus Lage, Wohnungskategorie und Kontext wird eine Bestandsmiete in €/m² geschätzt."""
+            ),
+            markdown(
+                """## Faires Vergleichsdesign
 
 600.000 identische Zeilen, 660 räumliche 25-km-Blöcke und drei identische `GroupKFold`-Splits für Baseline, Ridge, Random Forest, Histogram Gradient Boosting und MLP. Primäre Metrik ist der MAE in €/m²."""
+            ),
+            markdown(
+                """### Warum MAE, RMSE und R² gemeinsam?
+
+- **MAE:** durchschnittlicher absoluter Fehler in €/m²; leicht erklärbar und robust.
+- **RMSE:** bestraft große Einzelfehler stärker und macht Risikospitzen sichtbar.
+- **R²:** Anteil der erklärten Streuung; hilfreich, aber für räumliche Holdouts nicht allein entscheidend.
+- **Trainingszeit:** qualitative Produktionsmetrik für Reproduzierbarkeit und Wartbarkeit.
+
+Der MAE entscheidet das Ranking, die anderen Größen verhindern eine eindimensionale Modellwahl."""
             ),
             code(
                 """report = load_json("reports/algorithm_benchmark.json")
@@ -344,17 +523,36 @@ champion = summary.iloc[0]
 print(f"Champion: {champion['model']} · Verbesserung zur Baseline: {(1-champion['MAE']/baseline):.1%}")"""
             ),
             markdown(
-                """## Entscheidung
+                """## Entscheidung und Übergang zu A²
 
-Histogram Gradient Boosting gewinnt mit MAE 1,305 €/m² knapp vor Random Forest (1,320), trainiert aber etwa 2,4-mal schneller. Der kleine Fehlerabstand wird nicht als statistisch große Überlegenheit verkauft; Random Forest bleibt Challenger. Ridge und Kategorien-Median bleiben interpretierbare Referenzen. Das MLP erreichte sein Iterationslimit und war deutlich langsamer."""
+Histogram Gradient Boosting gewinnt mit MAE 1,305 €/m² knapp vor Random Forest (1,320), trainiert aber etwa 2,4-mal schneller. Der Vorsprung von nur 0,016 €/m² wird **nicht** als statistisch große Überlegenheit verkauft; Random Forest bleibt Challenger.
+
+Ridge und Kategorien-Median bleiben interpretierbare Referenzen. Das MLP belegt, dass ein neuronaler Ansatz geprüft wurde, erreichte aber sein Iterationslimit und war deutlich langsamer. Damit ist HGB der fachlich ausgewogene Kandidat für die nächste Schleife: beste räumliche CV-Güte, akzeptable Rechenzeit und erklärbar über Permutationsbeiträge."""
             ),
         ],
     )
 
     development = notebook(
-        "04 · A²/A³ – Anpassung und Anwendung",
+        "04 · A²/A³ – Features anpassen, Hyperparameter justieren",
         "Räumliches HGB-Tuning, inkrementelle Feature-Ablation und Modellartefakt.",
         [
+            markdown(
+                """## A² – Adapting Features
+
+Die zweite A-Iteration fragt nicht „welches Modell?“, sondern „welche Information hilft dem gewählten Modell wirklich?“. MietCheck ergänzt Merkmale inkrementell:
+
+1. **Kategorien-Baseline:** nur Gebäudealter und Wohnungsgröße,
+2. **+ Lage:** ETRS89-LAEA-Koordinaten,
+3. **+ Kontext:** Bevölkerung, Haushalt, Eigentum, Leerstand und Wohnungsbestand,
+4. **+ Qualitätsflags:** amtliche Unsicherheitskennzeichen.
+
+Die Ablation fügt Gruppen schrittweise hinzu und prüft jede Stufe auf denselben Raum-Folds. So wird nicht nur eine Feature Importance gezeigt, sondern der messbare Zusatznutzen ganzer Informationsgruppen."""
+            ),
+            markdown(
+                """## A³ – Adjusting Hyperparameters
+
+HGB besitzt Regler für Lernrate, Baumkomplexität, Mindestbeobachtungen je Blatt, Regularisierung und Iterationszahl. Acht begründete Konfigurationen werden innerhalb der Entwicklungsdaten verglichen. Das finale Testset bleibt während dieser Suche vollständig versiegelt."""
+            ),
             markdown(
                 """## Datensperre
 
@@ -413,9 +611,13 @@ display(artifact_summary)
 assert artifact.exists() and artifact.stat().st_size > 100_000"""
             ),
             markdown(
-                """## Ergebnis
+                """## Ergebnis und Modellartefakt
 
-Kandidat 6 (`learning_rate=.06`, 127 Blätter, 100 Mindestbeobachtungen je Blatt, L2=5) besitzt den niedrigsten mittleren und schlechtesten Fold-MAE. Standort bringt den größten Effekt; numerischer Kontext und Qualitätsflags verbessern jedoch alle Folds und bleiben deshalb im 15-Feature-Modell."""
+Kandidat 6 (`learning_rate=.06`, 127 Blätter, 100 Mindestbeobachtungen je Blatt, L2=5) besitzt sowohl den niedrigsten mittleren als auch den niedrigsten schlechtesten Fold-MAE. Die Entscheidung belohnt damit nicht nur den besten Durchschnitt, sondern auch Stabilität.
+
+Standort bringt in A² den größten Effekt. Numerischer Kontext und Qualitätsflags verbessern jedoch **alle** Folds und bleiben deshalb im 15-Feature-Modell. Modell, Feature-Reihenfolge, Softwareversion, Splits und Parameter werden gemeinsam versioniert; die App muss exakt dieses Artefakt laden und trainiert nichts stillschweigend neu.
+
+**Übergabe an C:** Erst nach Abschluss aller A-Entscheidungen wird das gesperrte Testset einmalig geöffnet."""
             ),
         ],
     )
@@ -424,6 +626,19 @@ Kandidat 6 (`learning_rate=.06`, 127 Blätter, 100 Mindestbeobachtungen je Blatt
         "05 · C – Comparing & Kreuzvalidierung",
         "Finale räumliche Güte, Baseline, Intervalle, Subgruppen und Erklärbarkeit.",
         [
+            markdown(
+                """## Position der C-Phase
+
+Die A³-Schleife hat gebaut und optimiert; C **entscheidet**. Es werden keine neuen Features und keine neuen Hyperparameter mehr gesucht. Die Phase beantwortet fünf Fragen:
+
+1. Erfüllt das gewählte Modell die vorab definierten KPIs?
+2. Wie groß ist der Vorteil gegenüber der fachlichen Baseline?
+3. Wo irrt das Modell systematisch stärker?
+4. Wie belastbar sind die Unsicherheitsintervalle auf neuen Regionen?
+5. Ist HGB auch unter qualitativen Kriterien die richtige App-Entscheidung?
+
+Damit bleibt der finale Test ein ehrlicher Nachweis und wird nicht zu einer weiteren Tuningrunde."""
+            ),
             markdown(
                 """## Finale Evaluation
 
@@ -439,6 +654,11 @@ comparison = pd.DataFrame([
 display(comparison.round(3).style.hide(axis="index"))
 print(f"MAE-Verbesserung zur Baseline: {test['mae_improvement_vs_baseline']:.1%}")"""
             ),
+            markdown(
+                """### Formales KPI-Gate
+
+Die vorab geforderte Verbesserung von mindestens 15 % wird mit 38,3 % deutlich erreicht. MAE 1,413 €/m² beschreibt den durchschnittlichen absoluten Fehler auf völlig neuen Raumblöcken; Median AE 0,956 €/m² zeigt, dass mindestens die Hälfte der Prognosen weniger als rund einen Euro pro Quadratmeter abweicht."""
+            ),
             code(
                 """intervals = pd.DataFrame([
     {"Intervall": "global", **test["global_90_percent_interval"]},
@@ -453,6 +673,11 @@ ax.axhline(.90, color=COLORS["red"], linestyle="--", label="nominelles Ziel 90 %
 ax.set(ylim=(.80, .92), ylabel="Coverage", xlabel="",
        title="Räumlicher Coverage-Test: ehrliche Unterdeckung")
 ax.legend(); plt.tight_layout(); plt.show()"""
+            ),
+            markdown(
+                """### Warum die Coverage unter 90 % liegt
+
+Split Conformal Prediction garantiert die nominelle Coverage nur unter Austauschbarkeit von Kalibrierungs- und Testbeobachtungen. Neue räumliche Regionen unterscheiden sich systematisch; deshalb erreicht das kategoriespezifische 90-%-Band empirisch 86,8 %. Wissenschaftlich korrekt ist nicht, die Zielzahl zu verstecken, sondern die **gemessene Testabdeckung** in App und Modellkarte auszuweisen."""
             ),
             code(
                 """subgroups = []
@@ -470,6 +695,30 @@ ax.set(title="Fehler nach Gebäudealter-/Größenklasse", ylabel="MAE €/m²", 
 ax.tick_params(axis="x", rotation=25)
 plt.tight_layout(); plt.show()"""
             ),
+            markdown(
+                """### Qualitative Bewertung
+
+Die Professorenvorgabe verlangt neben Kennzahlen auch Interpretierbarkeit, Effizienz und Wartbarkeit. Die folgende Matrix ist eine transparente fachliche Bewertung auf einer Skala von 1 (schwach) bis 5 (stark); sie ersetzt keine Messwerte, sondern dokumentiert den Produktions-Trade-off."""
+            ),
+            code(
+                """decision = pd.DataFrame({
+    "Kriterium": ["räumliche CV-Güte", "Test-/Produktionsnähe", "Interpretierbarkeit",
+                  "Trainingsökonomie", "Wartbarkeit"],
+    "Gewicht": [0.40, 0.20, 0.15, 0.10, 0.15],
+    "HGB": [5, 5, 3, 4, 4],
+    "Random Forest": [5, 4, 3, 2, 3],
+    "Ridge": [3, 3, 5, 5, 5],
+    "MLP": [3, 2, 2, 1, 2],
+    "Kategorien-Median": [2, 2, 5, 5, 5],
+})
+scores = {
+    model: float((decision[model] * decision["Gewicht"]).sum())
+    for model in decision.columns[2:]
+}
+display(decision.style.format({"Gewicht": "{:.0%}"}).hide(axis="index"))
+display(pd.Series(scores, name="gewichteter Score / 5").sort_values(ascending=False).to_frame())
+print("Hinweis: Ordinales Entscheidungshilfsmittel; quantitative Messwerte bleiben separat.")"""
+            ),
             code(
                 """importance = pd.DataFrame(
     report["permutation_importance_on_calibration_sample"]["results"]
@@ -481,13 +730,20 @@ ax.set(title="Permutationswichtigkeit auf Kalibrierungsdaten",
 plt.tight_layout(); plt.show()"""
             ),
             markdown(
-                """## Kritische Interpretation
+                """## Finale Modellentscheidung und kritische Interpretation
 
 - MAE 1,413 €/m² und R² 0,584 auf unbekannten Raumblöcken.
 - 38,3 % MAE-Verbesserung gegenüber der fachlichen Baseline.
 - Das nominelle 90%-Band erreicht nur 86,8 %: räumlicher Shift verletzt perfekte Austauschbarkeit. Die App zeigt daher empirisch ca. 87 % statt einer falschen 90%-Garantie.
 - Neue Gebäude sind mit MAE 1,64–1,91 €/m² schwieriger; diese Grenze wird sichtbar.
 - Wichtigkeit ist prädiktiv und nicht kausal."""
+            ),
+            markdown(
+                """## Go/No-Go und Übergabe an K
+
+**Go mit sichtbaren Grenzen:** HGB erfüllt Daten-, Generalisierungs- und Nutzen-KPIs und gewinnt auch den dokumentierten Produktions-Trade-off. Die Unterdeckung des Intervalls und die schwächere Güte bei Neubauten verhindern keine Demonstrations-App, verlangen aber klare Warnungen.
+
+An K werden `models/zensus_hgb.joblib`, Metadaten mit fester Feature-Reihenfolge, regionale Profile, GREIX-Zeitreihen und die gemessenen Qualitätskennzahlen übergeben. Das Testset bleibt nach dieser Entscheidung unverändert."""
             ),
         ],
     )
@@ -496,6 +752,22 @@ plt.tight_layout(); plt.show()"""
         "06 · K – Wissensextraktion",
         "Vom Modelloutput zum nachvollziehbaren Umzugsaufschlag und Budgetsignal.",
         [
+            markdown(
+                """## Position der K-Phase
+
+Knowledge Transfer bedeutet mehr als Deployment: Technische Ergebnisse werden so dokumentiert, visualisiert und in eine Anwendung übersetzt, dass die Zielgruppen aus Q damit eine echte Entscheidung vorbereiten können. MietCheck überführt das trainierte Modell deshalb nicht als isolierte Prognose, sondern als nachvollziehbare Vergleichsreise.
+
+| Übergabeartefakt | Funktion in der App |
+|---|---|
+| `zensus_hgb.joblib` + Metadaten | reproduzierbarer Bestandsanker |
+| regionale Zensus-Profile | schnelle Laufzeit ohne Rohdaten-Download |
+| GREIX-Quartalswerte | aktueller Angebotsmarkt und Markt-IQR |
+| Conformal-Halbbreiten | sichtbares Modellband |
+| Daten-/Modellkarte | Quellen, Zweck, Risiken und Grenzen |
+| getestete App-Logik | Umzugsaufschlag und Mietbelastung |
+
+Die produktive App speichert keine persönlichen Eingaben und benötigt zur Laufzeit kein Training."""
+            ),
             markdown(
                 """## Drei Mietrealitäten
 
@@ -584,12 +856,40 @@ plt.tight_layout(); plt.show()"""
 
 **Kein Mietspiegel, keine Rechtsberatung, keine individuelle Angebotsprognose.**"""
             ),
+            markdown(
+                """## Nutzerführung in der Streamlit-App
+
+1. Region, Wohnfläche und Baujahr wählen.
+2. Optional aktuelle Nettokaltmiete und Haushaltsnettoeinkommen eingeben.
+3. Drei Werte getrennt lesen: persönliche Miete, Bestandsanker, Angebotsmedian.
+4. Umzugsaufschlag und persönliche Mehrbelastung interpretieren.
+5. Marktverlauf, IQR, Modellband, Coverage und Quellen prüfen.
+
+Die App zeigt damit nicht nur **was** das Modell schätzt, sondern auch **wann**, **für welchen Raum**, **mit welcher Unsicherheit** und **wofür die Zahl nicht verwendet werden darf**."""
+            ),
+            markdown(
+                """## Portfolio- und Deployment-Nachweis
+
+- responsive Streamlit-App unter der reservierten URL `mietcheck.streamlit.app`,
+- öffentlich nachvollziehbares GitHub-Repository mit Installations- und Reproduktionsanleitung,
+- automatisierte Tests und GitHub Actions,
+- sieben vollständig ausgeführte QUA³CK-Notebooks,
+- Datenkarte, Modellkarte, Risiko-/Ethikdokument und Demo-Runbook,
+- Präsentation und schriftliche Ausarbeitung.
+
+Die App bleibt bis zur gemeinsamen Abnahme privat. Erst danach wird ihre öffentliche Sichtbarkeit freigegeben."""
+            ),
+            markdown(
+                """## Schlussfolgerung
+
+Der fachliche Mehrwert liegt nicht in maximaler Scheingenauigkeit, sondern in einer überprüfbaren Entscheidungshilfe: **Bestand, Angebot und persönliche Belastung bleiben drei sauber getrennte Realitäten.** Das ML-Modell liefert den kleinräumigen Bestandsanker; aktuelle Marktdaten und persönliche Eingaben werden methodisch getrennt ergänzt. Genau diese Übersetzung von Big Data zu einer verständlichen Nutzerentscheidung schließt den QUA³CK-Prozess."""
+            ),
         ],
     )
 
     return {
         "00_gesamtueberblick_qua3ck.ipynb": overview,
-        "01_qualitaetspruefung.ipynb": quality,
+        "01_question.ipynb": question,
         "02_understanding_the_data.ipynb": understanding,
         "03_algorithmenauswahl.ipynb": algorithms,
         "04_modellentwicklung.ipynb": development,

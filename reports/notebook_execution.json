@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "executed_at_utc": "2026-07-16T20:34:34+00:00",
+  "executed_at_utc": "2026-07-17T09:42:37+00:00",
   "kernel": "mietcheck",
   "working_directory": ".",
   "all_passed": true,
@@ -8,49 +8,49 @@
     {
       "notebook": "00_gesamtueberblick_qua3ck.ipynb",
       "status": "passed",
-      "seconds": 9.73250890000054,
+      "seconds": 6.268153100000745,
       "code_cells": 4,
       "executed_code_cells": 4
     },
     {
-      "notebook": "01_qualitaetspruefung.ipynb",
+      "notebook": "01_question.ipynb",
       "status": "passed",
-      "seconds": 7.845977500001027,
+      "seconds": 3.4235515000000305,
       "code_cells": 4,
       "executed_code_cells": 4
     },
     {
       "notebook": "02_understanding_the_data.ipynb",
       "status": "passed",
-      "seconds": 12.804127600000356,
-      "code_cells": 5,
-      "executed_code_cells": 5
+      "seconds": 7.381686199999422,
+      "code_cells": 8,
+      "executed_code_cells": 8
     },
     {
       "notebook": "03_algorithmenauswahl.ipynb",
       "status": "passed",
-      "seconds": 7.605558299997938,
+      "seconds": 3.835087100000237,
       "code_cells": 4,
       "executed_code_cells": 4
     },
     {
       "notebook": "04_modellentwicklung.ipynb",
       "status": "passed",
-      "seconds": 7.7676637999975355,
+      "seconds": 4.009908799999721,
       "code_cells": 5,
       "executed_code_cells": 5
     },
     {
       "notebook": "05_kreuzvalidierung.ipynb",
       "status": "passed",
-      "seconds": 8.474518399998487,
-      "code_cells": 5,
-      "executed_code_cells": 5
+      "seconds": 4.5287914000000455,
+      "code_cells": 6,
+      "executed_code_cells": 6
     },
     {
       "notebook": "06_wissensextraktion.ipynb",
       "status": "passed",
-      "seconds": 8.500334399999701,
+      "seconds": 4.274392700000135,
       "code_cells": 6,
       "executed_code_cells": 6
     }

@@ -12,8 +12,8 @@ Statuswerte: `OFFEN`, `IN ARBEIT`, `ERFÜLLT`, `BLOCKIERT`.
 | Daten | aktuelle Marktreferenz | GREIX bis Q1/2026, 37 lokale Märkte | ERFÜLLT |
 | Daten | reproduzierbarer Download | `scripts/download_data.py`, SHA-256-Manifest | ERFÜLLT |
 | Daten | Lizenz, Quelle und Datenstand | `DATA_CARD.md`, Manifeste, README und App-Quellenansicht | ERFÜLLT |
-| Methodik | vollständige QUA³CK-Struktur | sieben automatisiert ausgeführte Notebooks; Laufbericht 33/33 Zellen ohne Fehler | ERFÜLLT |
-| Methodik | EDA und Datenqualitätsprüfung | Q- und U-Notebook mit realem 2,06-Mio.-Datensatz | ERFÜLLT |
+| Methodik | vollständige QUA³CK-Struktur | sieben automatisiert ausgeführte Notebooks; Laufbericht 37/37 Zellen ohne Fehler | ERFÜLLT |
+| Methodik | EDA und Datenqualitätsprüfung | U-Notebook mit Quellenprüfung, Qualitätsgates und realem 2,06-Mio.-Datensatz | ERFÜLLT |
 | Methodik | mehrere Modelle und Baselines | fünf Modellfamilien auf identischer 3-Fold-Spatial-CV | ERFÜLLT |
 | Methodik | Feature-Anpassung und Hyperparameteroptimierung | 8-Kandidaten-Tuning, 4-stufige Ablation, ausgeführtes A³-Notebook | ERFÜLLT |
 | Methodik | räumlich robuste, leckagefreie Evaluation | 276.458 Testzeilen aus 99 gesperrten 25-km-Gruppen | ERFÜLLT |

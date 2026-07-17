@@ -156,7 +156,7 @@ Diese Abgrenzung schützt wissenschaftliche Klarheit, Datenlizenz, Wartbarkeit u
 - öffentliches GitHub-Repository
 - öffentliches Streamlit-Deployment
 - reproduzierbare Daten- und Trainingspipeline
-- sieben QUA3CK-Notebooks plus Gesamtüberblick
+- sieben QUA³CK-Notebooks einschließlich Gesamtüberblick
 - Datenblatt und Modellkarte
 - Test- und Evaluationsbericht
 - Präsentation für 10-15 Minuten
