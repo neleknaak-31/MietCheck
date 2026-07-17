@@ -889,7 +889,7 @@ Die App zeigt damit nicht nur **was** das Modell schätzt, sondern auch **wann**
 
 - responsive Streamlit-App unter der reservierten URL `mietcheck.streamlit.app`,
 - öffentlich nachvollziehbares GitHub-Repository mit Installations- und Reproduktionsanleitung,
-- 33 automatisierte Tests, ML-Release-Gates und GitHub Actions,
+- 34 automatisierte Tests, ML-Release-Gates und GitHub Actions,
 - drei MLflow-Runs, Model Registry Version 1 mit Alias `@champion`,
 - SHA-256-Modelllineage und reproduzierbarer Docker-Container,
 - sieben vollständig ausgeführte QUA³CK-Notebooks,

@@ -9,12 +9,12 @@
       "sha256": "64b2bef5df9dfe55b160b55f1815d914e8be8c0b4dab378d629e71cd40e34368"
     },
     "zensus_hgb_meta.json": {
-      "bytes": 1957,
-      "sha256": "0ab2ceb91bd915bb008159905fff4a565d7f8b482999b6c6d3ed35ed723539a8"
+      "bytes": 1894,
+      "sha256": "f1809b4d0d06e7159a7a63d48c52ea50caf23bf7bda5217600f7280e952a34d4"
     },
     "../reports/final_model_evaluation.json": {
-      "bytes": 7787,
-      "sha256": "4f9229eb09bf824f62672bf9b93e92ddd87685ce8fdb581251c0333c9350e751"
+      "bytes": 7536,
+      "sha256": "b5e4c56c0dcc40bd34594a1baeb3d792913b087af5653d6983a6b7d9e31c2800"
     }
   },
   "quality_gates": {
@@ -24,4 +24,3 @@
     "maximum_loaded_scenario_latency_seconds": 2.0
   }
 }
-

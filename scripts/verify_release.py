@@ -18,12 +18,22 @@ if str(PROJECT_ROOT) not in sys.path:
 from src.app_logic import evaluate_scenario  # noqa: E402
 
 
+def governed_artifact_bytes(path: Path) -> bytes:
+    """Return stable bytes for cross-platform governance checks.
+
+    Git can materialize text files with CRLF on Windows and LF on Linux.
+    JSON artifacts are normalized to UTF-8/LF before hashing, while binary
+    model artifacts remain byte-exact.
+    """
+    payload = path.read_bytes()
+    if path.suffix.lower() == ".json":
+        text = payload.decode("utf-8")
+        return text.replace("\r\n", "\n").replace("\r", "\n").encode("utf-8")
+    return payload
+
+
 def sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
+    return hashlib.sha256(governed_artifact_bytes(path)).hexdigest()
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -42,9 +52,10 @@ def verify_release(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
         path = (root / "models" / relative).resolve()
         if not path.exists():
             raise AssertionError(f"Missing governed artifact: {path}")
-        if path.stat().st_size != expected["bytes"]:
+        stable_bytes = governed_artifact_bytes(path)
+        if len(stable_bytes) != expected["bytes"]:
             raise AssertionError(f"Artifact size drift: {path}")
-        if sha256(path) != expected["sha256"]:
+        if hashlib.sha256(stable_bytes).hexdigest() != expected["sha256"]:
             raise AssertionError(f"Artifact hash drift: {path}")
 
     gates = manifest["quality_gates"]

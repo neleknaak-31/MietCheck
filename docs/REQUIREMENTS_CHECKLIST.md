@@ -22,7 +22,7 @@ Statuswerte: `OFFEN`, `IN ARBEIT`, `ERFÜLLT`, `BLOCKIERT`.
 | Produkt | belegbares Alleinstellungsmerkmal | Konkurrenzanalyse, finaler Hook und Drei-Realitäten-Nutzerreise | ERFÜLLT |
 | Produkt | professionelle Streamlit-App | Desktop- und Mobil-Screenshots, AppTest und echter Browser-Smoke-Test ohne Fehler | ERFÜLLT |
 | Produkt | verständliche Erklärbarkeit | getrennte Messkonzepte, Bandbreiten, Modellvergleich, Permutationsbeiträge und Grenzen in der App | ERFÜLLT |
-| Qualität | automatisierte Tests | 33 lokale Tests, ML-Release-Gates, Ruff und GitHub Actions | ERFÜLLT |
+| Qualität | automatisierte Tests | 34 lokale Tests, ML-Release-Gates, Ruff und GitHub Actions | ERFÜLLT |
 | MLOps | Experiment-Tracking und Model Registry | drei MLflow-Runs, Modell-Signatur, Registry-Version 1 und Alias `@champion` | ERFÜLLT |
 | MLOps | Modell-Lineage und reproduzierbarer Container | SHA-256-Modellmanifest, Release-Prüfung, Docker-Build und Health-Smoke-Test | ERFÜLLT |
 | Qualität | Datenschutz, Bias, Grenzen und Sicherheit | `RISK_AND_ETHICS.md`, Datenblatt, Modellkarte und sichtbare App-Hinweise | ERFÜLLT |
