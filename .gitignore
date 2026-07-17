@@ -30,6 +30,9 @@ data/processed/*
 # Local reports and experiment stores
 mlruns/
 artifacts/
+mlartifacts/
+mlflow.db
+
 
 # Editors and operating systems
 .DS_Store

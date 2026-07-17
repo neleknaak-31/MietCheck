@@ -59,6 +59,9 @@ SHA-256-Prüfsumme.
 Details stehen in [DATA_CARD.md](docs/DATA_CARD.md) und
 [MODEL_CARD.md](docs/MODEL_CARD.md).
 
+Der vollständige Abgleich mit dem QUA³CK-/MLOps-Schema des Kurses steht in der
+[QUA³CK- und MLOps-Nachweismatrix](docs/QUA3CK_MLOPS_COMPLIANCE.md).
+
 ## Methodik und belastbare Ergebnisse
 
 Die Analyse folgt QUA³CK. Räumliche 25-km-Gruppen verhindern, dass benachbarte
@@ -112,6 +115,7 @@ python scripts/build_greix.py
 python scripts/build_region_profiles.py
 python scripts/generate_notebooks.py
 python scripts/execute_notebooks.py
+python scripts/publish_mlflow.py
 ```
 
 Der vollständige Lauf verarbeitet mehrere Millionen Zeilen und benötigt je nach
@@ -131,6 +135,48 @@ python -m pytest
 Die Tests prüfen unter anderem Datenverträge, Download-Metadaten, räumliche Splits,
 Modell- und GREIX-Pipelines, Notebook-Ausführung, App-Logik und einen
 Streamlit-Render-Smoke-Test. GitHub Actions führt dieselben Qualitätsgates aus.
+
+Zusätzliche Release-Gates prüfen Modellhash, Metadatenkonsistenz, den
+Baseline-Vorteil, die Intervallabdeckung, alle dokumentierten
+Zuverlässigkeitssegmente und die Laufzeit der geladenen Szenarioberechnung:
+
+```bash
+python scripts/verify_release.py
+```
+
+## MLflow und Model Registry
+
+MLflow ist bewusst von der schlanken Streamlit-Laufzeit getrennt. Die
+rechenintensiven Skripte schreiben zuerst versionierbare JSON-Berichte. Anschließend
+publiziert ein eigener Schritt die A¹-, A³- und C/K-Ergebnisse einschließlich
+Parameter, Metriken, Governance-Dokumente, Modell-Signatur und finalem Modell:
+
+```bash
+python -m pip install -r requirements-mlops.txt
+python scripts/publish_mlflow.py
+python -m mlflow ui --backend-store-uri sqlite:///mlflow.db --port 5000
+```
+
+Ohne Konfiguration wird eine lokale SQLite-Datenbank verwendet. Für einen
+Tracking-Server kann `MLFLOW_TRACKING_URI` gesetzt oder `--tracking-uri` übergeben
+werden. Das finale Modell wird als `MietCheck-Zensus-Stock-Rent` registriert und
+erhält den Alias `@champion`. `reports/mlflow_publish.json` dokumentiert die
+zugehörigen Run- und Modellversions-IDs.
+
+## Docker
+
+Die App und ein lokaler MLflow-Server lassen sich reproduzierbar als Container
+starten:
+
+```bash
+docker compose up --build
+```
+
+- Streamlit: `http://localhost:8501`
+- MLflow: `http://localhost:5000`
+
+Der App-Container enthält ausschließlich die deploybaren Datenprodukte und
+Berichte. Rohdaten und Trainingsmatrix werden nicht in das Image kopiert.
 
 ## QUA³CK-Notebooks
 

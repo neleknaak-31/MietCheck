@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "published_at_utc": "2026-07-17T11:14:41+00:00",
+  "tracking_uri": "sqlite:///mlflow.db",
+  "experiment": "MietCheck QUA3CK",
+  "runs": {
+    "algorithm_benchmark": "87855f4f02e44a10bda20d63f71285f4",
+    "hgb_tuning": "9a2a2894ca654aa89a415bfc617f3388",
+    "final_model": "77a69ebc54e245f3b0fc84dc4a0f5b0d"
+  },
+  "registry": {
+    "model_name": "MietCheck-Zensus-Stock-Rent",
+    "version": "1",
+    "alias": "champion",
+    "model_uri": "models:/MietCheck-Zensus-Stock-Rent@champion"
+  }
+}

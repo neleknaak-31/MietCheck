@@ -765,8 +765,25 @@ Knowledge Transfer bedeutet mehr als Deployment: Technische Ergebnisse werden so
 | Conformal-Halbbreiten | sichtbares Modellband |
 | Daten-/Modellkarte | Quellen, Zweck, Risiken und Grenzen |
 | getestete App-Logik | Umzugsaufschlag und Mietbelastung |
+| MLflow-Runs + Registry | Parameter, Metriken, Signatur und Champion-Version |
+| SHA-256-Modellmanifest | überprüfbare Train-/Serving-Lineage |
 
 Die produktive App speichert keine persönlichen Eingaben und benötigt zur Laufzeit kein Training."""
+            ),
+            markdown(
+                """## MLOps- und Governance-Nachweis
+
+Die drei rechenintensiven Entscheidungsschritte werden zusätzlich zu den versionierten JSON-Berichten in MLflow dokumentiert:
+
+| MLflow-Run | QUA³CK-Bezug | Inhalt |
+|---|---|---|
+| Algorithmusvergleich | A¹ | fünf Modellfamilien, Spatial CV und Vergleichsmetriken |
+| HGB-Tuning | A³ | acht Kandidaten, Parameter und gesperrte Datenpartitionen |
+| finales Modell | C/K | Testmetriken, Intervall-Coverage, Governance-Dokumente und Modellartefakt |
+
+Das finale Modell ist als `MietCheck-Zensus-Stock-Rent` Version 1 mit dem Alias `@champion` registriert. `models/model_manifest.json` sichert Joblib-Modell, Metadaten und Evaluation per SHA-256. GitHub Actions prüft Code, Datenverträge, Modell- und Segment-Gates sowie den Docker-Build.
+
+**Serving-Entscheidung:** Das als Registry-Version dokumentierte Modellartefakt erzeugt in einem reproduzierbaren Batch-Schritt 37 regionale Profile. Streamlit kombiniert diese geprüften ML-Ausgaben interaktiv mit GREIX und persönlichen Eingaben. Dadurch benötigt die öffentliche App weder Trainingsmatrix noch laufenden MLflow-Server."""
             ),
             markdown(
                 """## Drei Mietrealitäten
@@ -872,7 +889,9 @@ Die App zeigt damit nicht nur **was** das Modell schätzt, sondern auch **wann**
 
 - responsive Streamlit-App unter der reservierten URL `mietcheck.streamlit.app`,
 - öffentlich nachvollziehbares GitHub-Repository mit Installations- und Reproduktionsanleitung,
-- automatisierte Tests und GitHub Actions,
+- 34 automatisierte Tests, ML-Release-Gates und GitHub Actions,
+- drei MLflow-Runs, Model Registry Version 1 mit Alias `@champion`,
+- SHA-256-Modelllineage und reproduzierbarer Docker-Container,
 - sieben vollständig ausgeführte QUA³CK-Notebooks,
 - Datenkarte, Modellkarte, Risiko-/Ethikdokument und Demo-Runbook,
 - Präsentation und schriftliche Ausarbeitung.
