@@ -12,5 +12,13 @@ Ergänzende Vorbereitung:
 - `docs/PRESENTATION_SCRIPT.md`: auf rund zwölf Minuten getaktetes Sprechskript
 - `docs/DEMO_RUNBOOK.md`: 90-Sekunden-Live-Demo, Sprachleitplanken und Offline-Fallback
 
-Vor der offiziellen Abgabe sind nur noch die veranstaltungsspezifischen Angaben zu
-ergänzen: Matrikelnummer, Name der prüfenden Person und konkreter Abgabetermin.
+## Platzhalter vor der offiziellen Abgabe
+
+Die drei Angaben sind bewusst als `[EINTRAGEN]` beziehungsweise `[TT.MM.JJJJ]`
+markiert:
+
+- **Präsentation:** Folie 1, links unten unter dem Untertitel.
+- **Handout:** Seite 1, unter dem Abschnitt „Positionierung“.
+
+Zu ersetzen sind Matrikelnummer, Name der prüfenden Person und Abgabetermin. Danach
+die PDFs erneut aus der jeweiligen PPTX- beziehungsweise DOCX-Datei exportieren.
