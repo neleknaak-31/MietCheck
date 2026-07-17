@@ -1,8 +1,8 @@
 # MietCheck - verbindliche Produktspezifikation
 
-Version: 0.1
+Version: 1.0
 
-Stand: 16. Juli 2026
+Stand: 17. Juli 2026
 
 ## Produktversprechen
 
@@ -33,19 +33,16 @@ Wie groß ist die Lücke zwischen kleinräumiger Bestandsmiete und aktueller Ang
 - Studierende und Berufseinsteiger mit begrenztem Budget
 - dateninteressierte Personen, die regionale Mietunterschiede nachvollziehen möchten
 
-## Abdeckungsstufen
+## Abdeckung
 
-### Stufe A - aktuelle lokale Marktreferenz
+Die veröffentlichte App zeigt die 37 Städte und Kreise, für die GREIX eine lokale
+Angebotsmiete bis Q1/2026 bereitstellt. Der lokale Bestandsanker entsteht aus einem
+ML-Profil des Zensusumfelds um das jeweilige Regionszentrum. Damit ist jede
+Bestands-/Angebotsdifferenz durch beide Datenquellen belegt.
 
-Für die von GREIX veröffentlichten Städte und Regionen werden lokale Angebotsmieten bis zum jeweils jüngsten Datenstand genutzt. Die App zeigt Mittelwert, Median sowie 25.- und 75.-Perzentil.
-
-### Stufe B - deutschlandweite Bestandsreferenz
-
-Für Deutschland wird eine kleinräumige Bestandsmietenschätzung aus offenen Zensusdaten angeboten. Sie ist keine aktuelle Angebotsmiete und kein amtlicher Mietspiegel.
-
-### Stufe C - nationale Zeitkorrektur
-
-Außerhalb der lokalen GREIX-Abdeckung darf eine bundesweite Indexkorrektur angezeigt werden. Sie wird ausdrücklich als grobe Orientierung mit geringerer regionaler Aussagekraft gekennzeichnet und nicht als lokale Marktprognose bezeichnet.
+Außerhalb dieser 37 Märkte wird bewusst keine lokale aktuelle Angebotsmiete
+behauptet. Die nationale GREIX-Referenz bleibt in der Datenpipeline für Analysen
+erhalten, wird aber nicht als Ersatz für fehlende lokale Daten ausgegeben.
 
 ## Kernfunktionen der Streamlit-App
 
@@ -59,23 +56,24 @@ Außerhalb der lokalen GREIX-Abdeckung darf eine bundesweite Indexkorrektur ange
 - persönliche Mietbelastung und erforderliches Einkommen darstellen
 - Datenstand, Abdeckung und Quellen direkt am Ergebnis anzeigen
 
-### 2. Marktvergleich
+### 2. Marktverlauf
 
 - regionale Bestandsmieten vergleichen
 - GREIX-Zeitreihe ab 2012 darstellen
 - Bestands-/Angebotslücke für verfügbare Regionen zeigen
-- Filter nach Gebäudealter und Wohnungsgröße
+- die in der Sidebar gewählte Gebäudealter-/Wohnungsgrößenklasse übernehmen
+- Rangliste der größten relativen Abstände zeigen
 
-### 3. Leistbarkeit
+### 3. Leistbarkeit im persönlichen Mietbild
 
 - heutige und potenzielle Mietbelastung vergleichen
 - Szenarien für Einkommen, Wohnfläche und Region berechnen
 - Faustregeln klar als Faustregeln und nicht als Rechts- oder Finanzberatung kennzeichnen
 
-### 4. Modell und Daten
+### 4. Methodik und Quellen
 
 - Modellvergleich und räumliche Validierung
-- erklärbare Featurebeiträge
+- Modellvergleich und Permutationsbeiträge auf separaten Kalibrierungsdaten
 - Unsicherheit und Datenqualitätskennzeichen
 - Datenblatt, Modellkarte, Lizenzen und bekannte Grenzen
 
@@ -83,15 +81,18 @@ Außerhalb der lokalen GREIX-Abdeckung darf eine bundesweite Indexkorrektur ange
 
 Zielgröße ist die durchschnittliche Nettokaltmiete pro Quadratmeter einer Kombination aus 100-m-Gitterzelle, Gebäudealterklasse und Wohnungsgrößenklasse im Zensus 2022.
 
-Geplante Modellgruppen:
+Verglichene Modellgruppen:
 
 - robuste Median-Baselines
 - lineares beziehungsweise regularisiertes Regressionsmodell
 - baumbasiertes Ensemble
 - Histogram Gradient Boosting
-- neuronale Regression als dokumentierter Zusatzvergleich, sofern Laufzeit und Güte dies rechtfertigen
+- neuronale Regression (MLP)
 
 Der Modellvergleich erfolgt nicht nur zufällig, sondern primär über räumlich getrennte Gruppen. Hyperparameter werden ausschließlich innerhalb der Trainingsdaten ausgewählt.
+
+Final gewählt wurde Histogram Gradient Boosting. Der finale räumliche Test umfasst
+276.458 Zeilen aus 99 zuvor gesperrten 25-km-Gruppen.
 
 ## Features
 
@@ -120,7 +121,8 @@ Sensible Merkmale wie Religion oder Staatsangehörigkeit werden nicht verwendet.
 ### Modell
 
 - mindestens 15 % niedrigerer MAE als die definierte Median-Baseline im räumlichen Holdout; falls nicht erreicht, wird das Produktkonzept fachlich neu bewertet
-- MAE, RMSE, R² und Median Absolute Error für zufällige und räumliche Splits
+- MAE, RMSE, R² und Median Absolute Error auf räumlich getrennten Entwicklungs-
+  und Testgebieten
 - getrennte Güteauswertung für amtlich unsichere Zielwerte
 - Unsicherheitsintervall mit dokumentierter empirischer Coverage
 - keine Testdatenverwendung bei Modellauswahl oder Featureentscheidung

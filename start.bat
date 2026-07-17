@@ -1,29 +1,16 @@
 @echo off
-REM ============================================================
-REM  MietCheck starten (Windows) - einfach doppelklicken
-REM ============================================================
+setlocal
 cd /d "%~dp0"
 title MietCheck
 
-where python >nul 2>nul
-if errorlevel 1 (
-  echo.
-  echo   [!] Python wurde nicht gefunden.
-  echo   Bitte Python 3.9+ von https://www.python.org/downloads/ installieren
-  echo   und beim Setup den Haken "Add Python to PATH" setzen.
-  echo.
-  pause
-  exit /b
+if not exist ".venv\Scripts\python.exe" (
+  echo [MietCheck] Erzeuge lokale Python-Umgebung ...
+  python -m venv .venv || exit /b 1
 )
 
-echo.
-echo   Installiere benoetigte Pakete (nur beim ersten Mal, dauert 1-2 Min.) ...
-python -m pip install -r requirements.txt
+echo [MietCheck] Installiere oder aktualisiere Abhaengigkeiten ...
+".venv\Scripts\python.exe" -m pip install -r requirements.txt || exit /b 1
 
-echo.
-echo   Starte MietCheck ... es oeffnet sich der Browser.
-echo   Zum Beenden dieses Fenster schliessen oder Strg+C druecken.
-echo.
-python -m streamlit run app.py
-
-pause
+echo [MietCheck] Starte Streamlit unter http://localhost:8501
+".venv\Scripts\python.exe" -m streamlit run app.py
+endlocal

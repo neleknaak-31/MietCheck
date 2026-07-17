@@ -1,138 +1,175 @@
-# 🏠 MietCheck – Zahle ich zu viel Miete?
+# MietCheck – drei Mietrealitäten statt einer Scheingenauigkeit
 
-Ein Data-Science-Prototyp für das Modul **Data Analytics & Big Data** (IU, 4. Semester),
-umgesetzt entlang des **QUA³CK-Prozessmodells**.
+MietCheck ist eine Machine-Learning-App für das Modul **Data Analytics & Big Data**.
+Sie stellt drei Werte bewusst getrennt nebeneinander:
 
-> **USP für Alltagsuser:** Jeder wohnt zur Miete oder sucht eine Wohnung. MietCheck
-> beantwortet in Sekunden die eine Frage, die alle stellen: *„Ist diese Miete fair?"* –
-> mit einem datenbasierten Richtwert aus **über 200.000 echten Wohnungsangeboten** und
-> einem klaren Urteil: **Schnäppchen · Fair · Zu teuer.**
+1. den kleinräumig modellierten **Bestandsanker aus dem Zensus 2022**,
+2. den **aktuellen Angebotsmarkt aus GREIX** (derzeit Q1/2026),
+3. die **persönliche Vertragsmiete und Mietbelastung**.
 
----
+Der zentrale Produktnutzen ist der **Umzugsaufschlag**: Wie groß ist die Lücke zwischen
+dem lokalen Wohnungsbestand und dem Preis, der bei einer heutigen Wohnungssuche
+tatsächlich aufgerufen wird? Zeitbezug, Marktstreuung und Modellunsicherheit werden
+direkt am Ergebnis gezeigt.
 
-## 🎯 Die Idee in einem Satz
+![MietCheck-App](reports/streamlit_overview.png)
 
-Nutzer geben ein paar einfache Eckdaten ein (Ort, Größe, Zimmer, Baujahr, Ausstattung),
-MietCheck schätzt die **faire Kaltmiete** und vergleicht sie mit dem tatsächlichen Angebot.
-**Bewusst wenige Eingaben, ein klares Ergebnis** – damit niemand den Überblick verliert.
+> MietCheck ist ein wissenschaftlicher Prototyp, kein amtlicher Mietspiegel, keine
+> Einzelwohnungsbewertung und keine Rechts- oder Finanzberatung.
 
----
+## Warum das Projekt eigenständig ist
 
-## 📊 Datenbasis
+Viele Mietrechner geben eine einzelne vermeintlich „faire“ Miete aus. MietCheck
+vermischt dagegen nicht:
 
-| | |
-|---|---|
-| Mietpreise (Training) | *Apartment rental offers in Germany* (Immoscout24), Kaggle |
-| Umfang roh | 268.850 Angebote × 49 Merkmale |
-| Nach Qualitätsprüfung | **202.908 Angebote** (24,5 % Ausreißer/Fehler entfernt) |
-| Zielgröße | Kaltmiete (`baseRent`) in € |
-| Städteverzeichnis | **OpenPLZ API** (offen, live) – **10.786 Städte/Gemeinden**, ganz Deutschland |
-| Zuordnung | jede Stadt → Landkreis (= `regio2`, 87 % direkt getroffen) |
+- **Bestand:** amtliche, kleinräumige Zensus-Mieten zum Stichtag 15.05.2022,
+- **Angebot:** aktuelle GREIX-Angebotsmieten mit 25.–75. Perzentil,
+- **Person:** tatsächliche Miete, Wohnfläche und Haushaltsnettoeinkommen.
 
----
+Damit beantwortet die App nicht nur „Was kostet Wohnen?“, sondern die praktischere
+Frage: **„Was würde ein Umzug für mich verändern – und wie belastbar ist der
+Vergleich?“**
 
-## 🔄 Umsetzung entlang QUA³CK
+## Datenbasis
 
-| Phase | Was passiert | Datei |
-|-------|--------------|-------|
-| **Q** – Qualitätsprüfung | Unplausible Werte & Ausreißer entfernen (z. B. 5 €/m² oder 9,9 Mio. € Miete), Plausibilitätsgrenzen | `src/data_prep.py` |
-| **U** – Understanding the Data | EDA: Verteilungen, Preis/m² je Bundesland, Korrelationen, Fläche↔Miete | `src/data_prep.py`, `notebooks/02_understanding_the_data.ipynb` |
-| **A** – Algorithmenauswahl | Vergleich: Lineare Regression · Random Forest · Gradient Boosting | `src/train.py` |
-| **Modellentwicklung** | sklearn-Pipeline: Imputation → Scaling → One-Hot-Encoding → Modell | `src/train.py` |
-| **C** – Kreuzvalidierung | 5-fache CV, faire Modellauswahl | `src/train.py` |
-| **K** – Wissensextraktion | Merkmalswichtigkeit + **App als Deployment** | `app.py`, `reports/` |
+| Quelle | Verwendung | Umfang in MietCheck | Stand |
+|---|---|---:|---|
+| [Zensus 2022 – Gitterdaten](https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Bevoelkerung/Zensus2022/_publikationen.html) | Zielvariable Nettokaltmiete sowie Bevölkerung, Haushaltsgröße, Eigentum, Leerstand, Wohnfläche und Wohnungszahl | 2.058.569 Modellzeilen, 1.184.386 eindeutige 100-m-Gitterzellen | 15.05.2022 |
+| [GREIX Mietpreisindex](https://www.kielinstitut.de/de/institut/forschungszentren/makrooekonomie/makrofinanzen/mietpreisindex/) | nominale Angebotsmieten, Marktquartile und Zeitreihe | 2.166 Quartalswerte, 37 lokale Märkte plus Deutschlandreferenz | 2012-Q1 bis 2026-Q1 |
 
----
+Die Zensusdaten stehen unter der **Datenlizenz Deutschland –
+Namensnennung – Version 2.0**. GREIX wird unter Angabe des Kiel Instituts für
+Weltwirtschaft und der VALUE Marktdatenbank verwendet. Rohdaten werden nicht in Git
+versioniert; der Download erzeugt ein Manifest mit URL, Abrufzeitpunkt, Dateigröße und
+SHA-256-Prüfsumme.
 
-## 🏆 Ergebnisse
+Details stehen in [DATA_CARD.md](docs/DATA_CARD.md) und
+[MODEL_CARD.md](docs/MODEL_CARD.md).
 
-Bestes Modell: **Gradient Boosting** (Auswahl per 5-facher Kreuzvalidierung)
+## Methodik und belastbare Ergebnisse
 
-| Modell | CV-MAE |
-|--------|--------|
-| Lineare Regression | 120,5 € |
-| Random Forest | 102,7 € |
-| **Gradient Boosting** | **90,2 €** |
+Die Analyse folgt QUA³CK. Räumliche 25-km-Gruppen verhindern, dass benachbarte
+Gitterzellen gleichzeitig in Training und Validierung landen.
 
-**Auf dem Testset (40.582 Wohnungen):**
-- Mittlerer absoluter Fehler (MAE): **± 89,7 €**
-- Bestimmtheitsmaß **R² = 0,898**
-- Mittlerer prozentualer Fehler (MAPE): **13,7 %**
+| Prüfung | Ergebnis |
+|---|---:|
+| verglichene Modellfamilien | Kategorie-Baseline, Ridge, MLP, Random Forest, HistGradientBoosting |
+| finales Modell | HistGradientBoostingRegressor |
+| räumlich getrenntes Testset | 276.458 Zeilen in 99 bislang ungesehenen Raumgruppen |
+| Test-MAE | **1,413 €/m²** |
+| Test-Median-AE | **0,956 €/m²** |
+| Test-RMSE | **2,130 €/m²** |
+| Test-R² | **0,584** |
+| Verbesserung gegenüber Kategorie-Baseline | **38,3 % MAE** |
+| empirische Coverage des nominalen 90-%-Intervalls | **86,8 %** |
 
-Wichtigste Preistreiber (Permutations-Wichtigkeit): **Wohnfläche → Stadt → Bundesland.**
+Die Coverage wird absichtlich als gemessene **86,8 %** und nicht als garantierte
+90 % kommuniziert. Besonders für Neubauten ist die Schätzung schwächer. Diese
+Abweichung ist Teil der fachlichen Aussage und keine versteckte Einschränkung.
 
----
+## App lokal starten
 
-## 🚀 Loslegen
+Voraussetzung ist Python 3.11 bis 3.13.
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python -m streamlit run app.py
+```
+
+Unter macOS/Linux wird die Umgebung mit `source .venv/bin/activate` aktiviert.
+Die App benötigt zur Laufzeit keinen Download: kompakte Marktprofile, Zeitreihen
+und das trainierte Modellartefakt liegen im Repository.
+
+## Vollständig reproduzieren
+
+Die folgenden Befehle laden die öffentlichen Quellen neu und bauen Daten,
+Experimente, Modell, App-Profile und Notebooks nach:
 
 ```bash
-# 1. Abhängigkeiten installieren
-pip install -r requirements.txt
-
-# 2. (Nur einmal) Daten von Kaggle laden – braucht ~/.kaggle/kaggle.json
-kaggle datasets download -d corrieaar/apartment-rental-offers-in-germany --unzip -p data
-
-# 3. Datenphase + Training (erzeugt Modell, Grafiken, Metadaten)
-python3 src/data_prep.py
-python3 src/train.py
-
-# 4. App starten  👉  http://localhost:8501
-streamlit run app.py
+python scripts/download_data.py
+python scripts/build_dataset.py
+python scripts/algorithm_benchmark.py
+python scripts/feature_ablation.py
+python scripts/tune_hgb.py
+python scripts/train_final_model.py
+python scripts/build_greix.py
+python scripts/build_region_profiles.py
+python scripts/generate_notebooks.py
+python scripts/execute_notebooks.py
 ```
 
-Schnellstart als Skript: `./start.command` (macOS).
+Der vollständige Lauf verarbeitet mehrere Millionen Zeilen und benötigt je nach
+Rechner deutlich Zeit und Arbeitsspeicher. Experimentberichte werden als JSON unter
+`reports/` geschrieben; die ausgeführten Notebooks enthalten die zugehörigen
+Ergebnisse und Visualisierungen.
 
----
+## Qualität prüfen
 
-## 📁 Projektstruktur
-
-```
-MietCheck/
-├── app.py                  # Multipage-Controller: Theme + Bottom-Navigation
-├── views/                  # die 5 Seiten der App
-│   ├── check.py            #   🏠 Predictor + Warmmiete/Spanne/Wertbeitrag/Urteil
-│   ├── explorer.py         #   🗺️ Markt – Deutschland-Karte, Ranking, Zimmer-Analyse
-│   ├── budget.py           #   🧮 Leistbarkeits-Rechner
-│   ├── insights.py         #   📈 Modell & Qualität – Kennzahlen, QUA³CK
-│   ├── about.py            #   ℹ️ Über – Idee, Datenquellen, Grenzen
-│   └── common.py           #   Theme, Lader, KPI-Karten, Logo, Aggregate
-├── assets/                 # Logo (SVG: logo.svg + logo_mark.svg)
-├── .streamlit/config.toml  # helles Theme
-├── src/
-│   ├── config.py           # Pfade, Merkmale, Grenzwerte (Single Source of Truth)
-│   ├── data_prep.py        # QUA³CK Q + U : Qualitätsprüfung & EDA
-│   ├── train.py            # QUA³CK A + C : Modellvergleich & Kreuzvalidierung
-│   └── fetch_cities.py     # holt ALLE dt. Städte via OpenPLZ API → cities_de.json
-├── notebooks/              # ausführbare Analyse (für die Abgabe)
-│   ├── 00_gesamtueberblick_qua3ck.ipynb   # alle Phasen kompakt
-│   ├── 01_qualitaetspruefung.ipynb        # Q
-│   ├── 02_understanding_the_data.ipynb    # U
-│   ├── 03_algorithmenauswahl.ipynb        # A
-│   ├── 04_modellentwicklung.ipynb         # Modellentwicklung
-│   ├── 05_kreuzvalidierung.ipynb          # C
-│   └── 06_wissensextraktion.ipynb         # K
-├── data/                   # Rohdaten + bereinigter Datensatz
-├── models/                 # Trainiertes Modell + Metadaten
-├── reports/                # EDA-Grafiken, Kennzahlen
-└── requirements.txt
+```bash
+python -m pip install -r requirements-dev.txt
+python -m ruff check .
+python -m ruff format --check .
+python -m pytest
 ```
 
-### Die App (5 Seiten, Bottom-Navigation, eigenes Logo)
+Die Tests prüfen unter anderem Datenverträge, Download-Metadaten, räumliche Splits,
+Modell- und GREIX-Pipelines, Notebook-Ausführung, App-Logik und einen
+Streamlit-Render-Smoke-Test. GitHub Actions führt dieselben Qualitätsgates aus.
 
-| Seite | Inhalt |
+## QUA³CK-Notebooks
+
+| Phase | Notebook |
 |---|---|
-| 🏠 **Check** | faire Kaltmiete **+ Warmmiete + Preisspanne**, Regionsvergleich, **„Warum dieser Preis?"** (Wertbeitrag der Ausstattung), Tacho-Urteil, Einkommens-Empfehlung |
-| 🗺️ **Markt** | **Deutschland-Mietkarte** (Choropleth), günstigstes/teuerstes Land, teuerste Städte, Miete nach Zimmerzahl, Preisverteilung, **bundesweites Städte-Ranking (durchsuchbar)** |
-| 🧮 **Budget** | Leistbarkeits-Rechner: Einkommen → leistbare Warm-/Kaltmiete + Wohnfläche, Städtevergleich „was bekomme ich wo?" |
-| 📈 **Modell** | Genauigkeit, Modellvergleich (CV), Merkmalswichtigkeit, QUA³CK-Ablauf |
-| ℹ️ **Über** | Idee/USP, beide Datenquellen, Technik, Grenzen |
+| Gesamtüberblick | `00_gesamtueberblick_qua3ck.ipynb` |
+| Q – Qualitätsprüfung | `01_qualitaetspruefung.ipynb` |
+| U – Understanding the Data | `02_understanding_the_data.ipynb` |
+| A – Algorithmenauswahl | `03_algorithmenauswahl.ipynb` |
+| A³ – Anwendung, Anpassung, Auswertung | `04_modellentwicklung.ipynb` |
+| C – Kreuzvalidierung und finaler Test | `05_kreuzvalidierung.ipynb` |
+| K – Wissensextraktion | `06_wissensextraktion.ipynb` |
 
-Standortauswahl (alle 10.786 Städte) liegt global in der **Sidebar** und speist alle Seiten.
-**Helles, massentaugliches Design · alle Diagramme interaktiv (Plotly, mit Hover-Tooltips).**
+Alle sieben Notebooks wurden automatisiert ausgeführt; der Prüfbericht liegt in
+`reports/notebook_execution.json`.
 
----
+## Projektstruktur
 
-## ⚠️ Hinweis
+```text
+MietCheck/
+├── app.py                      # Streamlit-Produkt
+├── data/app/                   # kleine, deploybare Datenprodukte
+├── models/                     # finales ML-Modell + Metadaten
+├── notebooks/                  # ausgeführte QUA³CK-Analyse
+├── scripts/                    # Download, Build, Experimente, Training
+├── src/app_logic.py            # getestete App-Berechnungen
+├── tests/                      # automatisierte Qualitätsprüfungen
+├── docs/                       # Datenblatt, Modellkarte, Methodik
+├── reports/                    # maschinenlesbare Experimentergebnisse
+└── .github/workflows/ci.yml    # reproduzierbare CI
+```
 
-Die Schätzung ist ein datenbasierter **Richtwert** auf Basis historischer Angebote,
-keine Miet- oder Rechtsberatung und kein amtlicher Mietspiegel.
+## Grenzen und verantwortungsvolle Nutzung
+
+- Zensus 2022 beschreibt Bestandsmieten am Stichtag, GREIX aktuelle
+  Angebotsmieten; die Differenz ist ein **deskriptiver Marktvergleich**.
+- Die App arbeitet mit regionalen Profilen rund um 37 GREIX-Märkte, nicht mit einer
+  adressgenauen Schätzung für jede Wohnung Deutschlands.
+- Ausstattung, Mikrolage, Vertragsbeginn und rechtliche Besonderheiten sind nicht
+  vollständig beobachtet.
+- Das Unsicherheitsband beschreibt empirische Modellfehler, nicht die rechtlich
+  zulässige Miete.
+- Persönliche Eingaben werden nur in der laufenden Streamlit-Sitzung verarbeitet
+  und nicht gespeichert.
+
+## Quellenangabe
+
+Zensus: *Statistische Ämter des Bundes und der Länder, Zensus 2022; eigene
+Verarbeitung.*
+
+GREIX: *Kiel Institut für Weltwirtschaft auf Basis der VALUE Marktdatenbank; eigene
+Verarbeitung.*
+
+Der Quellcode steht unter der [MIT-Lizenz](LICENSE). Drittanbieterdaten behalten
+ihre jeweiligen Nutzungsbedingungen.

@@ -1,0 +1,1 @@
+"""MietCheck application package."""

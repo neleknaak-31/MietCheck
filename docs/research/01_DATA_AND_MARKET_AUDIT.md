@@ -104,9 +104,9 @@ Beispiele:
 
 `Nicht eindeutig` und `nicht offengelegt` bedeuten, dass die jeweilige Information auf den geprüften öffentlichen Produktseiten nicht belastbar dokumentiert war. Sie werden nicht als Beleg für das Fehlen einer internen Funktion interpretiert.
 
-## Vorläufiger USP
+## Finaler USP
 
-MietCheck soll die heute meist getrennten Perspektiven in einer transparenten Analyse verbinden:
+MietCheck verbindet die heute meist getrennten Perspektiven in einer transparenten Analyse:
 
 - amtliche kleinräumige Bestandsmiete,
 - aktuelle qualitätsbereinigte Angebotsmiete,
@@ -115,7 +115,12 @@ MietCheck soll die heute meist getrennten Perspektiven in einer transparenten An
 - sichtbare Unsicherheit, Datenalter und Quellen,
 - erklärbares Modell statt intransparenter Zahl.
 
-Der USP gilt erst als bestanden, wenn eine strukturierte Konkurrenzmatrix zeigt, dass kein geprüftes Konkurrenzprodukt dieselbe Kombination in einer frei zugänglichen, quellenoffenen Anwendung anbietet.
+Die strukturierte Konkurrenzmatrix zeigt für die geprüften öffentlichen
+Produktseiten kein Angebot, das dieselbe Kombination aus amtlichem Bestandsanker,
+aktuellem Angebotsmarkt, persönlicher Leistbarkeit, sichtbarer Unsicherheit und
+offener ML-Methodik bereitstellt. Der USP ist damit für den definierten
+Prüfungsumfang bestanden. Das ist keine Behauptung, dass weltweit niemals ein
+ähnliches Produkt existiert.
 
 ## Methodische Konsequenzen
 
@@ -127,10 +132,14 @@ Der USP gilt erst als bestanden, wenn eine strukturierte Konkurrenzmatrix zeigt,
 - Ein Vorhersageintervall darf nicht erneut als pauschales `plus/minus MAE` umgesetzt werden.
 - Jede Nutzeransicht nennt Datenstand, Regionsebene, Unsicherheit und Quelle.
 
-## Offene Gates
+## Gate-Ergebnisse
 
-1. Verfügbarkeit einer belastbaren Ortsauflösung für Nutzereingaben klären.
-2. Zusätzliche Zensus-Rastermerkmale auf Prognosegewinn testen.
-3. Abdeckung außerhalb der 37 GREIX-Regionen fachlich definieren.
-4. Konkurrenzmatrix vollständig und reproduzierbar dokumentieren.
-5. Endgültigen Produktnamen und öffentliche Zielgruppe festlegen.
+1. **Ortsauflösung:** 37 lokale GREIX-Märkte; Zensuskontext um das jeweilige
+   Regionszentrum, transparent als regionale Näherung bezeichnet.
+2. **Zusatzmerkmale:** Die Ablation bestätigt einen messbaren Gewinn durch
+   numerische Kontextmerkmale und Unsicherheitsflags.
+3. **Abdeckung:** Außerhalb der 37 lokalen Märkte wird keine lokale aktuelle
+   Angebotsmiete behauptet.
+4. **Konkurrenz:** Matrix und Einschränkungen sind oben dokumentiert.
+5. **Produkt:** Name MietCheck; Zielgruppe sind Mieterinnen, Mieter und
+   Wohnungssuchende, die den finanziellen Effekt eines Umzugs verstehen möchten.

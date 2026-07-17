@@ -1,9 +1,14 @@
-#!/bin/bash
-# MietCheck starten (Doppelklick auf macOS)
+#!/usr/bin/env bash
+set -euo pipefail
 cd "$(dirname "$0")"
-echo "🏠 Starte MietCheck …"
-if [ ! -f models/mietcheck_model.joblib ]; then
-  echo "→ Modell fehlt, führe Datenphase + Training aus …"
-  python3 src/data_prep.py && python3 src/train.py
+
+if [[ ! -x ".venv/bin/python" ]]; then
+  echo "[MietCheck] Erzeuge lokale Python-Umgebung ..."
+  python3 -m venv .venv
 fi
-streamlit run app.py
+
+echo "[MietCheck] Installiere oder aktualisiere Abhängigkeiten ..."
+".venv/bin/python" -m pip install -r requirements.txt
+
+echo "[MietCheck] Starte Streamlit unter http://localhost:8501"
+".venv/bin/python" -m streamlit run app.py

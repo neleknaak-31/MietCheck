@@ -1,7 +1,8 @@
 # Modellkarte: MietCheck Zensus-Bestandsmiete
 
-Stand: 16. Juli 2026  
-Modellversion: 1.0.0-rc1
+Stand: 17. Juli 2026
+
+Modellversion: 1.0.0
 
 ## Zweck
 
@@ -75,7 +76,7 @@ Halbbreiten in €/m²:
 - Bestands-, Angebots- und persönliche Miete werden visuell getrennt.
 - Datenstand und Quelle stehen direkt am Ergebnis.
 - Prognoseband und empirische Abdeckung sind sichtbar.
-- Für nicht abgedeckte oder schwach belegte Regionen wird eine niedrigere Vertrauensstufe angezeigt.
+- Die App ist auf die 37 Regionen mit lokaler GREIX-Marktreferenz beschränkt.
 - Negative oder unplausible Eingaben werden validiert.
 - Rechtliche Aussagen und Scheingenauigkeit werden vermieden.
 
