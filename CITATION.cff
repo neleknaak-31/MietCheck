@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "Wenn Sie MietCheck verwenden, zitieren Sie bitte dieses Repository."
+title: "MietCheck: Drei Mietrealitäten für transparente Umzugsentscheidungen"
+type: software
+authors:
+  - family-names: Knaak
+    given-names: Nele
+version: 1.0.0
+date-released: 2026-07-17
+url: "https://github.com/neleknaak-31/MietCheck"
+repository-code: "https://github.com/neleknaak-31/MietCheck"
+license: MIT
+keywords:
+  - big data
+  - machine learning
+  - streamlit
+  - zensus 2022
+  - greix
+  - housing
+preferred-citation:
+  type: software
+  title: "MietCheck: Drei Mietrealitäten für transparente Umzugsentscheidungen"
+  authors:
+    - family-names: Knaak
+      given-names: Nele
+  year: 2026
+  url: "https://github.com/neleknaak-31/MietCheck"

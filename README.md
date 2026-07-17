@@ -17,6 +17,16 @@ direkt am Ergebnis gezeigt.
 > MietCheck ist ein wissenschaftlicher Prototyp, kein amtlicher Mietspiegel, keine
 > Einzelwohnungsbewertung und keine Rechts- oder Finanzberatung.
 
+## Online und Abgabeunterlagen
+
+- **Repository:** [github.com/neleknaak-31/MietCheck](https://github.com/neleknaak-31/MietCheck)
+- **Präsentation:** [PPTX](deliverables/MietCheck_Praesentation.pptx) · [PDF](deliverables/MietCheck_Praesentation.pdf)
+- **Handout:** [DOCX](deliverables/MietCheck_Handout.docx) · [PDF](deliverables/MietCheck_Handout.pdf)
+- **Vorbereitung:** [12-Minuten-Sprechskript](docs/PRESENTATION_SCRIPT.md) · [Demo-Runbook](docs/DEMO_RUNBOOK.md)
+
+Die Präsentation umfasst zwölf Hauptfolien plus zwei Backup-Folien und enthält
+Sprechernotizen. Das Handout ist auf fünf DIN-A4-Seiten begrenzt.
+
 ## Warum das Projekt eigenständig ist
 
 Viele Mietrechner geben eine einzelne vermeintlich „faire“ Miete aus. MietCheck
@@ -146,6 +156,7 @@ MietCheck/
 ├── src/app_logic.py            # getestete App-Berechnungen
 ├── tests/                      # automatisierte Qualitätsprüfungen
 ├── docs/                       # Datenblatt, Modellkarte, Methodik
+├── deliverables/               # Präsentation und 5-seitiges Handout
 ├── reports/                    # maschinenlesbare Experimentergebnisse
 └── .github/workflows/ci.yml    # reproduzierbare CI
 ```

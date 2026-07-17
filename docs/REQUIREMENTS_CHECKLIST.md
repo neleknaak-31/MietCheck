@@ -4,9 +4,9 @@ Statuswerte: `OFFEN`, `IN ARBEIT`, `ERFÜLLT`, `BLOCKIERT`.
 
 | Bereich | Anforderung | Nachweis | Status |
 |---|---|---|---|
-| Prüfungsform | 10–15 Minuten Präsentation pro Person | finaler Demo- und Sprechzeitentest | OFFEN |
-| Prüfungsform | Handout mit maximal 5 DIN-A4-Seiten oder Poster nach Vorgabe | gerendertes und geprüftes PDF | OFFEN |
-| Prüfungsform | wissenschaftliche Quellen und korrekte Zitation | Literaturverzeichnis und finale Quellenprüfung | IN ARBEIT |
+| Prüfungsform | 10–15 Minuten Präsentation pro Person | 12-Minuten-Sprechskript, Sprecherhinweise und 90-Sekunden-Demo-Runbook | ERFÜLLT |
+| Prüfungsform | Handout mit maximal 5 DIN-A4-Seiten oder Poster nach Vorgabe | visuell geprüfter PDF-Export, exakt 5 DIN-A4-Seiten | ERFÜLLT |
+| Prüfungsform | wissenschaftliche Quellen und korrekte Zitation | Quellenfolien, Handout, Datenblatt, Modellkarte und README | ERFÜLLT |
 | Inhalt | Problem, Zielgruppe und KPIs klar definieren | `PROJECT_CHARTER.md`, `PRODUCT_SPEC.md`, Überblicks-Notebook | ERFÜLLT |
 | Daten | großer öffentlicher Datensatz | Zensus 2022 mit 2.058.569 Modellzeilen | ERFÜLLT |
 | Daten | aktuelle Marktreferenz | GREIX bis Q1/2026, 37 lokale Märkte | ERFÜLLT |
@@ -26,4 +26,4 @@ Statuswerte: `OFFEN`, `IN ARBEIT`, `ERFÜLLT`, `BLOCKIERT`.
 | Qualität | Datenschutz, Bias, Grenzen und Sicherheit | `RISK_AND_ETHICS.md`, Datenblatt, Modellkarte und sichtbare App-Hinweise | ERFÜLLT |
 | Veröffentlichung | öffentliches GitHub-Repository | Repository-URL | OFFEN |
 | Veröffentlichung | öffentliches Streamlit-Deployment | App-URL und Produktions-Smoke-Test | OFFEN |
-| Prüfung | Präsentation, Handout und Demo-Ablauf | final gerenderte und visuell geprüfte Artefakte | OFFEN |
+| Prüfung | Präsentation, Handout und Demo-Ablauf | 14 geprüfte Folien ohne Überlauf, 5 geprüfte A4-Seiten, Sprechskript und Offline-Fallback | ERFÜLLT |

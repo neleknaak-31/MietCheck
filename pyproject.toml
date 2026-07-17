@@ -9,7 +9,7 @@ description = "Transparent comparison of German stock rents and current asking r
 readme = "README.md"
 requires-python = ">=3.11,<3.14"
 license = { text = "MIT" }
-authors = [{ name = "MietCheck project" }]
+authors = [{ name = "Nele Knaak" }]
 dynamic = ["dependencies"]
 
 [tool.setuptools.dynamic]
