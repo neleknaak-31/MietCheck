@@ -38,4 +38,4 @@ python -m ruff check .
 streamlit run app.py
 ```
 
-Erwartung: 29 Tests erfolgreich; keine Ruff-Fehler; App ohne Browser- oder Requestfehler.
+Erwartung: 33 Tests erfolgreich; keine Ruff-Fehler; App ohne Browser- oder Requestfehler.

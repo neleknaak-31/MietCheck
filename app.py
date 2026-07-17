@@ -23,6 +23,8 @@ FINAL_REPORT = ROOT / "reports" / "final_model_evaluation.json"
 BENCHMARK_REPORT = ROOT / "reports" / "algorithm_benchmark.json"
 BUILD_REPORT = ROOT / "reports" / "dataset_build_report.json"
 MODEL_META = ROOT / "models" / "zensus_hgb_meta.json"
+MODEL_MANIFEST = ROOT / "models" / "model_manifest.json"
+MLFLOW_REPORT = ROOT / "reports" / "mlflow_publish.json"
 
 COLORS = {
     "ink": "#132238",
@@ -48,14 +50,16 @@ st.set_page_config(
 
 
 @st.cache_data
-def load_data() -> tuple[pd.DataFrame, pd.DataFrame, dict, dict, dict, dict]:
+def load_data() -> tuple[pd.DataFrame, pd.DataFrame, dict, dict, dict, dict, dict, dict]:
     profiles = pd.read_csv(PROFILES_FILE)
     greix = pd.read_csv(GREIX_FILE)
     final = json.loads(FINAL_REPORT.read_text(encoding="utf-8"))
     benchmark = json.loads(BENCHMARK_REPORT.read_text(encoding="utf-8"))
     build = json.loads(BUILD_REPORT.read_text(encoding="utf-8"))
     model_meta = json.loads(MODEL_META.read_text(encoding="utf-8"))
-    return profiles, greix, final, benchmark, build, model_meta
+    model_manifest = json.loads(MODEL_MANIFEST.read_text(encoding="utf-8"))
+    mlflow_report = json.loads(MLFLOW_REPORT.read_text(encoding="utf-8"))
+    return profiles, greix, final, benchmark, build, model_meta, model_manifest, mlflow_report
 
 
 def euro(value: float, digits: int = 0) -> str:
@@ -344,7 +348,16 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-profiles, greix, final, benchmark, build, model_meta = load_data()
+(
+    profiles,
+    greix,
+    final,
+    benchmark,
+    build,
+    model_meta,
+    model_manifest,
+    mlflow_report,
+) = load_data()
 regions = sorted(profiles["region"].tolist())
 
 with st.sidebar:
@@ -616,6 +629,47 @@ with method_tab:
         with column:
             st.markdown(f"**{step}. {title}**")
             st.caption(detail)
+
+    st.markdown("#### MLOps, Modell-Lineage und reproduzierbares Serving")
+    mlops_columns = st.columns(4)
+    with mlops_columns[0]:
+        st.metric("MLflow-Runs", len(mlflow_report["runs"]))
+    with mlops_columns[1]:
+        st.metric("Registry-Version", mlflow_report["registry"]["version"])
+    with mlops_columns[2]:
+        st.metric("Modell-Alias", mlflow_report["registry"]["alias"])
+    with mlops_columns[3]:
+        st.metric("automatisierte Tests", "33")
+
+    with st.expander("Wie Training, Registry, CI und App zusammenhängen", expanded=False):
+        st.markdown(
+            f"""
+            - **Experiment-Tracking:** Algorithmusvergleich, HGB-Tuning und finale
+              räumliche Evaluation sind als drei MLflow-Runs mit Parametern,
+              Metriken und Artefakten dokumentiert.
+            - **Model Registry:** Das finale Modell ist als
+              `{mlflow_report["registry"]["model_name"]}` Version
+              `{mlflow_report["registry"]["version"]}` registriert. Die geprüfte
+              Version trägt den Alias `@{mlflow_report["registry"]["alias"]}`.
+            - **Lineage:** Modellversion `{model_manifest["model_version"]}` besitzt
+              den SHA-256-Fingerabdruck
+              `{model_manifest["files"]["zensus_hgb.joblib"]["sha256"][:16]}…`.
+              Metadaten und finaler Evaluationsbericht werden ebenfalls per Hash
+              geprüft.
+            - **Serving:** Ein versionierter Batch-Schritt erzeugt mit dem als
+              Registry-Version dokumentierten Modellartefakt die 37 regionalen
+              Zensus-Profile. Die App kombiniert diese geprüften ML-Vorhersagen
+              interaktiv mit GREIX und persönlichen Eingaben. Sie trainiert nicht
+              im Browser und benötigt keine Rohdaten.
+            - **Qualitätsgates:** GitHub Actions führt Lint, Formatierung, 33 Tests,
+              Modell-/Segment-Gates und einen Docker-Build aus. Der Container besitzt
+              einen eigenen Health-Endpunkt.
+
+            Die lokale MLflow-Datenbank ist kein Bestandteil der öffentlichen App.
+            Der reproduzierbare Publishing-Schritt und seine Run-/Registry-IDs
+            liegen im GitHub-Repository.
+            """
+        )
 
     ranking = pd.DataFrame(benchmark["ranking_by_mean_mae"]).sort_values("mean_mae")
     model_figure = go.Figure(

@@ -67,13 +67,19 @@ bestimmt.
   Screenshot-Test und Aktualisierung des Datenstands deployt werden.
 - Die App zeigt voraggregierte Modellprofile und benötigt im Produktivbetrieb
   keinen Zugriff auf Rohdaten.
+- Die öffentliche App hängt nicht von einem extern erreichbaren MLflow-Server ab.
+  Modell- und Experimentfreigaben werden vor dem Deployment lokal beziehungsweise
+  in CI geprüft; Run- und Registry-IDs bleiben als versionierter Nachweis erhalten.
+- Ein unbeabsichtigter Austausch des Joblib-Modells, seiner Metadaten oder der
+  finalen Evaluation wird durch SHA-256-Prüfungen im Release-Gate erkannt.
 
 ## Freigabegate vor jeder Veröffentlichung
 
 1. Daten- und Lizenzstand prüfen.
 2. Download- und Datenvertragstests ausführen.
 3. räumliche Modellgüte und Intervall-Coverage erneut messen.
-4. AppTest sowie Desktop-/Mobil-Smoke-Test durchführen.
-5. Quellen, Stichtage und Grenzen in README, App, Datenblatt und Modellkarte
+4. Modellhash, MLflow-Registry-Alias und alle Segment-Gates prüfen.
+5. AppTest, Container-Healthcheck sowie Desktop-/Mobil-Smoke-Test durchführen.
+6. Quellen, Stichtage und Grenzen in README, App, Datenblatt und Modellkarte
    synchronisieren.
-6. öffentliche App auf fehlende Geheimnisse und unerwartete Loggingpfade prüfen.
+7. öffentliche App auf fehlende Geheimnisse und unerwartete Loggingpfade prüfen.

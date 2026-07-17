@@ -38,6 +38,25 @@ Die Zielvariable und ihr Unsicherheitskennzeichen sind keine Eingabefeatures.
 - 276.458 finale Testzeilen aus weiteren 99 Blöcken
 - Random State 2026
 
+## Versionierung, Registry und Serving
+
+- semantische Modellversion: `1.0.0`
+- MLflow-Experiment: `MietCheck QUA3CK`
+- registrierter Modellname: `MietCheck-Zensus-Stock-Rent`
+- registrierte Version: `1`
+- Freigabealias: `@champion`
+- Modell-URI: `models:/MietCheck-Zensus-Stock-Rent@champion`
+- Modell-Signatur: 15 numerische Eingabefeatures in dokumentierter Reihenfolge
+- unveränderliche Lineage: SHA-256 für Joblib-Modell, Metadaten und Evaluation in
+  `models/model_manifest.json`
+
+Die Streamlit-App lädt das Modell nicht bei jeder Interaktion neu. Der geprüfte
+Batch-Schritt `scripts/build_region_profiles.py` erzeugt mit exakt diesem Modell
+die 37 versionierten regionalen Profile. Die App kombiniert diese
+ML-Vorhersagen anschließend in Echtzeit mit aktuellen GREIX-Werten und
+persönlichen Szenarioeingaben. Dieses Serving-Muster vermeidet Rohdatenzugriff
+und rechenintensive Modellinitialisierung in der Streamlit Cloud.
+
 ## Finale Testgüte
 
 | Kennzahl | Wert |
@@ -84,5 +103,7 @@ Halbbreiten in €/m²:
 
 Bei neuen Zensus-, GREIX- oder Geodaten müssen Download-Manifest, Datenprofil, räumliche Splits, Modellvergleich, Kalibrierung, Subgruppen und Modellkarte erneut erzeugt werden. Ein Modellupdate ist erst nach bestandenen Tests und dokumentierter Vergleichsmessung zulässig.
 
-Maschinenlesbare Metadaten: `models/zensus_hgb_meta.json`  
-Evaluation: `reports/final_model_evaluation.json`
+- Maschinenlesbare Metadaten: `models/zensus_hgb_meta.json`
+- Hashmanifest: `models/model_manifest.json`
+- Evaluation: `reports/final_model_evaluation.json`
+- MLflow-Nachweis: `reports/mlflow_publish.json`
