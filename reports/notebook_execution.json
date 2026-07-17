@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "executed_at_utc": "2026-07-16T20:34:34+00:00",
+  "kernel": "mietcheck",
+  "working_directory": ".",
+  "all_passed": true,
+  "notebooks": [
+    {
+      "notebook": "00_gesamtueberblick_qua3ck.ipynb",
+      "status": "passed",
+      "seconds": 9.73250890000054,
+      "code_cells": 4,
+      "executed_code_cells": 4
+    },
+    {
+      "notebook": "01_qualitaetspruefung.ipynb",
+      "status": "passed",
+      "seconds": 7.845977500001027,
+      "code_cells": 4,
+      "executed_code_cells": 4
+    },
+    {
+      "notebook": "02_understanding_the_data.ipynb",
+      "status": "passed",
+      "seconds": 12.804127600000356,
+      "code_cells": 5,
+      "executed_code_cells": 5
+    },
+    {
+      "notebook": "03_algorithmenauswahl.ipynb",
+      "status": "passed",
+      "seconds": 7.605558299997938,
+      "code_cells": 4,
+      "executed_code_cells": 4
+    },
+    {
+      "notebook": "04_modellentwicklung.ipynb",
+      "status": "passed",
+      "seconds": 7.7676637999975355,
+      "code_cells": 5,
+      "executed_code_cells": 5
+    },
+    {
+      "notebook": "05_kreuzvalidierung.ipynb",
+      "status": "passed",
+      "seconds": 8.474518399998487,
+      "code_cells": 5,
+      "executed_code_cells": 5
+    },
+    {
+      "notebook": "06_wissensextraktion.ipynb",
+      "status": "passed",
+      "seconds": 8.500334399999701,
+      "code_cells": 6,
+      "executed_code_cells": 6
+    }
+  ]
+}

@@ -17,6 +17,7 @@ venv/
 
 # Notebooks
 .ipynb_checkpoints/
+.ipython/
 
 # Reproducible data products
 data/raw/*
