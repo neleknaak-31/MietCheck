@@ -1,5 +1,8 @@
 # MietCheck – drei Mietrealitäten statt einer Scheingenauigkeit
 
+[![CI](https://github.com/neleknaak-31/MietCheck/actions/workflows/ci.yml/badge.svg)](https://github.com/neleknaak-31/MietCheck/actions/workflows/ci.yml)
+[![MIT License](https://img.shields.io/badge/License-MIT-0B6E4F.svg)](LICENSE)
+
 MietCheck ist eine Machine-Learning-App für das Modul **Data Analytics & Big Data**.
 Sie stellt drei Werte bewusst getrennt nebeneinander:
 

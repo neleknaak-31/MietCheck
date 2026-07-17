@@ -22,8 +22,8 @@ Statuswerte: `OFFEN`, `IN ARBEIT`, `ERFÜLLT`, `BLOCKIERT`.
 | Produkt | belegbares Alleinstellungsmerkmal | Konkurrenzanalyse, finaler Hook und Drei-Realitäten-Nutzerreise | ERFÜLLT |
 | Produkt | professionelle Streamlit-App | Desktop- und Mobil-Screenshots, AppTest und echter Browser-Smoke-Test ohne Fehler | ERFÜLLT |
 | Produkt | verständliche Erklärbarkeit | getrennte Messkonzepte, Bandbreiten, Modellvergleich, Permutationsbeiträge und Grenzen in der App | ERFÜLLT |
-| Qualität | automatisierte Tests | 29 lokale Tests, Ruff-Gates und CI-Workflow; öffentlicher GitHub-Lauf noch ausstehend | IN ARBEIT |
+| Qualität | automatisierte Tests | 29 lokale Tests, Ruff-Gates und erfolgreicher öffentlicher GitHub-Actions-Lauf | ERFÜLLT |
 | Qualität | Datenschutz, Bias, Grenzen und Sicherheit | `RISK_AND_ETHICS.md`, Datenblatt, Modellkarte und sichtbare App-Hinweise | ERFÜLLT |
-| Veröffentlichung | öffentliches GitHub-Repository | Repository-URL | OFFEN |
+| Veröffentlichung | öffentliches GitHub-Repository | `https://github.com/neleknaak-31/MietCheck`, öffentlicher `main`-Branch | ERFÜLLT |
 | Veröffentlichung | öffentliches Streamlit-Deployment | App-URL und Produktions-Smoke-Test | OFFEN |
 | Prüfung | Präsentation, Handout und Demo-Ablauf | 14 geprüfte Folien ohne Überlauf, 5 geprüfte A4-Seiten, Sprechskript und Offline-Fallback | ERFÜLLT |
