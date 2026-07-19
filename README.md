@@ -186,18 +186,20 @@ Berichte. Rohdaten und Trainingsmatrix werden nicht in das Image kopiert.
 
 ## QUA³CK-Notebooks
 
-| Phase | Notebook |
-|---|---|
-| Gesamtüberblick | `00_gesamtueberblick_qua3ck.ipynb` |
-| Q – Question | `01_question.ipynb` |
-| U – Understanding the Data und Datenqualität | `02_understanding_the_data.ipynb` |
-| A – Algorithmenauswahl | `03_algorithmenauswahl.ipynb` |
-| A²/A³ – Features anpassen und Hyperparameter justieren | `04_modellentwicklung.ipynb` |
-| C – Kreuzvalidierung und finaler Test | `05_kreuzvalidierung.ipynb` |
-| K – Wissensextraktion | `06_wissensextraktion.ipynb` |
+Die Namen und die inhaltliche Reihenfolge folgen bewusst dem mit 1,0 bewerteten
+Referenzaufbau des Moduls; die MietCheck-Analyse ergänzt räumliche
+Leakage-Kontrolle, SVM-Skalierungsstudie und conformale Unsicherheit.
 
-Alle sieben Notebooks wurden automatisiert ausgeführt; der Prüfbericht liegt in
-`reports/notebook_execution.json`.
+| Phase | Artefakt |
+|---|---|
+| Q – Question | `Q-Phase.ipynb` |
+| U – Understanding the Data inklusive StandardScaler | `U-Phase.ipynb` |
+| A¹/A²/A³ – Auswahl, Features und Tuning | `A-Phase.ipynb` |
+| C – Conclude and Compare | `C-Phase.ipynb` |
+| K – Knowledge Transfer | `K-Phase.md` |
+
+Die vier Rechennotebooks wurden automatisiert ausgeführt: 24 von 24 Codezellen
+ohne Fehler. Der Prüfbericht liegt in `reports/notebook_execution.json`.
 
 ## Projektstruktur
 

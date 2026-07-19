@@ -27,11 +27,16 @@ Das amtliche Unsicherheitskennzeichen der Zielvariable ist kein Feature. Damit w
 
 1. Kategorien-Median als einfache fachliche Baseline
 2. Ridge-Regression als lineares, regularisiertes Modell
-3. Random Forest als Bagging-Ensemble
-4. Histogram Gradient Boosting als Boosting-Ensemble
-5. mehrschichtiges Perzeptron (MLP) als neuronales Netz
+3. LinearSVR als lineare Support-Vector-Regression
+4. einzelner Entscheidungsbaum als klassische nichtlineare Referenz
+5. Random Forest als Bagging-Ensemble
+6. Histogram Gradient Boosting als Boosting-Ensemble
+7. mehrschichtiges Perzeptron (MLP) als neuronales Netz
 
-Die Kandidaten decken damit Baseline-, lineare, Ensemble- und neuronale Ansätze ab.
+Ridge, LinearSVR und MLP erhalten innerhalb jedes Trainingsfolds
+Median-Imputation und `StandardScaler`. Entscheidungsbaum, Random Forest und HGB
+werden nicht skaliert, weil ihre Schwellenaufteilungen gegenüber monotoner
+Skalierung invariant sind.
 
 ## Ergebnisse
 
@@ -39,9 +44,11 @@ Die Kandidaten decken damit Baseline-, lineare, Ensemble- und neuronale Ansätze
 |---:|---|---:|---:|---:|---:|
 | 1 | Histogram Gradient Boosting | **1,305** | 0,055 | **0,402** | 12,8 s |
 | 2 | Random Forest | 1,320 | **0,053** | 0,401 | 30,3 s |
-| 3 | MLP | 1,397 | 0,076 | 0,348 | 74,2 s |
-| 4 | Ridge | 1,632 | 0,105 | 0,176 | 1,0 s |
-| 5 | Kategorien-Median | 1,719 | 0,125 | 0,051 | – |
+| 3 | Decision Tree | 1,393 | 0,037 | 0,347 | 5,4 s |
+| 4 | MLP | 1,397 | 0,076 | 0,348 | 74,2 s |
+| 5 | Ridge | 1,632 | 0,105 | 0,176 | 1,0 s |
+| 6 | LinearSVR | 1,635 | 0,104 | 0,176 | 1,5 s |
+| 7 | Kategorien-Median | 1,719 | 0,125 | 0,051 | – |
 
 Histogram Gradient Boosting reduziert den MAE gegenüber der fachlichen Baseline um **24,1 %**. Gegenüber Random Forest beträgt sein MAE-Vorteil nur rund **1,2 %**, es trainiert in diesem Lauf jedoch etwa **2,4-mal schneller**. Die beiden Ensembleverfahren liegen fachlich eng beieinander; die endgültige Aussage darf daher nicht allein auf dem kleinen Abstand ihrer Mittelwerte beruhen.
 
@@ -59,6 +66,23 @@ Das MLP erreichte in allen Folds das Iterationslimit ohne vollständige Konverge
 
 Random Forest bleibt Challenger und wird in der finalen Evaluation als Plausibilitätsvergleich beibehalten. Ridge und Kategorien-Median bleiben interpretierbare Referenzen.
 
+## Ergänzende lineare-vs.-Kernel-SVM-Studie
+
+Ein exakter RBF-SVR wächst bei Speicher- und Laufzeitbedarf superlinear und ist
+kein glaubwürdiger Vollkandidat für 600.000 Zeilen. `svm_kernel_benchmark.py`
+vergleicht deshalb LinearSVR und RBF-SVR ergänzend auf 10.000 deterministischen
+Zeilen mit derselben räumlichen 3-Fold-Logik. Beide Varianten nutzen
+fold-interne Median-Imputation und `StandardScaler`.
+
+| SVM-Variante | MAE €/m² | R² | Ø Trainingszeit/Fold |
+|---|---:|---:|---:|
+| LinearSVR | 1,620 | 0,159 | 0,017 s |
+| RBF-SVR | **1,518** | **0,214** | 2,315 s |
+
+Der Kernel verbessert die kleine Machbarkeitsstichprobe, skaliert aber nicht
+vertretbar in den 600k-Hauptvergleich. Maschinenlesbare Evidenz:
+`reports/svm_kernel_benchmark.json`.
+
 ## Grenzen und nächste Schritte
 
 - Die 600.000 Beobachtungen sind eine große, aber nicht vollständige Auswahlbasis.
@@ -67,6 +91,11 @@ Random Forest bleibt Challenger und wird in der finalen Evaluation als Plausibil
 - Die Zielgröße ist ein amtlicher Gitterzellenmittelwert und keine individuelle Angebots- oder Vertragsmiete.
 - Als Nächstes folgen räumliche Hyperparameteroptimierung, Feature-Ablation, Fehlerkarten und kalibrierte Vorhersageintervalle.
 
-Reproduktion: `python scripts/algorithm_benchmark.py`
+Reproduktion:
+
+```text
+python scripts/algorithm_benchmark.py
+python scripts/svm_kernel_benchmark.py
+```
 
 Maschinenlesbarer Bericht: `reports/algorithm_benchmark.json`

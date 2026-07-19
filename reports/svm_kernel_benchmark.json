@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-07-19T11:29:29+00:00",
+  "purpose": "Supplementary linear-versus-kernel SVM feasibility study",
+  "scope": {
+    "rows": 10000,
+    "spatial_blocks": 609,
+    "random_state": 2026,
+    "not_full_benchmark": true,
+    "reason": "Exact RBF SVR grows super-linearly and is not a scalable candidate for the 600,000-row main benchmark."
+  },
+  "validation": {
+    "method": "GroupKFold",
+    "groups": "spatial_block_25km",
+    "folds": 3
+  },
+  "preprocessing": {
+    "fit_scope": "inside each training fold only",
+    "imputer": "SimpleImputer(strategy=median, add_indicator=True)",
+    "scaler": "StandardScaler"
+  },
+  "features": [
+    "x_laea_m",
+    "y_laea_m",
+    "building_after_1990",
+    "dwelling_over_65sqm",
+    "population",
+    "avg_household_size",
+    "ownership_rate_pct",
+    "vacancy_rate_pct",
+    "avg_dwelling_area_sqm",
+    "dwelling_count",
+    "household_size_uncertain",
+    "ownership_uncertain",
+    "vacancy_uncertain",
+    "dwelling_area_uncertain",
+    "rent_count_uncertain"
+  ],
+  "models": {
+    "linear_svr": {
+      "folds": [
+        {
+          "fold": 1,
+          "training_rows": 6666,
+          "test_rows": 3334,
+          "training_seconds": 0.018424200010485947,
+          "mae": 1.7675160407345611,
+          "rmse": 2.538107808064074,
+          "r2": 0.1796276631103374
+        },
+        {
+          "fold": 2,
+          "training_rows": 6667,
+          "test_rows": 3333,
+          "training_seconds": 0.015771000005770475,
+          "mae": 1.505687091128876,
+          "rmse": 1.994340038343499,
+          "r2": 0.09711263664248126
+        },
+        {
+          "fold": 3,
+          "training_rows": 6667,
+          "test_rows": 3333,
+          "training_seconds": 0.016340100002707914,
+          "mae": 1.5878830081043578,
+          "rmse": 2.057410995769125,
+          "r2": 0.19979821216714622
+        }
+      ],
+      "summary": {
+        "mae": {
+          "mean": 1.6203620466559316,
+          "std": 0.10933058636334747
+        },
+        "rmse": {
+          "mean": 2.1966196140588994,
+          "std": 0.242837567661092
+        },
+        "r2": {
+          "mean": 0.1588461706399883,
+          "std": 0.04442210168507939
+        },
+        "training_seconds": {
+          "mean": 0.016845100006321445,
+          "std": 0.0011405075826118813
+        }
+      }
+    },
+    "rbf_svr": {
+      "folds": [
+        {
+          "fold": 1,
+          "training_rows": 6666,
+          "test_rows": 3334,
+          "training_seconds": 2.3644189999904484,
+          "mae": 1.6758345798878636,
+          "rmse": 2.4466272747689253,
+          "r2": 0.23769897633247672
+        },
+        {
+          "fold": 2,
+          "training_rows": 6667,
+          "test_rows": 3333,
+          "training_seconds": 2.329531700001098,
+          "mae": 1.407329113780649,
+          "rmse": 1.927050158494994,
+          "r2": 0.1570123811437013
+        },
+        {
+          "fold": 3,
+          "training_rows": 6667,
+          "test_rows": 3333,
+          "training_seconds": 2.250747099998989,
+          "mae": 1.4693771857085651,
+          "rmse": 1.9947344951729347,
+          "r2": 0.24780992225090115
+        }
+      ],
+      "summary": {
+        "mae": {
+          "mean": 1.517513626459026,
+          "std": 0.11477988798407471
+        },
+        "rmse": {
+          "mean": 2.1228039761456183,
+          "std": 0.23063887921213247
+        },
+        "r2": {
+          "mean": 0.2141737599090264,
+          "std": 0.040629424670682895
+        },
+        "training_seconds": {
+          "mean": 2.3148992666635118,
+          "std": 0.047545811529171575
+        }
+      }
+    }
+  }
+}

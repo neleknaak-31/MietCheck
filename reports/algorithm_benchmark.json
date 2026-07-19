@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_at_utc": "2026-07-16T13:43:06+00:00",
+  "created_at_utc": "2026-07-19T11:30:51+00:00",
   "purpose": "Spatially grouped candidate algorithm comparison",
   "sample": {
     "rows": 600000,
@@ -11,6 +11,22 @@
     "method": "GroupKFold",
     "groups": "spatial_block_25km",
     "folds": 3
+  },
+  "preprocessing": {
+    "fit_scope": "inside each training fold only",
+    "scaled_models": [
+      "ridge",
+      "linear_svr",
+      "mlp"
+    ],
+    "scaler": "StandardScaler",
+    "unscaled_models": [
+      "category_median",
+      "decision_tree",
+      "random_forest",
+      "hist_gradient_boosting"
+    ],
+    "reason": "Scale-sensitive linear and neural models require comparable feature magnitudes; tree splits are invariant to monotonic rescaling."
   },
   "features": [
     "x_laea_m",
@@ -336,6 +352,128 @@
           "std": 0.03593179348453793
         }
       }
+    },
+    "linear_svr": {
+      "folds": [
+        {
+          "fold": 1,
+          "training_rows": 400000,
+          "test_rows": 200000,
+          "training_seconds": 1.5346901000011712,
+          "metrics": {
+            "mae": 1.576423168182373,
+            "median_ae": 1.301523208618164,
+            "rmse": 2.0892505645751953,
+            "r2": 0.1951385736465454
+          },
+          "warnings": []
+        },
+        {
+          "fold": 2,
+          "training_rows": 400000,
+          "test_rows": 200000,
+          "training_seconds": 1.4996591999952216,
+          "metrics": {
+            "mae": 1.7811696529388428,
+            "median_ae": 1.328479528427124,
+            "rmse": 2.5334575176239014,
+            "r2": 0.17161566019058228
+          },
+          "warnings": []
+        },
+        {
+          "fold": 3,
+          "training_rows": 400000,
+          "test_rows": 200000,
+          "training_seconds": 1.5780672999972012,
+          "metrics": {
+            "mae": 1.5464621782302856,
+            "median_ae": 1.2412922382354736,
+            "rmse": 2.1024484634399414,
+            "r2": 0.1615067720413208
+          },
+          "warnings": []
+        }
+      ],
+      "summary": {
+        "mae": {
+          "mean": 1.6346849997838337,
+          "std": 0.1042999854176555
+        },
+        "median_ae": {
+          "mean": 1.2904316584269206,
+          "std": 0.03644788751971248
+        },
+        "rmse": {
+          "mean": 2.241718848546346,
+          "std": 0.20636074305282084
+        },
+        "r2": {
+          "mean": 0.17608700195948282,
+          "std": 0.014089456878910868
+        }
+      }
+    },
+    "decision_tree": {
+      "folds": [
+        {
+          "fold": 1,
+          "training_rows": 400000,
+          "test_rows": 200000,
+          "training_seconds": 5.596457999999984,
+          "metrics": {
+            "mae": 1.3851655721664429,
+            "median_ae": 1.0262761116027832,
+            "rmse": 1.9437255859375,
+            "r2": 0.3033575415611267
+          },
+          "warnings": []
+        },
+        {
+          "fold": 2,
+          "training_rows": 400000,
+          "test_rows": 200000,
+          "training_seconds": 5.209780600009253,
+          "metrics": {
+            "mae": 1.4413068294525146,
+            "median_ae": 1.0354671478271484,
+            "rmse": 2.0830495357513428,
+            "r2": 0.439979612827301
+          },
+          "warnings": []
+        },
+        {
+          "fold": 3,
+          "training_rows": 400000,
+          "test_rows": 200000,
+          "training_seconds": 5.283516499999678,
+          "metrics": {
+            "mae": 1.351815104484558,
+            "median_ae": 0.9965226650238037,
+            "rmse": 1.923993706703186,
+            "r2": 0.29780757427215576
+          },
+          "warnings": []
+        }
+      ],
+      "summary": {
+        "mae": {
+          "mean": 1.3927625020345051,
+          "std": 0.036927651942686414
+        },
+        "median_ae": {
+          "mean": 1.0194219748179119,
+          "std": 0.01662132322258167
+        },
+        "rmse": {
+          "mean": 1.9835896094640095,
+          "std": 0.07078862652215961
+        },
+        "r2": {
+          "mean": 0.34704824288686115,
+          "std": 0.06575145206752639
+        }
+      }
     }
   },
   "ranking_by_mean_mae": [
@@ -350,6 +488,11 @@
       "std_mae": 0.05326727819286469
     },
     {
+      "model": "decision_tree",
+      "mean_mae": 1.3927625020345051,
+      "std_mae": 0.036927651942686414
+    },
+    {
       "model": "mlp",
       "mean_mae": 1.3965997695922852,
       "std_mae": 0.07615948428605901
@@ -358,6 +501,11 @@
       "model": "ridge",
       "mean_mae": 1.632184624671936,
       "std_mae": 0.10512345896454083
+    },
+    {
+      "model": "linear_svr",
+      "mean_mae": 1.6346849997838337,
+      "std_mae": 0.1042999854176555
     },
     {
       "model": "category_median",

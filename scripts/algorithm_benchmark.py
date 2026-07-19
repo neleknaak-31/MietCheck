@@ -35,6 +35,8 @@ from sklearn.model_selection import GroupKFold
 from sklearn.neural_network import MLPRegressor
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
+from sklearn.svm import LinearSVR
+from sklearn.tree import DecisionTreeRegressor
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATA_FILE = PROJECT_ROOT / "data" / "processed" / "model_table.parquet"
@@ -91,6 +93,36 @@ def model_factories() -> dict[str, Callable[[], object]]:
             [
                 ("prepare", impute_and_scale()),
                 ("model", Ridge(alpha=10.0)),
+            ]
+        ),
+        "linear_svr": lambda: Pipeline(
+            [
+                ("prepare", impute_and_scale()),
+                (
+                    "model",
+                    LinearSVR(
+                        C=1.0,
+                        epsilon=0.1,
+                        loss="squared_epsilon_insensitive",
+                        dual="auto",
+                        tol=1e-3,
+                        max_iter=5_000,
+                        random_state=RANDOM_STATE,
+                    ),
+                ),
+            ]
+        ),
+        "decision_tree": lambda: Pipeline(
+            [
+                ("impute", SimpleImputer(strategy="median", add_indicator=True)),
+                (
+                    "model",
+                    DecisionTreeRegressor(
+                        max_depth=20,
+                        min_samples_leaf=100,
+                        random_state=RANDOM_STATE,
+                    ),
+                ),
             ]
         ),
         "random_forest": lambda: Pipeline(
@@ -164,6 +196,17 @@ def parse_args() -> argparse.Namespace:
         default=600_000,
         help="Deterministic row sample used for the fair algorithm comparison.",
     )
+    parser.add_argument(
+        "--models",
+        nargs="+",
+        choices=sorted(model_factories()),
+        help="Run only selected learned models; default runs every candidate.",
+    )
+    parser.add_argument(
+        "--merge-existing",
+        action="store_true",
+        help="Preserve model results in the existing report when adding selected candidates.",
+    )
     return parser.parse_args()
 
 
@@ -185,6 +228,13 @@ def main() -> None:
     splitter = GroupKFold(n_splits=3)
     splits = list(splitter.split(frame, groups=frame[GROUP]))
     report_models: dict[str, object] = {}
+    if args.merge_existing:
+        if not OUTPUT_FILE.exists():
+            raise FileNotFoundError("--merge-existing requires reports/algorithm_benchmark.json")
+        existing = json.loads(OUTPUT_FILE.read_text(encoding="utf-8"))
+        if existing["sample"]["rows"] != len(frame):
+            raise ValueError("Existing benchmark uses a different sample size")
+        report_models.update(existing["models"])
 
     baseline_folds: list[dict[str, object]] = []
     for fold_number, (train_index, test_index) in enumerate(splits, start=1):
@@ -207,6 +257,8 @@ def main() -> None:
     x = frame[FEATURES].to_numpy(dtype="float32", na_value=np.nan)
     y = frame[TARGET].to_numpy(dtype="float32")
     for model_name, factory in model_factories().items():
+        if args.models and model_name not in args.models:
+            continue
         print(f"\n=== {model_name} ===")
         model_folds: list[dict[str, object]] = []
         for fold_number, (train_index, test_index) in enumerate(splits, start=1):
@@ -261,6 +313,21 @@ def main() -> None:
             "method": "GroupKFold",
             "groups": GROUP,
             "folds": 3,
+        },
+        "preprocessing": {
+            "fit_scope": "inside each training fold only",
+            "scaled_models": ["ridge", "linear_svr", "mlp"],
+            "scaler": "StandardScaler",
+            "unscaled_models": [
+                "category_median",
+                "decision_tree",
+                "random_forest",
+                "hist_gradient_boosting",
+            ],
+            "reason": (
+                "Scale-sensitive linear and neural models require comparable feature "
+                "magnitudes; tree splits are invariant to monotonic rescaling."
+            ),
         },
         "features": FEATURES,
         "models": report_models,

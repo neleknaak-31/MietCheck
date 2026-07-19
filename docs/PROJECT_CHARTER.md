@@ -65,7 +65,7 @@ räumlich evaluierten ML-Modell; er ist keine umbenannte Portalpreisschätzung.
 
 - `scripts/`: Download, Datenbau, Experimente, Training und Notebook-Ausführung
 - `src/app_logic.py`: reine und getestete Szenarioberechnungen
-- `notebooks/`: sieben QUA³CK-Notebooks einschließlich Gesamtüberblick
+- `notebooks/`: Q-, U-, A- und C-Notebook plus schriftlicher K-Transfer wie in der 1,0-Referenz
 - `app.py`: professionelle responsive Streamlit-Anwendung
 - `tests/`: Unit-, Datenvertrags-, Notebook- und App-Smoke-Tests
 - `docs/`: Spezifikation, Datenblatt, Modellkarte, Quellen und Prüfungsunterlagen

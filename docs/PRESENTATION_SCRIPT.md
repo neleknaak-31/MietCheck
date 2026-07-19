@@ -1,65 +1,130 @@
 # MietCheck – Sprechskript für 10–15 Minuten
 
-Zielzeit: **12 Minuten Vortrag plus Fragen**. Die Folien 13 und 14 sind Backup-Folien und werden nur bei Rückfragen gezeigt.
+Zielzeit: **etwa 12 Minuten plus Fragen**. Folie 15 ist eine Backup-Folie.
+Die App wird anhand von drei Screenshots gezeigt; eine Live-Demo ist nicht
+vorgesehen.
 
-## Folie 1 – Einstieg (0:00–0:40)
+## Folie 1 – Einstieg (0:00–0:35)
 
-„Wer heute umzieht, vergleicht meist zwei Zahlen, die methodisch nicht vergleichbar sind: die eigene Bestandsmiete und aktuelle Angebotsmieten. MietCheck trennt deshalb drei Realitäten: den lokalen Wohnungsbestand, den aktuellen Angebotsmarkt und die persönliche Belastung. Meine Leitfrage lautet: Wie lässt sich diese Lücke mit einem großen, offenen Datensatz, einem räumlich belastbar evaluierten ML-Modell und einer transparenten App sichtbar machen?“
+„MietCheck führt von 2,06 Millionen amtlichen Zensuszeilen zu einer
+persönlichen Umzugsentscheidung. Ich zeige den vollständigen QUA³CK-Prozess:
+Fragestellung, Datenverständnis, drei A-Phasen, finale Bewertung und
+Wissenstransfer in die App.“
 
-## Folie 2 – Drei Mietrealitäten (0:40–1:25)
+## Folie 2 – Q: Forschungsfrage (0:35–1:25)
 
-„Der Bestandsanker basiert auf dem Zensus-Stichtag 15. Mai 2022. Der Angebotsmarkt kommt aus dem aktuellen GREIX-Quartal 2026-Q1. Die persönliche Realität entsteht aus Vertragsmiete, Wohnfläche und optional dem Haushaltsnettoeinkommen. Der Mehrwert liegt gerade darin, diese Werte nicht zu vermischen. Der Umzugsaufschlag beschreibt die Differenz zwischen lokalem Bestand und heutigem Angebot, ohne daraus eine Rechtsaussage abzuleiten.“
+„Die Leitfrage lautet: Wie groß ist die Lücke zwischen lokalem Bestand,
+aktuellem Angebot und persönlicher Mietbelastung? Der Bestandsanker bezieht sich
+auf den Zensus-Stichtag 15. Mai 2022, der Angebotsmarkt auf GREIX 2026-Q1 und
+die persönliche Realität auf Vertrag, Fläche und optionales Einkommen.“
 
-## Folie 3 – Alleinstellungsmerkmal (1:25–2:10)
+## Folie 3 – Q: USP und Gates (1:25–2:10)
 
-„Bestehende Lösungen decken Teilprobleme ab: Destatis zeigt Bestand, Immobilienportale zeigen aktuelle Angebote, Mietspiegel liefern kommunale Vergleichswerte. In meiner Marktprüfung habe ich kein offenes Angebot gefunden, das Bestand, aktuellen Markt, persönliche Belastung, Unsicherheit und eine vollständig nachvollziehbare ML-Methode gemeinsam zeigt. Genau diese Kombination ist der USP – nicht ein weiterer Preisrechner.“
+„Der USP ist nicht ein weiterer Preisrechner. MietCheck verbindet Bestand,
+aktuellen Markt, persönliche Belastung, Marktstreuung, Modellunsicherheit und
+eine offene ML-Methode. Vor dem finalen Test gelten vier Gates: mindestens zwei
+Millionen Zeilen, sieben Kandidaten inklusive Baseline, räumlicher Holdout und
+mindestens 15 Prozent MAE-Verbesserung.“
 
-## Folie 4 – Datenbasis (2:10–3:00)
+## Folie 4 – U: Datenbasis (2:10–3:00)
 
-„Die ML-Basis besteht aus sieben amtlichen Zensusprodukten im 100-Meter-Gitter. Nach dem reproduzierbaren Build entstehen 2,06 Millionen Modellzeilen auf 1,18 Millionen eindeutigen Rasterzellen. Der GREIX bleibt bewusst getrennt: Er aktualisiert die Marktseite der App, wird aber nicht als historisch unpassendes Trainingsziel in das Zensusmodell gemischt. Downloads, SHA-256-Prüfsummen und Datenverträge machen die Herkunft prüfbar.“
+„Sieben amtliche Zensus-Gitterprodukte werden über die 100-Meter-Gitter-ID
+verbunden. Daraus entstehen 2,058 Millionen Modellzeilen auf 1,184 Millionen
+eindeutigen Zellen. GREIX bleibt bewusst getrennt, weil Angebot 2026 und Bestand
+2022 nicht dasselbe Ziel messen. URLs, Hashes, Datenverträge und Missingness
+unter einem Prozent sichern die Herkunft.“
 
-## Folie 5 – QUA³CK-Nachweiskette (3:00–3:50)
+## Folie 5 – U: StandardScaler (3:00–4:10)
 
-„QUA³CK ist hier kein Inhaltsverzeichnis, sondern eine Kette von überprüfbaren Entscheidungen. Question definiert Problem, Zielgruppen, KPIs und Deployment-Ziel. Understanding prüft Quellen und Datenqualität und dokumentiert EDA sowie räumliche Struktur. Algorithm Selection vergleicht fünf Modellfamilien. Adapting Features umfasst vier inkrementelle Ablationen; Adjusting Hyperparameters acht räumliche Tuningvarianten unter Datensperre. Conclude and Compare bewertet den unangetasteten Test quantitativ und qualitativ. Knowledge Transfer übersetzt das Ergebnis in die App. Alle sieben Notebooks sind ausgeführt: 37 von 37 Codezellen, ohne Fehleroutput.“
+„Der StandardScaler ist bei Ridge, LinearSVR, RBF-SVR und MLP notwendig, weil
+sonst Größen wie Koordinaten in Metern kleine Prozentmerkmale dominieren. Zuerst
+wird im Trainingsfold imputiert, dann werden nur dort Mittelwert und
+Standardabweichung gelernt und anschließend z-transformiert. Dadurch entsteht
+kein Leakage. Bäume und HGB brauchen keine Skalierung; deshalb speichert der
+HGB-Champion bewusst keinen unnötigen Scaler.“
 
-## Folie 6 – Räumlicher Holdout (3:50–4:45)
+## Folie 6 – A: räumlicher Split (4:10–5:00)
 
-„Ein zufälliger Zeilensplit wäre bei benachbarten 100-Meter-Zellen zu optimistisch. Deshalb fasse ich Zellen in 25-Kilometer-Blöcke zusammen und trenne ganze Räume. 465 Blöcke liegen in Entwicklung, 99 ausschließlich in der Kalibrierung und 99 ausschließlich im finalen Test. Zwischen den Mengen gibt es keinen gemeinsamen Block. Der Test simuliert damit besser die Übertragung in unbekannte Räume.“
+„Benachbarte 100-Meter-Zellen sind ähnlich. Ein Random Split wäre daher zu
+optimistisch. MietCheck trennt 25-Kilometer-Blöcke: 465 für Entwicklung, 99 nur
+für Intervallkalibrierung und 99 nur für den finalen Test. Zwischen den drei
+Mengen gibt es null gemeinsame Blöcke.“
 
-## Folie 7 – Modellvergleich (4:45–5:40)
+## Folie 7 – A¹: Algorithmenauswahl (5:00–6:00)
 
-„Alle Modelle sehen dieselben 600.000 Entwicklungszeilen und dieselbe dreifache Spatial-Cross-Validation. HistGradientBoosting erreicht mit 1,305 Euro pro Quadratmeter den besten mittleren CV-MAE. Random Forest liegt mit 1,320 dicht dahinter. Ridge und der Kategorienmedian bleiben deutlich schwächer. Ich wähle HGB wegen der besten Güte, der kleinen Artefaktgröße und der schnellen Inferenz; Random Forest bleibt als dokumentierter Challenger erhalten.“
+„Sieben Hauptkandidaten laufen auf denselben 600.000 Zeilen und denselben drei
+Spatial Folds: Kategorienmedian, Ridge, LinearSVR, Decision Tree, Random Forest,
+HGB und MLP. HGB erreicht mit 1,305 Euro pro Quadratmeter den besten CV-MAE.
+Random Forest bleibt Challenger. Ein exakter RBF-SVR wird zusätzlich auf 10.000
+räumlich validierten Zeilen geprüft, weil Kernel-SVR nicht glaubwürdig auf
+600.000 Zeilen skaliert.“
 
-## Folie 8 – Finaler Test und Unsicherheit (5:40–6:45)
+## Folie 8 – A²/A³: Features und Tuning (6:00–6:55)
 
-„Nach Modellwahl und Tuning wird der finale Test genau einmal ausgewertet. Der MAE beträgt 1,413 Euro pro Quadratmeter, der Medianfehler 0,956 und R² 0,584. Gegenüber dem Kategorienmedian verbessert sich der Fehler um 38,3 Prozent. Für die Intervalle nutze ich Split Conformal Prediction auf der separaten Kalibrierungsmenge. Das nominale 90-Prozent-Intervall erreicht räumlich 86,8 Prozent. Diese Unterdeckung wird nicht versteckt, sondern in App, Model Card und Risikoanalyse ausgewiesen.“
+„Vier Feature-Stufen zeigen, dass Lage den größten Zusatznutzen liefert.
+Anschließend werden acht theoriegeleitete HGB-Konfigurationen automatisiert
+verglichen. Kalibrierungs- und Testblöcke bleiben dabei gesperrt. Die Auswahl
+berücksichtigt mittleren MAE, Streuung und schlechtesten Fold.“
 
-## Folie 9 – Erkenntnis am Beispiel Berlin (6:45–7:35)
+## Folie 9 – C: finaler Test (6:55–7:55)
 
-„Für das gezeigte Berliner Szenario liegt der modellierte Bestandsanker bei 7,27 Euro pro Quadratmeter. Der aktuelle GREIX-Angebotsmedian beträgt 15,50 Euro. Das sind rund 113 Prozent beziehungsweise ungefähr 576 Euro monatlicher Aufschlag bei 70 Quadratmetern. Das ist keine exakte Wohnungsbewertung, sondern eine nachvollziehbare Größenordnung für die Umzugsentscheidung.“
+„Der unangetastete Test umfasst 276.458 Zeilen aus 99 Raumblöcken. Der MAE liegt
+bei 1,413 Euro pro Quadratmeter, R² bei 0,584 und die Verbesserung gegenüber dem
+Kategorienmedian bei 38,3 Prozent. Split Conformal Prediction erreicht
+empirisch 86,8 statt nominal 90 Prozent Coverage. Diese Unterdeckung wird offen
+kommuniziert.“
 
-## Folie 10 – App und Live-Demo (7:35–9:20)
+## Folie 10 – K: Dein Mietbild (7:55–8:40)
 
-„Die Streamlit-App übersetzt die Methodik in eine kurze Entscheidungskette: Erst Region und Wohnungsszenario, dann drei klar getrennte Vergleichswerte, anschließend Unsicherheit und Grenzen direkt am Ergebnis.“
+„Der erste Screenshot zeigt die Übersetzung in die Nutzerentscheidung:
+persönliche Miete, Bestandsanker und Angebotsmedian bleiben getrennt. Für das
+Berliner 70-Quadratmeter-Szenario wird der deskriptive Umzugsaufschlag direkt in
+Euro und Prozent sichtbar.“
 
-Jetzt die Demo nach `docs/DEMO_RUNBOOK.md` durchführen. Nicht länger als 90 Sekunden demonstrieren.
+## Folie 11 – K: Marktverlauf (8:40–9:20)
 
-## Folie 11 – Grenzen und verantwortliche Nutzung (9:20–10:15)
+„Der zweite Screenshot zeigt den aktuellen GREIX-Verlauf und den Markt-IQR.
+Diese Streuung beschreibt heutige Angebote. Sie ist methodisch etwas anderes
+als das Modellband des Zensusmodells.“
 
-„Das Modell kennt weder Ausstattung, Energiezustand, Etage noch adressgenaue Mikrolage. Es ist kein amtlicher Mietspiegel und keine Rechtsberatung. Regionen ohne GREIX werden nicht mit erfundenen Marktwerten gefüllt. Die empirische Coverage von 86,8 statt nominal 90 Prozent steht sichtbar im Produkt. Datenschutz, Bias und mögliche Fehlanwendungen sind im Risk Assessment dokumentiert.“
+## Folie 12 – K: Methodik in der App (9:20–10:05)
 
-## Folie 12 – Fazit (10:15–11:10)
+„Der dritte Screenshot belegt, dass Transparenz Teil des Produkts ist:
+Datenstand, Spatial Holdout, sieben Kandidaten, MLOps-Lineage, finale Testgüte,
+Coverage und Grenzen stehen direkt in der App. Eine Live-Demo ist deshalb nicht
+nötig.“
 
-„MietCheck behauptet nicht, die eine faire Miete zu kennen. Es trennt drei Mietrealitäten und macht ihre Differenz nachvollziehbar. Die technische Basis sind 2,06 Millionen Modellzeilen, ein räumlicher Holdout, 38,3 Prozent Verbesserung gegenüber der Baseline und transparent kommunizierte 86,8 Prozent Coverage. Der eigentliche Mehrwert ist deshalb nicht die Prognose allein, sondern eine besser informierte Umzugsentscheidung.“
+## Folie 13 – Grenzen (10:05–10:55)
 
-## Abschluss und Übergang zu Fragen (11:10–12:00)
+„Das Modell kennt Ausstattung, Energiezustand, Etage und adressgenaue Mikrolage
+nicht. Es ist kein Mietspiegel und keine Rechtsberatung. Regionen ohne GREIX
+werden nicht erfunden. Der Zeitversatz und die 86,8-Prozent-Coverage stehen
+sichtbar in App, Model Card und Risk Assessment.“
 
-„Code, Notebooks, Modellartefakt, Datenpipeline, Tests, Präsentation und Handout sind öffentlich reproduzierbar im Repository. Vielen Dank – ich freue mich auf Ihre Fragen.“
+## Folie 14 – Fazit (10:55–11:45)
+
+„Q definiert den Mehrwert, U prüft Daten und Skalierung, A wählt und optimiert,
+C bewertet ehrlich und K überträgt das Wissen in die App. MietCheck behauptet
+nicht, die eine faire Miete zu kennen. Es übersetzt Big Data und transparentes
+Machine Learning in eine nachvollziehbare Umzugsentscheidung.“
+
+## Folie 15 – Backup: Quellen und Reproduzierbarkeit
+
+Nur bei Rückfragen zeigen. Zensus, GREIX, vier ausgeführte Rechennotebooks,
+K-Transfer, JSON-Reports, Tests, CI, MLflow, Karten und Docker sind im
+Repository nachvollziehbar.
 
 ## Typische Rückfragen
 
-- **Warum kein Deep Learning?** Tabellarische, überwiegend kategoriale und räumliche Daten; HGB erreicht bessere validierte Güte bei kleinerem Artefakt und einfacher reproduzierbarer Inferenz.
-- **Warum GREIX nicht mittrainieren?** Zensus und GREIX messen unterschiedliche Zeitpunkte und Realitäten. Eine Vermischung würde Aktualität suggerieren, aber das Trainingsziel methodisch verfälschen.
-- **Warum 25-km-Blöcke?** Sie reduzieren räumliches Leakage deutlich und liefern ausreichend viele Gruppen für Entwicklung, Kalibrierung und Test.
-- **Warum nur 86,8 % Coverage?** Conformal Prediction garantiert unter Austauschbarkeit; räumlicher Distribution Shift verletzt diese Annahme teilweise. Die Abweichung ist ein Ergebnis, kein Grund zum Schönrechnen.
-- **Was wäre der nächste Schritt?** Wiederholter Zensus-/Mikrozensus-Refresh, breitere offene Angebotsdaten, räumlich adaptive Kalibrierung und Monitoring der Coverage über Zeit.
+- **Warum kein Deep Learning als Champion?** Das tabellarische HGB generalisiert
+  besser, trainiert effizient und liefert ein kleines Artefakt.
+- **Warum GREIX nicht mittrainieren?** Zensus und GREIX messen unterschiedliche
+  Zeitpunkte und Mietrealitäten.
+- **Warum nur 10.000 Zeilen beim RBF-SVR?** Exakter Kernel-SVR skaliert
+  superlinear; die Teilstudie prüft den Kernel, ohne ihn als 600k-Kandidaten
+  auszugeben.
+- **Warum kein Scaler im finalen Artefakt?** HGB ist skaleninvariant. Der
+  StandardScaler gehört korrekt in die Pipelines der skalenempfindlichen
+  Vergleichsmodelle.
+- **Warum nur 86,8 % Coverage?** Räumlicher Distribution Shift schwächt die
+  Austauschbarkeitsannahme. Die Abweichung ist ein wichtiges Ergebnis.
