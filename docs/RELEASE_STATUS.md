@@ -32,6 +32,26 @@ Am 19. Juli 2026 wurde der über Pull Request
 - ein anonymer HTTP-Aufruf erhält weiterhin `303 See Other` zur
   Streamlit-Authentifizierung. Die App ist damit weiterhin nicht öffentlich.
 
+## Reproduzierbarkeit aus öffentlichem Frischklon
+
+Ebenfalls am 19. Juli 2026 wurde der öffentliche `main`-Commit `1bfccbe` in ein
+neues isoliertes temporäres Verzeichnis geklont. Ohne Zugriff auf nicht
+versionierte Projektdateien wurden dort folgende Prüfungen erfolgreich ausgeführt:
+
+| Prüfung | Ergebnis |
+|---|---|
+| Git-Stand | sauberer Frischklon von `neleknaak-31/MietCheck`, Commit `1bfccbe` |
+| Test-Suite | 35 von 35 Tests bestanden |
+| Ruff-Lint und Format | ohne Befund; 34 Python-Dateien korrekt formatiert |
+| ML-Release-Gates | Modellhash, Baseline-Vorteil, Coverage, Subgruppen und Laufzeit bestanden |
+| Modellartefakt | Version 1.0.0, SHA-256 `64b2bef5df9dfe55b160b55f1815d914e8be8c0b4dab378d629e71cd40e34368` |
+| geladene Szenarien | 1.000 Berechnungen in rund 0,017 Sekunden |
+| Streamlit-Start | Health-Endpunkt aus dem Frischklon: `200 ok` |
+
+Damit ist belegt, dass die Abgabe nicht von versteckten Dateien des lokalen
+Entwicklungsordners abhängt. Große Rohdaten bleiben wie vorgesehen außerhalb von
+Git; Download und Training sind über die dokumentierten Skripte reproduzierbar.
+
 ## Freigabegate für die öffentliche App
 
 Die Streamlit-App wird erst öffentlich geschaltet, wenn alle folgenden Punkte
