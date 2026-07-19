@@ -16,6 +16,22 @@ App während der gemeinsamen fachlichen und visuellen Prüfung bereits allgemein
 zugänglich oder über Streamlit auffindbar ist. Das öffentliche Repository bleibt
 davon unabhängig verfügbar.
 
+## Letzte private Produktionsabnahme
+
+Am 19. Juli 2026 wurde der über Pull Request
+[`#7`](https://github.com/neleknaak-31/MietCheck/pull/7) veröffentlichte App-Stand
+`08f39ba` im echten Streamlit-Cloud-Deployment geprüft:
+
+- Startansicht, Marktverlauf sowie Methodik- und Quellenansicht rendern ohne
+  Browserwarnungen oder JavaScript-Fehler;
+- der Wechsel Berlin → München aktualisiert Überschrift, Bestandsanker,
+  Angebotsmarkt, Umzugsaufschlag und Budgetwirkung konsistent;
+- der beim dynamischen Regionswechsel zuvor veraltete Überschriften-Kopierlink
+  ist im Hero-Bereich nicht mehr sichtbar;
+- 35 Tests sowie die GitHub-Actions-Jobs `quality` und `container` sind grün;
+- ein anonymer HTTP-Aufruf erhält weiterhin `303 See Other` zur
+  Streamlit-Authentifizierung. Die App ist damit weiterhin nicht öffentlich.
+
 ## Freigabegate für die öffentliche App
 
 Die Streamlit-App wird erst öffentlich geschaltet, wenn alle folgenden Punkte
