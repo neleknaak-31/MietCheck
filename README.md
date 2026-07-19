@@ -28,7 +28,7 @@ direkt am Ergebnis gezeigt.
 - **Handout:** [DOCX](deliverables/MietCheck_Handout.docx) · [PDF](deliverables/MietCheck_Handout.pdf)
 - **Vorbereitung:** [12-Minuten-Sprechskript](docs/PRESENTATION_SCRIPT.md) · [Demo-Runbook](docs/DEMO_RUNBOOK.md)
 
-Die Präsentation umfasst zwölf Hauptfolien plus zwei Backup-Folien und enthält
+Die Präsentation umfasst vierzehn Hauptfolien plus eine Backup-Folie und enthält
 Sprechernotizen. Das Handout ist auf fünf DIN-A4-Seiten begrenzt.
 
 Der aktuelle Veröffentlichungsstatus ist in
@@ -75,7 +75,7 @@ Gitterzellen gleichzeitig in Training und Validierung landen.
 
 | Prüfung | Ergebnis |
 |---|---:|
-| verglichene Modellfamilien | Kategorie-Baseline, Ridge, MLP, Random Forest, HistGradientBoosting |
+| verglichene Modellfamilien | Kategorie-Baseline, Ridge, LinearSVR, Decision Tree, Random Forest, HistGradientBoosting, MLP |
 | finales Modell | HistGradientBoostingRegressor |
 | räumlich getrenntes Testset | 276.458 Zeilen in 99 bislang ungesehenen Raumgruppen |
 | Test-MAE | **1,413 €/m²** |
