@@ -321,6 +321,7 @@ st.markdown(
       text-transform:uppercase; }}
     .hero h1 {{ color:white; font-size:38px; line-height:1.08; letter-spacing:-1.4px;
       margin:9px 0 10px; max-width:820px; }}
+    .hero [data-testid="stHeaderActionElements"] {{ display:none; }}
     .hero p {{ color:#DCE6E4; max-width:850px; font-size:16px; line-height:1.55; margin:0; }}
     .metric-card {{ background:white; border:1px solid {COLORS["line"]}; border-radius:16px;
       padding:18px 18px 16px; min-height:145px; box-shadow:0 5px 18px rgba(19,34,56,.05); }}
