@@ -624,10 +624,15 @@ def main() -> None:
         "C-Phase.ipynb": c_phase(),
     }
     for old in NOTEBOOK_DIR.iterdir():
-        if old.is_file() and old.suffix in {".ipynb", ".md"} and old.name not in {
-            *expected,
-            "K-Phase.md",
-        }:
+        if (
+            old.is_file()
+            and old.suffix in {".ipynb", ".md"}
+            and old.name
+            not in {
+                *expected,
+                "K-Phase.md",
+            }
+        ):
             old.unlink()
     for filename, content in expected.items():
         path = NOTEBOOK_DIR / filename
