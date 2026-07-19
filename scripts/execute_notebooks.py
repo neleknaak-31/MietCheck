@@ -1,4 +1,4 @@
-"""Execute and persist all QUA³CK notebooks with the project kernel."""
+"""Execute and persist the four computational QUA³CK phase notebooks."""
 
 from __future__ import annotations
 
@@ -52,8 +52,12 @@ def main() -> None:
         )
         print(f"  passed in {elapsed:.1f}s", flush=True)
 
-    if len(results) != 7:
-        raise AssertionError(f"Expected seven notebooks, executed {len(results)}")
+    expected = {"Q-Phase.ipynb", "U-Phase.ipynb", "A-Phase.ipynb", "C-Phase.ipynb"}
+    executed = {item["notebook"] for item in results}
+    if executed != expected:
+        raise AssertionError(f"Expected {sorted(expected)}, executed {sorted(executed)}")
+    if not (NOTEBOOK_DIR / "K-Phase.md").exists():
+        raise AssertionError("Expected the written knowledge-transfer artifact K-Phase.md")
     report = {
         "schema_version": 1,
         "executed_at_utc": datetime.now(UTC).replace(microsecond=0).isoformat(),

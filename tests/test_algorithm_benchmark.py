@@ -4,6 +4,8 @@ from scripts.algorithm_benchmark import FEATURES, TARGET, model_factories
 def test_algorithm_benchmark_has_expected_candidates() -> None:
     assert set(model_factories()) == {
         "ridge",
+        "linear_svr",
+        "decision_tree",
         "random_forest",
         "hist_gradient_boosting",
         "mlp",

@@ -24,7 +24,7 @@ erfüllt und durch die Projekteigentümerin ausdrücklich freigegeben sind:
 1. lokaler Testlauf, Ruff-Prüfung und ML-Release-Gates sind erfolgreich;
 2. GitHub Actions ist auf dem veröffentlichten `main`-Stand grün;
 3. App-Inhalte, Datenstände, Quellen, Grenzen und Screenshots sind synchron;
-4. Präsentation, Handout, Sprechskript und Demo-Runbook sind final geprüft;
+4. Präsentation, Handout, Sprechskript und Screenshot-Runbook sind final geprüft;
 5. Name, Matrikelnummer, prüfende Person und Abgabetermin sind eingetragen;
 6. die Projekteigentümerin bestätigt die öffentliche Veröffentlichung.
 

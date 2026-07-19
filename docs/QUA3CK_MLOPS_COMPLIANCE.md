@@ -9,13 +9,13 @@ Produktionsfunktionen.
 
 | Anforderung | Umsetzung | Nachweis | Status |
 |---|---|---|---|
-| Q – Problem, Zielgruppen, Anforderungen, KPIs und Constraints | Forschungsfrage, Nutzerentscheidungen, Go/No-Go-Gates und Einsatzgrenzen | `notebooks/01_question.ipynb`, `PROJECT_CHARTER.md`, `PRODUCT_SPEC.md` | erfüllt |
-| U – EDA, Datenqualität, Missing Values, Ausreißer und Leakage | ausgeführte EDA, Datenverträge, plausible Wertebereiche, Median-Imputation nur auf Trainingsdaten und räumlicher Leakage-Schutz | `notebooks/02_understanding_the_data.ipynb`, `DATA_CARD.md`, `scripts/build_dataset.py` | erfüllt |
-| A¹ – geeignete Algorithmen vergleichen | Baseline, Ridge, Random Forest, HGB und MLP auf identischen räumlichen Folds | `notebooks/03_algorithmenauswahl.ipynb`, `reports/algorithm_benchmark.json` | erfüllt |
-| A² – Feature-Anpassung | vier inkrementelle Merkmalsgruppen und dokumentierte Ablation | `notebooks/04_modellentwicklung.ipynb`, `reports/feature_ablation.json` | erfüllt |
-| A³ – Hyperparameter-Tuning | acht theoriegeleitete Kandidaten; Kalibrierung und Test bleiben gesperrt | `notebooks/04_modellentwicklung.ipynb`, `reports/hgb_tuning.json` | erfüllt |
-| C – quantitative und qualitative Auswahl | räumlicher Holdout, vier Punktmetriken, Baseline-Gate, Intervalle, Subgruppen und Modellkarte | `notebooks/05_kreuzvalidierung.ipynb`, `reports/final_model_evaluation.json` | erfüllt |
-| K – Dokumentation und Deployment | Streamlit-App, README, Daten-/Modellkarte, Risikoanalyse, Präsentation und Demo-Runbook | `notebooks/06_wissensextraktion.ipynb`, `app.py`, `docs/` | erfüllt; öffentliche Freigabe folgt nach Abnahme |
+| Q – Problem, Zielgruppen, Anforderungen, KPIs und Constraints | Forschungsfrage, Nutzerentscheidungen, Go/No-Go-Gates und Einsatzgrenzen | `notebooks/Q-Phase.ipynb`, `PROJECT_CHARTER.md`, `PRODUCT_SPEC.md` | erfüllt |
+| U – EDA, Datenqualität, Skalierung und Leakage | ausgeführte EDA, Datenverträge, StandardScaler-Vorher/Nachher-Nachweis, fold-interne Imputation und räumlicher Leakage-Schutz | `notebooks/U-Phase.ipynb`, `DATA_CARD.md`, `scripts/build_dataset.py` | erfüllt |
+| A¹ – geeignete Algorithmen vergleichen | Baseline, Ridge, LinearSVR, Decision Tree, Random Forest, HGB und MLP auf identischen räumlichen Folds; RBF-SVR als skalierungsbegründete Zusatzstudie | `notebooks/A-Phase.ipynb`, `reports/algorithm_benchmark.json`, `reports/svm_kernel_benchmark.json` | erfüllt |
+| A² – Feature-Anpassung | vier inkrementelle Merkmalsgruppen und dokumentierte Ablation | `notebooks/A-Phase.ipynb`, `reports/feature_ablation.json` | erfüllt |
+| A³ – Hyperparameter-Tuning | acht theoriegeleitete Kandidaten; Kalibrierung und Test bleiben gesperrt | `notebooks/A-Phase.ipynb`, `reports/hgb_tuning.json` | erfüllt |
+| C – quantitative und qualitative Auswahl | räumlicher Holdout, vier Punktmetriken, Baseline-Gate, Intervalle, Subgruppen und Modellkarte | `notebooks/C-Phase.ipynb`, `reports/final_model_evaluation.json` | erfüllt |
+| K – Dokumentation und Deployment | Streamlit-App, README, Daten-/Modellkarte, Risikoanalyse und Screenshot-Präsentation | `notebooks/K-Phase.md`, `app.py`, `docs/` | erfüllt; öffentliche Freigabe folgt nach Abnahme |
 | Experiment-Tracking mit MLflow | bestehende unveränderliche JSON-Ergebnisse werden als A¹-, A³- und C/K-Runs mit Parametern, Metriken und Artefakten publiziert | `scripts/publish_mlflow.py`, `src/mlflow_tracking.py`, `reports/mlflow_publish.json` | erfüllt |
 | Model Registry und Modell-Signatur | finales scikit-learn-Modell mit Inputbeispiel und inferierter Signatur; Alias `@champion` | `scripts/publish_mlflow.py`, `models/model_manifest.json` | erfüllt |
 | Codeversionierung | GitHub, CI und klarer Repository-Aufbau | `.git/`, `.github/workflows/ci.yml`, `README.md` | erfüllt |
@@ -55,4 +55,3 @@ MietCheck nutzt deshalb URL-, Zeit-, Größen- und SHA-256-Provenienz statt eine
 eigenen DVC-Remotes. Automatisches Retraining wäre ohne fachlich vergleichbare neue
 Zensus-Zielwerte Scheinautomatisierung. Neue Daten werden erst nach den dokumentierten
 Qualitäts-, Segment- und Freigabegates übernommen.
-
