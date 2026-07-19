@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 from streamlit.testing.v1 import AppTest
@@ -14,6 +15,8 @@ def test_streamlit_app_renders_and_updates_scenario() -> None:
         "Methodik & Quellen",
     ]
     assert app.selectbox[0].value == "Berlin"
+    model_chart = json.loads(app.get("plotly_chart")[4].proto.spec)
+    assert "7 Modellfamilien" in model_chart["layout"]["title"]["text"]
 
     app.selectbox[0].select("Hamburg")
     app.slider[0].set_value(90)

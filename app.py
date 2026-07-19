@@ -25,6 +25,7 @@ BUILD_REPORT = ROOT / "reports" / "dataset_build_report.json"
 MODEL_META = ROOT / "models" / "zensus_hgb_meta.json"
 MODEL_MANIFEST = ROOT / "models" / "model_manifest.json"
 MLFLOW_REPORT = ROOT / "reports" / "mlflow_publish.json"
+DATA_CACHE_VERSION = "2026-07-19-seven-model-benchmark"
 
 COLORS = {
     "ink": "#132238",
@@ -50,7 +51,11 @@ st.set_page_config(
 
 
 @st.cache_data
-def load_data() -> tuple[pd.DataFrame, pd.DataFrame, dict, dict, dict, dict, dict, dict]:
+def load_data(
+    cache_version: str,
+) -> tuple[pd.DataFrame, pd.DataFrame, dict, dict, dict, dict, dict, dict]:
+    """Load versioned app artifacts so deployments cannot reuse stale report caches."""
+    del cache_version
     profiles = pd.read_csv(PROFILES_FILE)
     greix = pd.read_csv(GREIX_FILE)
     final = json.loads(FINAL_REPORT.read_text(encoding="utf-8"))
@@ -357,7 +362,7 @@ st.markdown(
     model_meta,
     model_manifest,
     mlflow_report,
-) = load_data()
+) = load_data(DATA_CACHE_VERSION)
 regions = sorted(profiles["region"].tolist())
 
 with st.sidebar:
@@ -686,7 +691,7 @@ with method_tab:
         )
     )
     model_figure.update_layout(
-        title="Fünf Modellfamilien auf identischen räumlichen Folds",
+        title=f"{len(ranking)} Modellfamilien auf identischen räumlichen Folds",
         xaxis_title="mittlerer MAE €/m²",
         yaxis_title="",
         height=390,
