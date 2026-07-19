@@ -27,5 +27,5 @@ Statuswerte: `OFFEN`, `IN ARBEIT`, `ERFÜLLT`, `BLOCKIERT`.
 | MLOps | Modell-Lineage und reproduzierbarer Container | SHA-256-Modellmanifest, Release-Prüfung, Docker-Build und Health-Smoke-Test | ERFÜLLT |
 | Qualität | Datenschutz, Bias, Grenzen und Sicherheit | `RISK_AND_ETHICS.md`, Datenblatt, Modellkarte und sichtbare App-Hinweise | ERFÜLLT |
 | Veröffentlichung | öffentliches GitHub-Repository | `https://github.com/neleknaak-31/MietCheck`, öffentlicher `main`-Branch | ERFÜLLT |
-| Veröffentlichung | öffentliches Streamlit-Deployment | App-URL und Produktions-Smoke-Test | OFFEN |
+| Veröffentlichung | öffentliches Streamlit-Deployment | App ist technisch deployt und für die Abnahme bewusst privat; öffentliche Freigabe, anonymer Produktions-Smoke-Test und Dokumentationsupdate folgen erst nach ausdrücklicher Endfreigabe | OFFEN |
 | Prüfung | Präsentation, Handout und Demo-Ablauf | 14 geprüfte Folien ohne Überlauf, 5 geprüfte A4-Seiten, Sprechskript und Offline-Fallback | ERFÜLLT |

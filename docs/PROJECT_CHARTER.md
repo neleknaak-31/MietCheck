@@ -7,6 +7,11 @@ Endprodukt besteht aus einer reproduzierbaren Machine-Learning-Pipeline, einer
 öffentlich erreichbaren Streamlit-App, einem nachvollziehbaren GitHub-Repository,
 vollständig ausgeführten QUA³CK-Notebooks sowie Präsentation und Handout.
 
+Bis zur gemeinsamen Endabnahme bleibt die bereits deployte Streamlit-App auf
+„Only specific people can view this app“. Das Repository bleibt öffentlich. Die
+öffentliche App-Freigabe ist ein bewusstes finales Release-Gate und kein
+Zwischenstand während der Qualitätsprüfung.
+
 Die Zielnote 1,0 ist ein Qualitätsanspruch, keine garantierbare Bewertung. Jede
 fachliche Aussage muss durch Code, Daten, Quellen oder ein überprüfbares Artefakt
 belegt sein.
@@ -73,3 +78,7 @@ Das Projekt ist erst fertig, wenn jede Zeile in
 `docs/REQUIREMENTS_CHECKLIST.md` durch konkrete Evidenz erfüllt ist, die App
 öffentlich erreichbar ist, ein frischer Klon reproduzierbar geprüft wurde und
 Präsentation sowie Handout visuell und inhaltlich abgenommen wurden.
+
+Der Übergang von privater Abnahme zu öffentlicher App ist erst zulässig, wenn die
+fachliche, visuelle und technische Endabnahme dokumentiert ist und die
+Projekteigentümerin die Veröffentlichung ausdrücklich freigibt.

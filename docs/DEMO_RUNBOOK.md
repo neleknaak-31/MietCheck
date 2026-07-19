@@ -2,11 +2,16 @@
 
 ## Vor dem Vortrag
 
-1. App lokal starten: `streamlit run app.py` oder `start.bat`.
-2. Browser auf 100 % Zoom und 1440 × 900 oder größer einstellen.
-3. Region **Berlin**, Wohnfläche **70 m²**, Baujahr **1985**, aktuelle Kaltmiete **850 €**, Haushaltsnetto **3.200 €** einstellen.
-4. Die Tabs **Dein Mietbild**, **Marktverlauf** sowie **Methodik & Quellen** einmal öffnen, damit alle Komponenten geladen sind.
-5. Präsentation und App in zwei direkt erreichbaren Fenstern bereithalten.
+1. Release-Status prüfen: Während der Abnahme ist die Cloud-App privat. Für die
+   Prüfung entweder vorher bei Streamlit anmelden oder die App lokal mit
+   `streamlit run app.py` beziehungsweise `start.bat` starten.
+2. Erst nach dokumentierter Endabnahme und ausdrücklicher Freigabe die
+   Streamlit-Sichtbarkeit auf öffentlich setzen; anschließend die URL in einem
+   nicht angemeldeten Browserfenster testen.
+3. Browser auf 100 % Zoom und 1440 × 900 oder größer einstellen.
+4. Region **Berlin**, Wohnfläche **70 m²**, Baujahr **1985**, aktuelle Kaltmiete **850 €**, Haushaltsnetto **3.200 €** einstellen.
+5. Die Tabs **Dein Mietbild**, **Marktverlauf** sowie **Methodik & Quellen** einmal öffnen, damit alle Komponenten geladen sind.
+6. Präsentation und App in zwei direkt erreichbaren Fenstern bereithalten.
 
 ## Live-Demo in 90 Sekunden
 
@@ -39,3 +44,9 @@ streamlit run app.py
 ```
 
 Erwartung: 34 Tests erfolgreich; keine Ruff-Fehler; App ohne Browser- oder Requestfehler.
+
+Zusätzlich vor der offiziellen Veröffentlichung:
+
+- Freigabeeinstellung im Streamlit-Dashboard: `This app is public and searchable`
+- anonymer Aufruf ohne Streamlit-/GitHub-Anmeldung zeigt die vollständige App
+- danach `docs/RELEASE_STATUS.md` und `docs/REQUIREMENTS_CHECKLIST.md` aktualisieren

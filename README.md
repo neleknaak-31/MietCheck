@@ -23,12 +23,18 @@ direkt am Ergebnis gezeigt.
 ## Online und Abgabeunterlagen
 
 - **Repository:** [github.com/neleknaak-31/MietCheck](https://github.com/neleknaak-31/MietCheck)
+- **Streamlit-App:** [mietcheck.streamlit.app](https://mietcheck.streamlit.app/) – während der gemeinsamen Abnahme bewusst nur für freigegebene Personen sichtbar; öffentliche Freigabe erst nach dem finalen Release-Gate
 - **Präsentation:** [PPTX](deliverables/MietCheck_Praesentation.pptx) · [PDF](deliverables/MietCheck_Praesentation.pdf)
 - **Handout:** [DOCX](deliverables/MietCheck_Handout.docx) · [PDF](deliverables/MietCheck_Handout.pdf)
 - **Vorbereitung:** [12-Minuten-Sprechskript](docs/PRESENTATION_SCRIPT.md) · [Demo-Runbook](docs/DEMO_RUNBOOK.md)
 
 Die Präsentation umfasst zwölf Hauptfolien plus zwei Backup-Folien und enthält
 Sprechernotizen. Das Handout ist auf fünf DIN-A4-Seiten begrenzt.
+
+Der aktuelle Veröffentlichungsstatus ist in
+[RELEASE_STATUS.md](docs/RELEASE_STATUS.md) festgehalten. Das öffentliche
+GitHub-Repository und die vorläufig private Streamlit-Freigabe sind bewusst
+voneinander getrennt.
 
 ## Warum das Projekt eigenständig ist
 
