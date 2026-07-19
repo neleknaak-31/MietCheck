@@ -45,6 +45,18 @@ Die GREIX-Datei ist öffentlich abrufbar. Für Weiterverwendung und Veröffentli
 sind die jeweils aktuellen Quellen- und Nutzungsbedingungen des Kiel Instituts zu
 beachten.
 
+Aktualitätsprüfung am 19.07.2026:
+
+- die offizielle, unverändert unter der dokumentierten URL angebotene Exceldatei
+  wurde erneut direkt im Speicher geladen und validiert;
+- Dateigröße: 1.241.956 Bytes; SHA-256:
+  `9382bf91aa5e8025458ae4055e67bd2677c2505f0c5eae0ff94989cda687b338`;
+- 18.468 Rohzeilen ergeben 2.166 nominale Quartalsbeobachtungen für 38 Reihen;
+- das maximal enthaltene Quartal ist weiterhin `2026-Q1`. Ein neuerer
+  GREIX-Mietdatenstand war zu diesem Prüfzeitpunkt nicht veröffentlicht;
+- der [offizielle GREIX-Bericht Q1/2026](https://www.kielinstitut.de/de/publikationen/greix-mietpreisindexq1-2026-mietpreisanstieg-verliert-an-tempo-19683/)
+  bestätigt den Datenstand und die Auswertung von 37 Städten und Regionen.
+
 ### Regionszentren
 
 - Geocoding: Nominatim / OpenStreetMap
