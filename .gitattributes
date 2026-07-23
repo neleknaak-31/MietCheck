@@ -9,5 +9,7 @@
 *.command text eol=lf
 *.bat text eol=crlf
 *.png binary
+*.pdf binary
+*.pptx binary
 *.parquet binary
 *.joblib binary
