@@ -110,9 +110,9 @@ Machine Learning in eine nachvollziehbare Umzugsentscheidung.“
 
 ## Folie 15 – Backup: Quellen und Reproduzierbarkeit
 
-Nur bei Rückfragen zeigen. Zensus, GREIX, vier ausgeführte Rechennotebooks,
-K-Transfer, JSON-Reports, Tests, CI, MLflow, Karten und Docker sind im
-Repository nachvollziehbar.
+Nur bei Rückfragen zeigen. Zensus, GREIX, vier geprüfte Phasen-Notebooks
+(Q bewusst ohne Code; U/A/C vollständig ausgeführt), K-Transfer, JSON-Reports,
+Tests, CI, MLflow, Karten und Docker sind im Repository nachvollziehbar.
 
 ## Typische Rückfragen
 

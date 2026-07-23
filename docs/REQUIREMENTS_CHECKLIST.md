@@ -12,7 +12,7 @@ Statuswerte: `OFFEN`, `IN ARBEIT`, `ERFÜLLT`, `BLOCKIERT`.
 | Daten | aktuelle Marktreferenz | GREIX bis Q1/2026, 37 lokale Märkte | ERFÜLLT |
 | Daten | reproduzierbarer Download | `scripts/download_data.py`, SHA-256-Manifest | ERFÜLLT |
 | Daten | Lizenz, Quelle und Datenstand | `DATA_CARD.md`, Manifeste, README und App-Quellenansicht | ERFÜLLT |
-| Methodik | vollständige QUA³CK-Struktur | vier Referenz-konform benannte Phasen-Notebooks plus `K-Phase.md`; Laufbericht 24/24 Codezellen ohne Fehler | ERFÜLLT |
+| Methodik | vollständige QUA³CK-Struktur | vier Referenz-konform benannte Phasen-Notebooks plus `K-Phase.md`; Q als reine Konzeptphase, U/A/C mit 11/11 fehlerfrei ausgeführten Analysezellen | ERFÜLLT |
 | Methodik | EDA und Datenqualitätsprüfung | U-Notebook mit Quellenprüfung, Qualitätsgates und realem 2,06-Mio.-Datensatz | ERFÜLLT |
 | Methodik | mehrere Modelle und Baselines | sieben Hauptkandidaten auf identischer 3-Fold-Spatial-CV; ergänzend Linear- vs. RBF-SVR auf transparenter 10k-Machbarkeitsstichprobe | ERFÜLLT |
 | Methodik | Feature-Anpassung und Hyperparameteroptimierung | 8-Kandidaten-Tuning, 4-stufige Ablation, ausgeführtes A³-Notebook | ERFÜLLT |
@@ -22,7 +22,7 @@ Statuswerte: `OFFEN`, `IN ARBEIT`, `ERFÜLLT`, `BLOCKIERT`.
 | Produkt | belegbares Alleinstellungsmerkmal | Konkurrenzanalyse, finaler Hook und Drei-Realitäten-Nutzerreise | ERFÜLLT |
 | Produkt | professionelle Streamlit-App | Desktop- und Mobil-Screenshots, AppTest und echter Browser-Smoke-Test ohne Fehler | ERFÜLLT |
 | Produkt | verständliche Erklärbarkeit | getrennte Messkonzepte, Bandbreiten, Modellvergleich, Permutationsbeiträge und Grenzen in der App | ERFÜLLT |
-| Qualität | automatisierte Tests | 35 lokale Tests, ML-Release-Gates, Ruff und GitHub Actions | ERFÜLLT |
+| Qualität | automatisierte Tests | 36 lokale Tests, ML-Release-Gates, Ruff und GitHub Actions | ERFÜLLT |
 | MLOps | Experiment-Tracking und Model Registry | drei MLflow-Runs, Modell-Signatur, Registry-Version 1 und Alias `@champion` | ERFÜLLT |
 | MLOps | Modell-Lineage und reproduzierbarer Container | SHA-256-Modellmanifest, Release-Prüfung, Docker-Build und Health-Smoke-Test | ERFÜLLT |
 | Qualität | Datenschutz, Bias, Grenzen und Sicherheit | `RISK_AND_ETHICS.md`, Datenblatt, Modellkarte und sichtbare App-Hinweise | ERFÜLLT |

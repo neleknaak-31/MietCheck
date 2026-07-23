@@ -198,8 +198,10 @@ Leakage-Kontrolle, SVM-Skalierungsstudie und conformale Unsicherheit.
 | C – Conclude and Compare | `C-Phase.ipynb` |
 | K – Knowledge Transfer | `K-Phase.md` |
 
-Die vier Rechennotebooks wurden automatisiert ausgeführt: 24 von 24 Codezellen
-ohne Fehler. Der Prüfbericht liegt in `reports/notebook_execution.json`.
+Die vier Phasen-Notebooks wurden automatisiert geprüft: Die Q-Phase ist wie
+die Referenz bewusst eine reine Konzept- und Textphase ohne Code; alle 11
+Codezellen der U-, A- und C-Phase wurden ohne Fehler ausgeführt. Der
+Prüfbericht liegt in `reports/notebook_execution.json`.
 
 ## Projektstruktur
 

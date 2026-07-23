@@ -28,7 +28,7 @@ Am 19. Juli 2026 wurde der über Pull Request
   Angebotsmarkt, Umzugsaufschlag und Budgetwirkung konsistent;
 - der beim dynamischen Regionswechsel zuvor veraltete Überschriften-Kopierlink
   ist im Hero-Bereich nicht mehr sichtbar;
-- 35 Tests sowie die GitHub-Actions-Jobs `quality` und `container` sind grün;
+- 36 Tests sowie die GitHub-Actions-Jobs `quality` und `container` sind grün;
 - ein anonymer HTTP-Aufruf erhält weiterhin `303 See Other` zur
   Streamlit-Authentifizierung. Die App ist damit weiterhin nicht öffentlich.
 
@@ -41,7 +41,7 @@ versionierte Projektdateien wurden dort folgende Prüfungen erfolgreich ausgefü
 | Prüfung | Ergebnis |
 |---|---|
 | Git-Stand | sauberer Frischklon von `neleknaak-31/MietCheck`, Commit `1bfccbe` |
-| Test-Suite | 35 von 35 Tests bestanden |
+| Test-Suite | 36 von 36 Tests bestanden |
 | Ruff-Lint und Format | ohne Befund; 34 Python-Dateien korrekt formatiert |
 | ML-Release-Gates | Modellhash, Baseline-Vorteil, Coverage, Subgruppen und Laufzeit bestanden |
 | Modellartefakt | Version 1.0.0, SHA-256 `64b2bef5df9dfe55b160b55f1815d914e8be8c0b4dab378d629e71cd40e34368` |
