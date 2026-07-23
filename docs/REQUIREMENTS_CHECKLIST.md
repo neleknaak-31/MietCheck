@@ -28,7 +28,7 @@ Statuswerte: `OFFEN`, `IN ARBEIT`, `ERFÜLLT`, `BLOCKIERT`.
 | Qualität | Datenschutz, Bias, Grenzen und Sicherheit | `RISK_AND_ETHICS.md`, Datenblatt, Modellkarte und sichtbare App-Hinweise | ERFÜLLT |
 | Veröffentlichung | öffentliches GitHub-Repository | `https://github.com/neleknaak-31/MietCheck`, öffentlicher `main`-Branch | ERFÜLLT |
 | Veröffentlichung | öffentliches Streamlit-Deployment | App ist technisch deployt und für die Abnahme bewusst privat; öffentliche Freigabe, anonymer Produktions-Smoke-Test und Dokumentationsupdate folgen erst nach ausdrücklicher Endfreigabe | OFFEN |
-| Prüfung | Präsentation, Handout und Screenshot-Ablauf | 15 geprüfte Folien ohne Überlauf, 5 geprüfte A4-Seiten, Sprechskript und Screenshot-Fallback | ERFÜLLT |
+| Prüfung | Präsentation, Handout und Screenshot-Ablauf | 16 geprüfte Folien ohne Überlauf, 5 geprüfte A4-Seiten, Sprechskript und Screenshot-Fallback | ERFÜLLT |
 
 ## Abgleich mit den mündlichen Hinweisen vom 16.07.2026
 
@@ -42,7 +42,7 @@ nachgewiesen:
 | Hyperparameter automatisiert optimieren | acht reproduzierbar ausgewertete HGB-Konfigurationen auf räumlichen Entwicklungsfolds; Testset bleibt bis zur finalen Evaluation gesperrt | ERFÜLLT |
 | interaktive Streamlit-App und funktionierender Link | Szenario-, Wohnungs- und Budgeteingaben, Markt-/Methodikansichten sowie deployte URL; Freigabe bleibt bis zum finalen Release-Gate absichtlich privat | TECHNISCH ERFÜLLT / FREIGABE OFFEN |
 | strukturiertes GitHub-Repository mit README, Code und Phasen-Notebooks | öffentliche Repository-Struktur; exakt referenzkonforme Dateien `Q-Phase`, `U-Phase`, `A-Phase`, `C-Phase` und `K-Phase` | ERFÜLLT |
-| Präsentation mit App-Screenshots statt riskanter Live-Demo | 15 Folien im App-Design, drei geprüfte Produktionsscreenshots, 12-Minuten-Sprechskript und Screenshot-Runbook | ERFÜLLT |
+| Präsentation mit App-Screenshots statt riskanter Live-Demo | 16 Folien im App-Design, drei geprüfte Produktionsscreenshots, 12-Minuten-Sprechskript und Screenshot-Runbook | ERFÜLLT |
 | fünfseitige schriftliche Ausarbeitung als erweitertes Handout | editierbares DOCX und visuell geprüfter PDF-Export mit exakt fünf DIN-A4-Seiten | ERFÜLLT |
 
 Word ist laut Zusammenfassung neben Markdown und LaTeX ausdrücklich zulässig. Das
