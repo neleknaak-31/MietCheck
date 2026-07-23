@@ -1,6 +1,6 @@
 # QUA³CK-Notebook-Leitfaden
 
-Stand: 19. Juli 2026
+Stand: 23. Juli 2026
 
 Die Dateinamen und die Phasenbündelung orientieren sich bewusst am mit 1,0
 bewerteten Referenzprojekt des Moduls. MietCheck ergänzt räumliche Validierung,
@@ -22,18 +22,21 @@ python scripts/execute_notebooks.py
 ```
 
 `generate_notebooks.py` hält Struktur und Narrative konsistent.
-`execute_notebooks.py` führt die vier Rechennotebooks mit dem Projektkernel aus,
+`execute_notebooks.py` prüft die vier Phasen-Notebooks mit dem Projektkernel,
 bricht beim ersten Fehler ab, speichert alle Outputs und schreibt
-`reports/notebook_execution.json`.
+`reports/notebook_execution.json`. Q ist wie im Referenzprojekt eine einzige
+Markdown-Narrative ohne Code. In U, A und C steht Code nur noch dort, wo er
+Berechnungen, Prüfungen oder Diagramme reproduzierbar erzeugt; statische
+Ergebnistabellen sind direkt lesbares Markdown.
 
-Der verifizierte Lauf umfasst 24 von 24 ausgeführte Codezellen ohne
-Fehleroutput. `K-Phase.md` ist wie in der Referenz ein schriftlicher
-Knowledge-Transfer statt eines Rechennotebooks.
+Der verifizierte Lauf umfasst 11 von 11 ausgeführte Codezellen ohne
+Fehleroutput (U: 4, A: 4, C: 3; Q: 0). `K-Phase.md` ist wie in der Referenz
+ein schriftlicher Knowledge-Transfer statt eines Rechennotebooks.
 
 ## StandardScaler-Nachweis
 
-Das U-Notebook zeigt vor und nach der Standardisierung Mittelwerte,
-Standardabweichungen und Boxplots. Der Scaler wird ausschließlich innerhalb
+Das U-Notebook erklärt die Standardisierung mathematisch und zeigt ihren Effekt
+in einem Vorher-/Nachher-Boxplot. Der Scaler wird ausschließlich innerhalb
 jedes Trainingsfolds nach der Median-Imputation gefittet. Er kommt bei Ridge,
 LinearSVR, RBF-SVR und MLP zum Einsatz. Decision Tree, Random Forest und HGB
 benötigen keine Skalierung; deshalb enthält das finale HGB-Artefakt bewusst

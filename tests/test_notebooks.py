@@ -19,11 +19,34 @@ def test_reference_aligned_qua3ck_artifacts_are_clean_and_substantive() -> None:
         cells = content["cells"]
         source = "".join("".join(cell["source"]) for cell in cells)
         assert content["nbformat"] == 4
-        assert sum(cell["cell_type"] == "code" for cell in cells) >= 3
         assert "MietCheck" in source
         assert "202.908" not in source
         assert "immo_clean" not in source
+
+        code_cells = sum(cell["cell_type"] == "code" for cell in cells)
+        if path.name == "Q-Phase.ipynb":
+            assert code_cells == 0
+            assert len(cells) == 1
+            assert "🎯 Zielgruppen und Anwendungsnutzen" in source
+            assert "../reports/streamlit_overview.png" in source
+        else:
+            assert code_cells >= 3
+            assert "display(" not in source
     assert "Knowledge Transfer" in (NOTEBOOK_DIR / "K-Phase.md").read_text(encoding="utf-8")
+
+
+def test_major_phase_headings_use_a_consistent_emoji_system() -> None:
+    expected = {
+        "Q-Phase.ipynb": ["🔬", "🧭", "🎯", "🗂️", "⚖️", "✅", "🖥️"],
+        "U-Phase.ipynb": ["🗂️", "📊", "🧹", "⚖️", "✅"],
+        "A-Phase.ipynb": ["🤖", "🧩", "⚙️", "✅"],
+        "C-Phase.ipynb": ["🔁", "📏", "🎯", "⚖️", "🧭", "✅"],
+    }
+    for name, emojis in expected.items():
+        content = json.loads((NOTEBOOK_DIR / name).read_text(encoding="utf-8"))
+        source = "".join("".join(cell["source"]) for cell in content["cells"])
+        for emoji in emojis:
+            assert emoji in source
 
 
 def test_notebooks_use_mietcheck_kernel() -> None:

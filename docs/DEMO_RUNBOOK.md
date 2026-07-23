@@ -18,7 +18,7 @@ geschaltet werden.
 1. App lokal oder privat in Streamlit öffnen.
 2. Berlin, 70 m², Baujahr 1985, Kaltmiete 850 €, Haushaltsnetto 3.200 € setzen.
 3. Alle drei Tabs auf 1440 × 900 oder größer bei 100 % Zoom prüfen.
-4. Sicherstellen, dass Datenstand 2026-Q1, 7-Kandidaten-Vergleich, 35 Tests und
+4. Sicherstellen, dass Datenstand 2026-Q1, 7-Kandidaten-Vergleich, 36 Tests und
    86,8-%-Coverage sichtbar beziehungsweise dokumentiert sind.
 5. Screenshots in Präsentation und PDF visuell auf Lesbarkeit kontrollieren.
 
@@ -53,5 +53,5 @@ python -m ruff check .
 streamlit run app.py
 ```
 
-Erwartung: 35 Tests erfolgreich, keine Ruff-Fehler und App ohne
+Erwartung: 36 Tests erfolgreich, keine Ruff-Fehler und App ohne
 Browser-/Requestfehler.

@@ -2,8 +2,8 @@
 
 | Datei | Zweck |
 |---|---|
-| `MietCheck_Praesentation.pptx` | editierbare QUA³CK-Präsentation, 14 Haupt- und 1 Backup-Folie, inklusive Sprechernotizen und drei App-Screenshots |
-| `MietCheck_Praesentation.pdf` | abgabefertiger PDF-Export, 15 Seiten, 16:9 |
+| `MietCheck_Praesentation.pptx` | editierbare QUA³CK-Präsentation, 15 Haupt- und 1 Backup-Folie, inklusive Sprechernotizen und drei App-Screenshots |
+| `MietCheck_Praesentation.pdf` | abgabefertiger PDF-Export, 16 Seiten, 16:9 |
 | `MietCheck_Handout.docx` | editierbares Handout |
 | `MietCheck_Handout.pdf` | abgabefertiges Handout, exakt 5 DIN-A4-Seiten |
 
