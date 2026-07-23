@@ -7,6 +7,11 @@
 | `MietCheck_Handout.docx` | editierbares Handout |
 | `MietCheck_Handout.pdf` | abgabefertiges Handout, exakt 5 DIN-A4-Seiten |
 
+Das DOCX enthält einen aussagekräftigen Alternativtext für den App-Screenshot und
+semantisch markierte Kopfzeilen für alle sieben Datentabellen. Der PDF-Export wurde
+danach erneut gerendert; alle fünf Seiten sind pixelidentisch zum visuell
+abgenommenen Stand.
+
 Ergänzende Vorbereitung:
 
 - `docs/PRESENTATION_SCRIPT.md`: auf rund zwölf Minuten getaktetes Sprechskript

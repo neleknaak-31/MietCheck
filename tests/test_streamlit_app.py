@@ -25,6 +25,9 @@ def test_streamlit_app_renders_and_updates_scenario() -> None:
     assert "Was kostet Wohnen in Berlin" in hero
     model_chart = json.loads(app.get("plotly_chart")[4].proto.spec)
     assert "7 Modellfamilien" in model_chart["layout"]["title"]["text"]
+    assert any(
+        metric.label == "automatisierte Tests" and metric.value == "36" for metric in app.metric
+    )
 
     app.selectbox[0].select("Hamburg")
     app.slider[0].set_value(90)
