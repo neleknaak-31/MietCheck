@@ -28,7 +28,7 @@ direkt am Ergebnis gezeigt.
 - **Handout:** [DOCX](deliverables/MietCheck_Handout.docx) · [PDF](deliverables/MietCheck_Handout.pdf)
 - **Vorbereitung:** [12-Minuten-Sprechskript](docs/PRESENTATION_SCRIPT.md) · [Demo-Runbook](docs/DEMO_RUNBOOK.md)
 
-Die Präsentation umfasst vierzehn Hauptfolien plus eine Backup-Folie und enthält
+Die Präsentation umfasst fünfzehn Hauptfolien plus eine Backup-Folie und enthält
 Sprechernotizen. Das Handout ist auf fünf DIN-A4-Seiten begrenzt.
 
 Der aktuelle Veröffentlichungsstatus ist in
