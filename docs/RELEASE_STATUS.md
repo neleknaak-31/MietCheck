@@ -1,6 +1,6 @@
 # MietCheck – Release-Status
 
-Stand: 19. Juli 2026
+Stand: 23. Juli 2026
 
 ## Aktueller Zustand
 
@@ -18,35 +18,37 @@ davon unabhängig verfügbar.
 
 ## Letzte private Produktionsabnahme
 
-Am 19. Juli 2026 wurde der über Pull Request
-[`#7`](https://github.com/neleknaak-31/MietCheck/pull/7) veröffentlichte App-Stand
-`08f39ba` im echten Streamlit-Cloud-Deployment geprüft:
+Am 23. Juli 2026 wurde der über Pull Request
+[`#12`](https://github.com/neleknaak-31/MietCheck/pull/12) veröffentlichte
+`main`-Stand `5021e39` im echten Streamlit-Cloud-Deployment geprüft:
 
 - Startansicht, Marktverlauf sowie Methodik- und Quellenansicht rendern ohne
   Browserwarnungen oder JavaScript-Fehler;
-- der Wechsel Berlin → München aktualisiert Überschrift, Bestandsanker,
+- der Wechsel Berlin → Aachen aktualisiert Überschrift, Bestandsanker,
   Angebotsmarkt, Umzugsaufschlag und Budgetwirkung konsistent;
-- der beim dynamischen Regionswechsel zuvor veraltete Überschriften-Kopierlink
-  ist im Hero-Bereich nicht mehr sichtbar;
+- die Methodikansicht weist konsistent mit Repository, Präsentation und Handout
+  36 automatisierte Tests aus;
 - 36 Tests sowie die GitHub-Actions-Jobs `quality` und `container` sind grün;
+- die CI verwendet die offiziellen Node-24-basierten Hauptversionen von
+  `actions/checkout` und `actions/setup-python` ohne Node-20-Abkündigungswarnung;
 - ein anonymer HTTP-Aufruf erhält weiterhin `303 See Other` zur
   Streamlit-Authentifizierung. Die App ist damit weiterhin nicht öffentlich.
 
 ## Reproduzierbarkeit aus öffentlichem Frischklon
 
-Ebenfalls am 19. Juli 2026 wurde der öffentliche `main`-Commit `1bfccbe` in ein
+Am 23. Juli 2026 wurde der öffentliche `main`-Commit `5021e39` in ein
 neues isoliertes temporäres Verzeichnis geklont. Ohne Zugriff auf nicht
 versionierte Projektdateien wurden dort folgende Prüfungen erfolgreich ausgeführt:
 
 | Prüfung | Ergebnis |
 |---|---|
-| Git-Stand | sauberer Frischklon von `neleknaak-31/MietCheck`, Commit `1bfccbe` |
+| Git-Stand | sauberer Frischklon von `neleknaak-31/MietCheck`, Commit `5021e39` |
 | Test-Suite | 36 von 36 Tests bestanden |
 | Ruff-Lint und Format | ohne Befund; 34 Python-Dateien korrekt formatiert |
 | ML-Release-Gates | Modellhash, Baseline-Vorteil, Coverage, Subgruppen und Laufzeit bestanden |
 | Modellartefakt | Version 1.0.0, SHA-256 `64b2bef5df9dfe55b160b55f1815d914e8be8c0b4dab378d629e71cd40e34368` |
-| geladene Szenarien | 1.000 Berechnungen in rund 0,017 Sekunden |
-| Streamlit-Start | Health-Endpunkt aus dem Frischklon: `200 ok` |
+| geladene Szenarien | 1.000 Berechnungen in rund 0,013 Sekunden |
+| Streamlit-Prüfung | AppTest rendert die App und validiert den dynamischen Regionswechsel |
 
 Damit ist belegt, dass die Abgabe nicht von versteckten Dateien des lokalen
 Entwicklungsordners abhängt. Große Rohdaten bleiben wie vorgesehen außerhalb von
