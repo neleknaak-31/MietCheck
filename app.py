@@ -645,7 +645,7 @@ with method_tab:
     with mlops_columns[2]:
         st.metric("Modell-Alias", mlflow_report["registry"]["alias"])
     with mlops_columns[3]:
-        st.metric("automatisierte Tests", "35")
+        st.metric("automatisierte Tests", "36")
 
     with st.expander("Wie Training, Registry, CI und App zusammenhängen", expanded=False):
         st.markdown(
@@ -667,7 +667,7 @@ with method_tab:
               Zensus-Profile. Die App kombiniert diese geprüften ML-Vorhersagen
               interaktiv mit GREIX und persönlichen Eingaben. Sie trainiert nicht
               im Browser und benötigt keine Rohdaten.
-            - **Qualitätsgates:** GitHub Actions führt Lint, Formatierung, 35 Tests,
+            - **Qualitätsgates:** GitHub Actions führt Lint, Formatierung, 36 Tests,
               Modell-/Segment-Gates und einen Docker-Build aus. Der Container besitzt
               einen eigenen Health-Endpunkt.
 
