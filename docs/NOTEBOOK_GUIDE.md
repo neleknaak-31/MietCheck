@@ -9,7 +9,7 @@ SVM-Skalierungsstudie, conformale Unsicherheit und MLOps-Lineage.
 | Phase | Artefakt | Inhalt | Reproduzierbare Evidenz |
 |---|---|---|---|
 | Q | `Q-Phase.ipynb` | Forschungsfrage, Zielgruppen, USP, Scope und Go/No-Go-Gates | `PROJECT_CHARTER.md`, `PRODUCT_SPEC.md` |
-| U | `U-Phase.ipynb` | Quellen, EDA, Missingness, Raumstruktur und StandardScaler-Vorher/Nachher | `download_data.py`, `build_dataset.py`, `model_table.parquet` |
+| U | `U-Phase.ipynb` | Quellen, EDA, Missingness, Raumstruktur und StandardScaler-Vorher/Nachher | `scripts/download_data.py`, `scripts/build_dataset.py`, `reports/dataset_build_report.json` |
 | A¹/A²/A³ | `A-Phase.ipynb` | sieben Hauptkandidaten, SVM-Zusatzstudie, vier Feature-Ablationen und acht HGB-Tunings | `algorithm_benchmark.py`, `svm_kernel_benchmark.py`, `feature_ablation.py`, `tune_hgb.py` |
 | C | `C-Phase.ipynb` | finaler Spatial Test, Baseline, Intervalle, Subgruppen, qualitative Matrix und Wichtigkeit | `train_final_model.py`, `final_model_evaluation.json` |
 | K | `K-Phase.md` | App-Architektur, UX, MLOps, Screenshots, Nutzen und Grenzen | `app.py`, GREIX-/Regionsprofile, Governance-Dokumente |

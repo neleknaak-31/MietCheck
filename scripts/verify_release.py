@@ -6,6 +6,7 @@ import hashlib
 import json
 import sys
 import time
+import tomllib
 from pathlib import Path
 from typing import Any
 
@@ -40,6 +41,13 @@ def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def load_citation_version(path: Path) -> str:
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("version:"):
+            return line.split(":", maxsplit=1)[1].strip().strip("\"'")
+    raise AssertionError("CITATION.cff does not declare a top-level version")
+
+
 def verify_release(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
     root = project_root.resolve()
     manifest = load_json(root / "models" / "model_manifest.json")
@@ -47,6 +55,16 @@ def verify_release(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
     report = load_json(root / "reports" / "final_model_evaluation.json")
     profile_metadata = load_json(root / "data" / "app" / "region_profiles_metadata.json")
     profiles = pd.read_csv(root / "data" / "app" / "region_profiles.csv")
+
+    project_version = tomllib.loads((root / "pyproject.toml").read_text(encoding="utf-8"))[
+        "project"
+    ]["version"]
+    citation_version = load_citation_version(root / "CITATION.cff")
+    model_version = manifest["model_version"]
+    if len({project_version, citation_version, model_version}) != 1:
+        raise AssertionError(
+            "Release version drift between pyproject.toml, CITATION.cff and model manifest"
+        )
 
     for relative, expected in manifest["files"].items():
         path = (root / "models" / relative).resolve()
@@ -96,7 +114,8 @@ def verify_release(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
         raise AssertionError("Loaded scenario evaluation exceeds the latency gate")
 
     return {
-        "model_version": manifest["model_version"],
+        "project_version": project_version,
+        "model_version": model_version,
         "model_sha256": manifest["files"]["zensus_hgb.joblib"]["sha256"],
         "mae_improvement_vs_baseline": improvement,
         "interval_coverage": coverage,
